@@ -24,4 +24,13 @@ vi.mock('next-themes', () => ({
   ThemeProvider: ({ children }: { children: React.ReactNode }) => children,
 }))
 
+vi.mock('react-map-gl/mapbox', () => ({
+  Map: ({ children, style, initialViewState, ...props }: { children?: React.ReactNode; style?: React.CSSProperties; initialViewState?: { zoom?: number }; [key: string]: unknown }) => (
+    <div data-testid="mock-map" data-zoom={initialViewState?.zoom} style={style} {...props}>
+      {children}
+    </div>
+  ),
+  useMap: () => ({ current: null }),
+}))
+
 global.fetch = vi.fn()

@@ -2,8 +2,16 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import { getCityById } from '@/lib/cities'
 import type { CitySnapshot } from '@/lib/types'
+
+const CityMap = dynamic(() => import('@/components/map/CityMap'), {
+  ssr: false,
+  loading: () => (
+    <div style={{ width: '100vw', height: '100vh', background: '#060A0F' }} />
+  ),
+})
 
 type ActivePanel = 'weather' | 'aq' | 'transit' | 'events' | 'anomaly' | 'history' | null
 
@@ -19,8 +27,7 @@ export default function CityPage() {
   const [activeLayers] = useState<string[]>(['air-quality', 'events', 'transit', 'crowd'])
   const [fading, setFading] = useState(false)
 
-  // suppress unused-var lint until these are consumed in later prompts
-  void activeLayers
+  // suppress unused-var lint until fading is consumed in later prompts
   void fading
   void setFading
 
@@ -82,11 +89,8 @@ export default function CityPage() {
         </div>
       )}
 
-      {/* CityMap added in P2.4 — placeholder shows snapshot data until then */}
       {snapshot && (
-        <div style={{ color: 'var(--amber)', fontFamily: 'var(--font-inter)', padding: '1rem' }}>
-          City: {snapshot.city.name} — Pulse: {snapshot.pulseScore}
-        </div>
+        <CityMap city={snapshot.city} snapshot={snapshot} activeLayers={activeLayers} />
       )}
     </div>
   )

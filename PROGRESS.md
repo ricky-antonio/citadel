@@ -6,6 +6,17 @@ Phase 2 — Shell & Map (in progress)
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P2.4 — CityMap component
+- `components/map/CityMap.tsx` — full-viewport react-map-gl/mapbox `Map` component; accepts `city`, `snapshot`, `activeLayers` props; `initialViewState` from `city.lat/lng/zoom`; `style={{ width: '100vw', height: '100vh' }}`; `attributionControl={false}`; mapRef for Phase 5 layer updates
+- `app/city/[id]/page.tsx` — dynamic import of CityMap with `ssr: false`; dark background `#060A0F` loading fallback; replaces placeholder div; `activeLayers` now consumed (void suppressor removed)
+- `tests/setup.tsx` — renamed from `setup.ts` (JSX required for react-map-gl mock); `vi.mock('react-map-gl/mapbox', ...)` with `data-testid="mock-map"` and `data-zoom` attribute
+- `vitest.config.ts` — updated `setupFiles` to `./tests/setup.tsx`
+- `tests/components/CityMap.test.tsx` — 3 tests: renders with null snapshot, renders with full snapshot, verifies zoom from city.zoom
+- Fixed: react-map-gl v8 exports from `react-map-gl/mapbox` sub-path (not root); updated both component and mock
+- `npm run type-check` — zero errors ✓
+- `npm test` — 56/56 pass ✓
+- Dev server: `http://localhost:3001/city/new-york` returns 200 ✓
+
 ### P2.3 — Routing + error boundary
 - `app/page.tsx` — permanent redirect to `/city/new-york` (fixed from `/city/chicago`)
 - `app/error.tsx` — global error boundary client component; centered amber "Something went wrong." + "Try again" reset button; 44px minimum tap target
@@ -114,7 +125,17 @@ Phase 2 — Shell & Map (in progress)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P2.4 — CityMap component
+- [ ] P2.6 — Phase 2 final checklist
+
+### P2.5 — Shared UI atoms
+- `components/nav/ThemeToggle.tsx` — dark/light toggle using `next-themes` `useTheme`; renders ☀/◑ icon; `aria-label` describes switch target; min 44×44px tap target
+- `components/shared/LiveDot.tsx` — 6px green (#4ADE80) circle with `pulse-dot` CSS animation; `aria-label="Live data"`
+- `components/shared/ErrorBanner.tsx` — in-panel error state; accepts optional `message` prop (default: "Data temporarily unavailable"); red tinted background/border
+- `tests/components/ThemeToggle.test.tsx` — 3 tests: aria-label, setTheme('light') on dark, setTheme('dark') on light; uses `vi.hoisted` for proper mock overrides
+- `tests/components/LiveDot.test.tsx` — 2 tests: aria-label, green background color
+- `tests/components/ErrorBanner.test.tsx` — 2 tests: default message, custom message
+- `npm run type-check` — zero errors ✓
+- `npm test` — 63/63 pass ✓
 
 ### P2.2 — Global CSS + root layout
 - `app/globals.css` — added `:root` CSS variables (all `--amber-*`, `--panel-*`, `--nav-bg`, `--chat-bg`, `--bg-*`, `--border-subtle`, `--tx-*`, `--radius*`, `--z-*`); `[data-theme='light']` overrides; base html/body styles (overflow hidden, zero margin); custom 4px scrollbar; `@keyframes float`, `pulse-dot`, `blink-cursor`
