@@ -147,7 +147,16 @@ Phase 3 — Orbital & Panels (in progress)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P3.6 — Wire all overlays into page.tsx
+- [ ] P3.7 — Phase 3 final checklist
+
+### P3.6 — Wire all overlays into page.tsx
+- `lib/types.ts` — added `anomalies: Anomaly[]` to `CitySnapshot` (was returned by route but missing from type)
+- `app/api/city/[id]/snapshot/route.ts` — moved `anomalies` into the `CitySnapshot` object directly (removed spread hack)
+- `components/nav/NavBar.tsx` — new pill nav component; absolute-positioned at top-center; CITADEL wordmark + CitySelector + LayerToggle + LiveDot + "Live" label + Ask button + ThemeToggle; height 44px, borderRadius 22px, glassmorphism styles
+- `app/city/[id]/page.tsx` — wired all overlays: NavBar (always visible), OrbitalLayout + all 6 panels (weather/aq/transit/events/anomaly/history) inside fade wrapper; `handleCityChange` with 300ms fade out → router.push; `activeLayers` now mutable with `setActiveLayers`; removed `void fading/setFading` suppressors; fixed unknown cityId redirect to `/city/new-york`
+- Test fixtures updated: `anomalies: []` added to CityMap, OrbitalLayout, context, and pulse test mocks
+- `npm run type-check` — zero errors ✓
+- `npm test` — 109/109 pass ✓
 
 ### P3.5 — Nav components + shared badges
 - `components/shared/PulseScore.tsx` — colored score badge; `sm` size: 6px dot + number inline (10px); `md` size: 13px number + optional label below (9px); color from `getPulseColor(score)`

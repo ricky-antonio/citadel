@@ -52,6 +52,7 @@ function makeMockSnapshot(): CitySnapshot {
       timeScore: 15,
     },
     timestamp: '2024-01-01T00:00:00Z',
+    anomalies: [],
   }
 }
 

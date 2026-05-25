@@ -94,19 +94,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       timeScore: getTimeOfDayScore(timestamp, city.timezone),
     }
 
-    const snapshot: CitySnapshot = {
-      city,
-      weather,
-      airQuality,
-      events,
-      transit,
-      pulseScore,
-      pulseLabel,
-      pulseColor,
-      pulseComponents,
-      timestamp,
-    }
-
     // Anomaly detection against last 30 days of pulse history
     const pulseHistory = await getPulseHistory(city.id, 30)
     const anomaly = detectAnomaly('pulse', pulseScore, pulseHistory)
@@ -119,7 +106,21 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     const anomalies = await getAnomalyHistory(city.id)
 
-    return Response.json({ ...snapshot, anomalies })
+    const snapshot: CitySnapshot = {
+      city,
+      weather,
+      airQuality,
+      events,
+      transit,
+      pulseScore,
+      pulseLabel,
+      pulseColor,
+      pulseComponents,
+      timestamp,
+      anomalies,
+    }
+
+    return Response.json(snapshot)
   } catch {
     return Response.json(
       { error: 'Internal server error.', code: 'INTERNAL_ERROR' } satisfies ApiError,

@@ -5,6 +5,14 @@ import { useParams, useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { getCityById } from '@/lib/cities'
 import type { CitySnapshot } from '@/lib/types'
+import NavBar from '@/components/nav/NavBar'
+import { OrbitalLayout } from '@/components/orbital/OrbitalLayout'
+import WeatherPanel from '@/components/panels/WeatherPanel'
+import AQPanel from '@/components/panels/AQPanel'
+import TransitPanel from '@/components/panels/TransitPanel'
+import EventsPanel from '@/components/panels/EventsPanel'
+import AnomalyPanel from '@/components/panels/AnomalyPanel'
+import HistoryPanel from '@/components/panels/HistoryPanel'
 
 const CityMap = dynamic(() => import('@/components/map/CityMap'), {
   ssr: false,
@@ -24,12 +32,8 @@ export default function CityPage() {
   const [loading, setLoading] = useState(true)
   const [activePanel, setActivePanel] = useState<ActivePanel>(null)
   const [chatOpen, setChatOpen] = useState(false)
-  const [activeLayers] = useState<string[]>(['air-quality', 'events', 'transit', 'crowd'])
+  const [activeLayers, setActiveLayers] = useState<string[]>(['air-quality', 'events', 'transit', 'crowd'])
   const [fading, setFading] = useState(false)
-
-  // suppress unused-var lint until fading is consumed in later prompts
-  void fading
-  void setFading
 
   const refetch = useCallback(async () => {
     setLoading(true)
@@ -47,7 +51,7 @@ export default function CityPage() {
   useEffect(() => {
     const city = getCityById(cityId)
     if (!city) {
-      router.replace('/city/chicago')
+      router.replace('/city/new-york')
       return
     }
 
@@ -70,6 +74,13 @@ export default function CityPage() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [activePanel, chatOpen])
 
+  function handleCityChange(newCityId: string) {
+    setFading(true)
+    setTimeout(() => {
+      router.push(`/city/${newCityId}`)
+    }, 300)
+  }
+
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
       {loading && !snapshot && (
@@ -91,6 +102,44 @@ export default function CityPage() {
 
       {snapshot && (
         <CityMap city={snapshot.city} snapshot={snapshot} activeLayers={activeLayers} />
+      )}
+
+      <NavBar
+        cityId={cityId}
+        activeLayers={activeLayers}
+        onCityChange={handleCityChange}
+        onLayerChange={setActiveLayers}
+        onAskClick={() => setChatOpen(true)}
+      />
+
+      {snapshot && (
+        <div
+          style={{
+            opacity: fading ? 0 : 1,
+            transition: 'opacity 300ms ease',
+          }}
+        >
+          <OrbitalLayout snapshot={snapshot} onOpenPanel={setActivePanel} />
+
+          {activePanel === 'weather' && (
+            <WeatherPanel weather={snapshot.weather} onClose={() => setActivePanel(null)} />
+          )}
+          {activePanel === 'aq' && (
+            <AQPanel airQuality={snapshot.airQuality} onClose={() => setActivePanel(null)} />
+          )}
+          {activePanel === 'transit' && (
+            <TransitPanel transit={snapshot.transit} onClose={() => setActivePanel(null)} />
+          )}
+          {activePanel === 'events' && (
+            <EventsPanel events={snapshot.events} onClose={() => setActivePanel(null)} />
+          )}
+          {activePanel === 'anomaly' && (
+            <AnomalyPanel anomalies={snapshot.anomalies} onClose={() => setActivePanel(null)} />
+          )}
+          {activePanel === 'history' && (
+            <HistoryPanel cityId={cityId} onClose={() => setActivePanel(null)} />
+          )}
+        </div>
       )}
     </div>
   )

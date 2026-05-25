@@ -130,6 +130,7 @@ export interface CitySnapshot {
   pulseColor: string
   pulseComponents: PulseComponents
   timestamp: string
+  anomalies: Anomaly[]
 }
 
 // ── Supabase row types ────────────────────────────────────────────────────────

@@ -43,6 +43,7 @@ const mockSnapshot: CitySnapshot = {
     status: 'normal',
   },
   timestamp: new Date().toISOString(),
+  anomalies: [],
 }
 
 describe('CityMap', () => {

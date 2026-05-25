@@ -33,6 +33,7 @@ function makeMockSnapshot(overrides: Partial<CitySnapshot> = {}): CitySnapshot {
     pulseComponents: { eventScore: 0, crowdScore: 0, transitScore: 0, aqScore: 0, timeScore: 0 },
     // 2024-07-15T23:00:00Z = 19:00 EDT (UTC-4, summer) → timeScore 20
     timestamp: '2024-07-15T23:00:00.000Z',
+    anomalies: [],
     ...overrides,
   }
 }
