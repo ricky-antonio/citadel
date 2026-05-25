@@ -1,10 +1,18 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 2 — Shell & Map (not started)
+Phase 2 — Shell & Map (in progress)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P2.3 — Routing + error boundary
+- `app/page.tsx` — permanent redirect to `/city/new-york` (fixed from `/city/chicago`)
+- `app/error.tsx` — global error boundary client component; centered amber "Something went wrong." + "Try again" reset button; 44px minimum tap target
+- `app/city/[id]/page.tsx` — dashboard page client component; reads cityId via `useParams()`; validates city ID (redirects unknown → `/city/new-york`); state: snapshot, loading, activePanel, chatOpen, activeLayers, fading; snapshot fetch on mount + 5-min polling with clearInterval cleanup; Escape key handler closes activePanel then chatOpen; loading skeleton while `loading && !snapshot`; placeholder for CityMap (P2.4)
+- `npm run type-check` — zero errors ✓
+- `npm test` — 53/53 pass ✓
+- Dev server: `http://localhost:3000` → 307 → `/city/new-york`, city page returns 200 ✓
 
 ### P1.11 — Phase 1 final checklist
 - `npm run type-check` — zero errors ✓
@@ -106,7 +114,7 @@ Phase 2 — Shell & Map (not started)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P2.3 — Routing + error boundary
+- [ ] P2.4 — CityMap component
 
 ### P2.2 — Global CSS + root layout
 - `app/globals.css` — added `:root` CSS variables (all `--amber-*`, `--panel-*`, `--nav-bg`, `--chat-bg`, `--bg-*`, `--border-subtle`, `--tx-*`, `--radius*`, `--z-*`); `[data-theme='light']` overrides; base html/body styles (overflow hidden, zero margin); custom 4px scrollbar; `@keyframes float`, `pulse-dot`, `blink-cursor`
