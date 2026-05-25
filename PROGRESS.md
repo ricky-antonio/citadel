@@ -1,10 +1,20 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 1 — Foundation (in progress)
+Phase 2 — Shell & Map (not started)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P1.11 — Phase 1 final checklist
+- `npm run type-check` — zero errors ✓
+- `npm test` — 53/53 pass ✓
+- `npm run test:coverage` — lines 92.46%, functions 97.67%, branches 76.92% (all above 75/75/70 thresholds) ✓
+- `npm run build` — Next.js 15.5.18, all 3 API routes render as dynamic server routes ✓
+- `curl /api/city/new-york/snapshot` — valid CitySnapshot JSON (pulseScore: 42, pulseLabel: "Active", weather, 363 transit alerts) ✓
+- `curl /api/pulse/new-york` — currentPulse + history array ✓
+- Cache hit verified: second request returned same data at same speed ✓
+- `npm audit fix --force` — upgraded Next.js 15.3.2 → 15.5.18 to address critical CVEs; remaining moderate PostCSS issue is unfixable without breaking downgrade to Next.js 9.x ✓
 
 ### P1.2 — Types & city config
 - `lib/types.ts` — all interfaces and union types: City, WeatherData, HourlyForecast, AirQualityData, Event, EventsData, TransitAlert, TransitData, Anomaly, ChatMessage, ApiError, PulseComponents, CitySnapshot, CacheRow; union types: TransitProvider, CrimeProvider, DataType, MetricType, PulseLabel, TransitSeverity
@@ -83,8 +93,20 @@ Phase 1 — Foundation (in progress)
 - `npm test` — 48/48 pass ✓
 - `npm run type-check` — zero errors ✓
 
+### P1.10 — API routes
+- `lib/pulse-history.ts` — `getPulseHistory(cityId, days)` (scores array for anomaly detection), `getPulseHistoryRows(cityId, limit)` (full rows for pulse endpoint), `writePulseScore(cityId, pulseScore, components)` (fire-and-forget insert); all Supabase queries kept in lib per code rules
+- `app/api/city/[id]/snapshot/route.ts` — cache-first orchestration for all 5 data types; assembles CitySnapshot with pulse score/label/color/components; detects anomalies against 30-day history; fire-and-forget pulse history write; returns snapshot + recent anomalies
+- `app/api/pulse/[id]/route.ts` — last 168 rows of pulse_history (7 days); returns currentPulse + history array
+- `app/api/anomalies/[id]/route.ts` — calls getAnomalyHistory(id, 20); returns anomalies array
+- `tests/api/snapshot.test.ts` — 5 integration tests: 404 for unknown city, 200 with CitySnapshot shape, cache hit skips external fetchers, cache miss triggers fetchWeather, pulseScore 0–100 in response
+- Fixed pre-existing ESLint issue in `lib/data/crime.ts` (`_city` → `_`); updated `eslint.config.mjs` to allow `^_` prefixed args/vars
+- `npm test` — 53/53 pass ✓
+- `npm run type-check` — zero errors ✓
+- `npm run test:coverage` — lines 92.46%, functions 97.67%, branches 76.92% (all above phase thresholds) ✓
+- `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
+
 ## In progress
-- [ ] P1.10 — API routes (`app/api/city/[id]/snapshot/route.ts`, pulse route, anomalies route, snapshot tests)
+- [ ] P2.1 — Next.js shell: layout, ThemeProvider, city selector, nav skeleton
 
 
 
