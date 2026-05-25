@@ -33,4 +33,8 @@ vi.mock('react-map-gl/mapbox', () => ({
   useMap: () => ({ current: null }),
 }))
 
+vi.mock('react-focus-trap', () => ({
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}))
+
 global.fetch = vi.fn()

@@ -139,7 +139,16 @@ Phase 3 — Orbital & Panels (not started)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P3.3 — PanelBase + WeatherPanel + AQPanel
+- [ ] P3.4 — TransitPanel + EventsPanel + AnomalyPanel + HistoryPanel
+
+### P3.3 — PanelBase + WeatherPanel + AQPanel
+- `components/panels/PanelBase.tsx` — glass panel shell; position constants for all 6 anchors; slide-in animation via mounted state + 1ms setTimeout; Escape keydown handler; outside mousedown handler; FocusTrap wrapper; amber title + LiveDot header
+- `components/panels/WeatherPanel.tsx` — wraps PanelBase at top-left; 32px temperature + condition; wind speed + humidity rows; hourly forecast strip (6 items, time→hour label)
+- `components/panels/AQPanel.tsx` — wraps PanelBase at top-right; 32px AQI + colored category badge; dominant pollutant row; color-coded 0–300 gradient bar with circle marker
+- `tests/setup.tsx` — added `vi.mock('react-focus-trap')` default export passthrough
+- `tests/components/PanelBase.test.tsx` — 4 tests: renders children, renders title, Escape calls onClose, role+aria-label
+- `npm run type-check` — zero errors ✓
+- `npm test` — 79/79 pass ✓
 
 ### P3.2 — OrbitalMetric + OrbitalLayout
 - `components/orbital/OrbitalMetric.tsx` — single metric node: colored dot + value + label; float animation via inline `animation`/`animationDelay` props; `tabIndex={0}`, `role="button"`, `aria-label`, `data-testid`; Enter/Space keyboard handler
