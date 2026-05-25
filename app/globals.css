@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  /* Amber brand palette */
+  --color-amber-50: #FFFBF0;
+  --color-amber-100: #FFF0C2;
+  --color-amber-200: #FFD97A;
+  --color-amber-300: #F5B731;
+  --color-amber-400: #E8A020;
+  --color-amber-500: #C47D0A;
+  --color-amber-600: #9A5E00;
+  --color-amber-700: #7A4400;
+  --color-amber-dark: #1A1200;
+
+  /* Dark surfaces */
+  --color-dark-900: #060A0F;
+  --color-dark-800: #0A0D12;
+  --color-dark-700: #0F1318;
+  --color-dark-600: #141820;
+  --color-dark-500: #1C2230;
+
+  /* Font families */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}

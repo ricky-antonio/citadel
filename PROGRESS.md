@@ -106,7 +106,13 @@ Phase 2 — Shell & Map (not started)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P2.1 — Next.js shell: layout, ThemeProvider, city selector, nav skeleton
+- [ ] P2.2 — Global CSS + root layout
+
+### P2.1 — Project bootstrap
+- `next.config.ts` — added `reactStrictMode: true` and webpack alias for `mapbox-gl`
+- `app/globals.css` — `@theme` block with full amber palette, dark surface palette, and font family tokens (Tailwind v4 — no `tailwind.config.ts` needed)
+- All production and dev dependencies already present from Phase 1 ✓
+- `npm run type-check` — zero errors ✓
 
 
 
