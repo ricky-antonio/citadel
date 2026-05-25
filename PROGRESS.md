@@ -67,8 +67,24 @@ Phase 1 — Foundation (in progress)
 - `npm run type-check` — zero errors ✓
 - `npm test` — 36/36 pass ✓
 
+### P1.8 — Transit fetchers
+- `lib/data/transit/mta.ts` — `fetchMtaStatus()` (no API key); fetches MTA GTFS-RT protobuf, decodes with `gtfs-realtime-bindings`, maps alert entities to `TransitAlert[]`; text-based severity ('major'/'No service' → major, else minor); returns `TRANSIT_FALLBACK` on empty feed or any error
+- `lib/data/transit/sf511.ts` — `fetchSf511Status(apiKey)` — same protobuf parsing, returns provider-specific fallback on error
+- `lib/data/transit/cta.ts` — `fetchCtaStatus(apiKey)` — JSON API, normalizes `ImpactedService.Service` (object | array), filters train alerts (`ServiceType === 'T'`), excludes elevator status
+- `lib/data/transit/wmata.ts` — `fetchWmataStatus(apiKey)` — WMATA Incidents JSON endpoint with `api_key` header, parses semicolon-delimited `LinesAffected`
+- `lib/data/transit/index.ts` — `fetchTransitStatus(city)` exhaustive switch on `city.transitProvider`; API keys from env vars
+- `tests/lib/data/transit/mta.test.ts` — 5 tests: shape, minor severity, major severity, empty feed fallback, fetch failure fallback
+- `npm test` — 41/41 pass ✓
+- `npm run type-check` — zero errors ✓
+
+### P1.9 — AI context builder
+- `lib/ai/context.ts` — `formatLocalTime(timestamp, timezone)` (Intl.DateTimeFormat, "Tuesday, 7:30 PM" format); `buildCityContext(snapshot)` assembles city name/state, local time, pulse score/label, weather, AQI, events tonight (capped at 5, "None" fallback), transit alerts ("None" fallback); warns in dev if output > 3200 chars
+- `tests/lib/ai/context.test.ts` — 7 tests: city name/state, pulse score/label, weather temp/condition, AQI, empty events → "None", empty delays → "None", output under 3200 chars
+- `npm test` — 48/48 pass ✓
+- `npm run type-check` — zero errors ✓
+
 ## In progress
-- [ ] P1.8 — Transit fetchers (`lib/data/transit/mta.ts`, `sf511.ts`, `cta.ts`, `wmata.ts`, `index.ts`)
+- [ ] P1.10 — API routes (`app/api/city/[id]/snapshot/route.ts`, pulse route, anomalies route, snapshot tests)
 
 
 
