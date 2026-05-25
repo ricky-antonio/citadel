@@ -139,7 +139,20 @@ Phase 3 — Orbital & Panels (not started)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P3.1 — Phase 3 first task (see .claude/phases/3-orbital-and-panels.md)
+- [ ] P3.3 — PanelBase + WeatherPanel + AQPanel
+
+### P3.2 — OrbitalMetric + OrbitalLayout
+- `components/orbital/OrbitalMetric.tsx` — single metric node: colored dot + value + label; float animation via inline `animation`/`animationDelay` props; `tabIndex={0}`, `role="button"`, `aria-label`, `data-testid`; Enter/Space keyboard handler
+- `components/orbital/OrbitalLayout.tsx` — positions OrbitalCore + 4 OrbitalMetric nodes at N/E/S/W; AQI color breakpoints (≤50 green, ≤100 amber, 101+ red); transit color by delay count (0=green, 1-5=amber, 6+=red); staggered animation delays 0s/1s/2s/3s; uses `snapshot.weather.temperature` (°F)
+- `tests/components/OrbitalLayout.test.tsx` — 8 tests: 4 value render tests, 2 click handler tests (weather + aq), all-four tabIndex test, Enter key test
+- `npm run type-check` — zero errors ✓
+- `npm test` — 75/75 pass ✓
+
+### P3.1 — OrbitalCore SVG component
+- `components/orbital/OrbitalCore.tsx` — pure SVG component (no state, no `'use client'`); three concentric amber rings (r=139/99/59, opacity 0.12/0.18/0.25); core circle r=36 (#1A1200 fill, #E8A020 stroke); pulse score text y=138 fontSize=22; pulse label text y=150 fontSize=9 uppercase; `role="img"`, `aria-label`, `aria-live="polite"` for screen readers
+- `tests/components/OrbitalCore.test.tsx` — 4 tests: score rendering, label uppercasing, aria-label content, three ring circles
+- `npm run type-check` — zero errors ✓
+- `npm test` — 67/67 pass ✓
 
 ### P2.5 — Shared UI atoms
 - `components/nav/ThemeToggle.tsx` — dark/light toggle using `next-themes` `useTheme`; renders ☀/◑ icon; `aria-label` describes switch target; min 44×44px tap target
