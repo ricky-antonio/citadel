@@ -420,33 +420,39 @@ lib/data/airQuality.ts:
   OpenAQ v3 base URL: https://api.openaq.org (NOT api.openaq.io — that domain is wrong)
   All requests require header: X-API-Key: process.env.OPENAQ_API_KEY
 
-  Search by coordinates — do NOT hardcode location IDs:
+  Two-step fetch (both verified against the live API):
+
+  STEP 1 — find nearby stations:
     GET https://api.openaq.org/v3/locations
-      ?coordinates={lat},{lng}
-      &radius=25000
-      &limit=10
-      &order_by=distance
+      ?coordinates={lat},{lng}&radius=25000&limit=10
     Header: X-API-Key: process.env.OPENAQ_API_KEY
+    Response shape: { results: Array<{ id, name, coordinates: { latitude, longitude },
+      sensors: Array<{ id, parameter: { name } }>, datetimeLast: { utc } }> }
+    Note: order_by=distance is NOT a valid param — sort client-side by datetimeLast
+    to prefer recently-active stations. Only keep stations where datetimeLast.utc
+    is within the last 48 hours (stale stations report old data).
+
+  STEP 2 — get latest readings for each station (parallel):
+    GET https://api.openaq.org/v3/locations/{id}/latest
+    Header: X-API-Key: process.env.OPENAQ_API_KEY
+    Response shape: { results: Array<{ value, sensorsId, locationsId,
+      datetime: { utc, local } }> }
+    Match result.sensorsId to the pm25 sensor ID from Step 1 to get PM2.5 value.
 
   fetchAirQuality(lat: number, lng: number): Promise<AirQualityData>
-    Single fetch to the locations endpoint above.
-    Parse the response: results array, each item has sensors array.
-    Find PM2.5 readings across all stations (parameter name "pm25").
-    Take the average PM2.5 across all stations that reported it.
+    Step 1: fetch nearby locations. Filter to those active within 48h.
+    Step 2: Promise.all fetching /latest for each active location (max 5).
+    Collect all PM2.5 values (parameter.name === 'pm25') across stations.
+    Average the PM2.5 values across all stations that returned one.
     Compute overall AQI from avg PM2.5 using EPA standard breakpoints:
-      PM2.5 0–12.0   → AQI 0–50   (Good)
+      PM2.5 0–12.0    → AQI 0–50   (Good)
       PM2.5 12.1–35.4 → AQI 51–100  (Moderate)
       PM2.5 35.5–55.4 → AQI 101–150 (Unhealthy for Sensitive Groups)
       PM2.5 55.5–150.4 → AQI 151–200 (Unhealthy)
-      PM2.5 150.5+    → AQI 201+   (Very Unhealthy)
-    dominantPollutant: 'pm25' (default for now — extend later if needed)
-    stations: array of { name, lat, lng, aqi } for each result location
+      PM2.5 150.5+     → AQI 201+   (Very Unhealthy)
+    dominantPollutant: 'pm25'
+    stations: [{ name, lat: coordinates.latitude, lng: coordinates.longitude, aqi }]
     Return AIR_QUALITY_FALLBACK on any error (including missing OPENAQ_API_KEY).
-
-  NOTE: The actual response shape of OpenAQ v3 /v3/locations with sensor data
-  embedded may vary. When writing this fetcher, log the raw response in development
-  and adjust the parser to match what the API actually returns. Do not guess the
-  shape — inspect it first.
 
 tests/lib/data/weather.test.ts — 5 tests:
   Mock global.fetch for each test case. Supply realistic Open-Meteo JSON fixtures.
@@ -480,13 +486,14 @@ Do not write any code until you have confirmed.
 
 ---
 
-You are building the events fetcher (Ticketmaster + Eventbrite merged) and the
-crime data stub. The events fetcher calls both APIs, deduplicates by venue+time,
-and returns a unified EventsData shape. The crime file is a stub — it returns
-CRIME_FALLBACK immediately. The real implementation comes in Phase 5.
+You are building the events fetcher (Ticketmaster only) and the crime data stub.
+Eventbrite's /v3/events/search/ endpoint was removed for new API keys in 2025 —
+do NOT implement an Eventbrite fetcher. Ticketmaster is the sole events source.
+The crime file is a stub — it returns CRIME_FALLBACK immediately. The real
+implementation comes in Phase 5.
 
 Describe what you are about to create before writing any code:
-- lib/data/events.ts — fetchEvents merging Ticketmaster and Eventbrite
+- lib/data/events.ts — fetchEvents using Ticketmaster only
 - lib/data/crime.ts — stub returning CRIME_FALLBACK
 
 Wait for confirmation before writing.
@@ -501,27 +508,17 @@ lib/data/events.ts:
     ?apikey={TICKETMASTER_API_KEY}&city={cityName}&size=50&sort=date,asc
     &startDateTime={todayISO}&endDateTime={tomorrowISO}
 
-  Eventbrite URL:
-    https://www.eventbriteapi.com/v3/events/search/
-    ?location.address={cityName}&expand=venue,ticket_classes
-    &start_date.range_start={todayISO}&start_date.range_end={tomorrowISO}
-    Header: Authorization: Bearer {EVENTBRITE_API_KEY}
-
   fetchEvents(cityName: string): Promise<EventsData>
-    Fetch both APIs in parallel with Promise.allSettled (so one failure doesn't
-    block the other). Map each to a common internal Event shape. Merge the two
-    arrays. Deduplicate: if two events share the same venue name and start time
-    (within 30 minutes), keep only the Ticketmaster one.
-    Compute: count, totalCapacity (sum of attendances), tonight (events today
-    after 18:00 local time, up to 10), byCategory (count per category),
-    locations array for the map layer.
-    Return EVENTS_FALLBACK if both APIs fail.
+    Fetch Ticketmaster. Parse the response into a unified EventsData shape.
+    Compute: count, tonight (events today after 18:00 local time, up to 10),
+    byCategory (count per category), locations array for the map layer.
+    Return EVENTS_FALLBACK on any failure.
 
   parseTicketmasterEvent(raw: unknown): Event — private helper
-  parseEventbriteEvent(raw: unknown): Event — private helper
 
-  Note: TICKETMASTER_API_KEY and EVENTBRITE_API_KEY are server-only env vars
-  (no NEXT_PUBLIC_ prefix). This file is only ever called from route handlers.
+  Note: TICKETMASTER_API_KEY is a server-only env var (no NEXT_PUBLIC_ prefix).
+  This file is only ever called from route handlers.
+  Do NOT add any Eventbrite code — the endpoint is restricted for new keys.
 
 lib/data/crime.ts:
   fetchCrimeData(city: City): Promise<Record<string, unknown>>
@@ -572,29 +569,34 @@ Wait for confirmation before writing.
 FILES TO CREATE:
 
 lib/data/transit/mta.ts:
-  MTA Service Alerts URL:
-    https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fsubway-alerts
-    Header: x-api-key: {MTA_API_KEY}
-    The feed is a GTFS-RT protobuf, but the MTA also provides a JSON-equivalent.
-    Use the JSON version: https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs
-    is binary; instead use the alerts JSON endpoint or parse the feed.
-    Simplification: use the MTA status page JSON API for the subway lines:
-    https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-ace (etc)
-    For this implementation, focus on the service alerts endpoint which returns
-    active delays across all lines. Map each alert to a delay entry.
-    
-    fetchMtaStatus(apiKey: string): Promise<TransitData>
+  MTA Service Alerts — NO API KEY REQUIRED (MTA opened all feeds in 2025):
+    https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fall-alerts
+    No headers required. Returns a GTFS-RT protobuf binary (~768KB live).
+
+  Parsing: install the gtfs-realtime-bindings package to decode protobuf:
+    npm install gtfs-realtime-bindings
+    import { transit_realtime } from 'gtfs-realtime-bindings'
+    const feed = transit_realtime.FeedMessage.decode(Buffer.from(await res.arrayBuffer()))
+
+  fetchMtaStatus(): Promise<TransitData>  ← no apiKey param needed
+    Fetch the feed as ArrayBuffer, decode with gtfs-realtime-bindings.
+    Filter feed.entity to those with alert defined.
+    Extract informedEntities to get affected route IDs (subway line letters/numbers).
     Return TRANSIT_FALLBACK on any error.
-    Parse: delayCount = number of active service alerts,
-    delays = alerts mapped to { line, severity, description },
+    Parse: delayCount = number of active alert entities,
+    delays = alerts mapped to { line, severity, description } where
+      description comes from alert.headerText.translation[0].text,
+      severity: headerText mentions 'major' or 'No' (no service) → 'major', else 'minor',
     lines = all subway lines with status derived from alerts presence.
-    Severity: delay description mentions '> 5 min' or 'major' → 'major', else 'minor'.
 
 lib/data/transit/sf511.ts:
-  SF 511 Real-Time Departures:
-    https://api.511.org/transit/lines?api_key={SF_511_API_KEY}&agency=SF&format=json
+  SF 511 Service Alerts — GTFS-RT protobuf (same format as MTA, same parsing approach):
+    https://api.511.org/transit/servicealerts?api_key={SF_511_API_KEY}&agency=SF
+    Note: format=json param is IGNORED — all 511 endpoints return protobuf binary.
+    Parse with gtfs-realtime-bindings (same as MTA fetcher).
     fetchSf511Status(apiKey: string): Promise<TransitData>
-    Parse lines and any service alerts. Return TRANSIT_FALLBACK on error.
+    Decode feed, filter entities with alert defined, extract informedEntities for
+    route IDs, map to delay entries. Return TRANSIT_FALLBACK on error.
 
 lib/data/transit/cta.ts:
   CTA Train Tracker:
@@ -615,7 +617,7 @@ lib/data/transit/wmata.ts:
 lib/data/transit/index.ts:
   fetchTransitStatus(city: City): Promise<TransitData>
     Switch on city.transit.provider:
-      'mta'    → fetchMtaStatus(city.transit.apiKey ?? '')
+      'mta'    → fetchMtaStatus()
       'sf-511' → fetchSf511Status(city.transit.apiKey ?? '')
       'cta'    → fetchCtaStatus(city.transit.apiKey ?? '')
       'wmata'  → fetchWmataStatus(city.transit.apiKey ?? '')

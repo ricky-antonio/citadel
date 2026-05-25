@@ -55,7 +55,7 @@ The technical focus is on multi-source data aggregation (weather, air quality, t
 | Open-Meteo               | Weather (free, no key)      | All           |
 | OpenAQ v3                | Air quality (free key)      | All           |
 | Ticketmaster Discovery   | Live events                 | All           |
-| Eventbrite               | Supplementary events        | All           |
+| Eventbrite               | Supplementary events (restricted — falls back to empty) | All |
 | MTA GTFS-RT              | Real-time transit            | New York      |
 | 511 SF Bay               | Real-time transit            | San Francisco |
 | CTA Train Tracker        | Real-time transit            | Chicago       |

@@ -43,8 +43,8 @@ and the next task. Do not write a single line of code until this confirmation is
 - Open-Meteo (weather, free, no key)
 - OpenAQ v3 (air quality, free, key required — register at openaq.org)
 - Ticketmaster Discovery API (events, key required)
-- Eventbrite API (supplementary events, key required)
-- MTA API (NYC transit, key required)
+- Eventbrite API (supplementary events — **restricted**: /v3/events/search removed for new keys; fetcher returns empty fallback, Ticketmaster-only in practice)
+- MTA API (NYC transit, **no key required** — feeds are fully open as of 2025)
 - 511 SF Bay API (SF transit, key required)
 - CTA API (Chicago transit, key required)
 - WMATA API (DC transit, key required)
@@ -60,7 +60,6 @@ SUPABASE_SERVICE_ROLE_KEY
 OPENAQ_API_KEY
 TICKETMASTER_API_KEY
 EVENTBRITE_API_KEY
-MTA_API_KEY
 SF_511_API_KEY
 CTA_API_KEY
 WMATA_API_KEY
