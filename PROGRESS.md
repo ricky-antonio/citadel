@@ -147,7 +147,19 @@ Phase 3 — Orbital & Panels (in progress)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P3.5 — Nav components + shared badges (CitySelector, LayerToggle, PulseScore, MetricBadge)
+- [ ] P3.6 — Wire all overlays into page.tsx
+
+### P3.5 — Nav components + shared badges
+- `components/shared/PulseScore.tsx` — colored score badge; `sm` size: 6px dot + number inline (10px); `md` size: 13px number + optional label below (9px); color from `getPulseColor(score)`
+- `components/shared/MetricBadge.tsx` — generic metric pill; label in `var(--tx-2)` + bold value + optional unit; small pill with panel-bg background and border
+- `components/nav/CitySelector.tsx` — trigger button with current city name + ▾; dropdown with all four cities and state abbreviations; PulseScore badge per city when score available; current city highlighted with amber border-left; aria-selected; arrow-key navigation; Escape + outside-click close; aria-haspopup="listbox" + aria-expanded
+- `components/nav/LayerToggle.tsx` — trigger "Layers ▾"; four checkbox options (air-quality, events, transit, crowd); toggle adds/removes from activeLayers array; Escape + outside-click close; aria-expanded
+- `tests/components/PulseScore.test.tsx` — 6 tests: score render, label render, no label, dot in sm, amber color (rgb normalized), blue color (rgb normalized)
+- `tests/components/MetricBadge.test.tsx` — 5 tests: label, value, value+unit, string value, no undefined in output
+- `tests/components/CitySelector.test.tsx` — 8 tests: trigger renders city name, no dropdown initially, opens on click, shows all four cities, calls onCityChange, closes after selection, Escape closes, aria-haspopup/expanded, pulse score badges shown, aria-selected on current
+- `tests/components/LayerToggle.test.tsx` — 8 tests: trigger renders, no dropdown initially, opens + shows 4 checkboxes, unchecked when empty, checked for active layer, toggle on, toggle off, Escape closes, aria-expanded
+- `npm run type-check` — zero errors ✓
+- `npm test` — 109/109 pass ✓
 
 ### P3.3 — PanelBase + WeatherPanel + AQPanel
 - `components/panels/PanelBase.tsx` — glass panel shell; position constants for all 6 anchors; slide-in animation via mounted state + 1ms setTimeout; Escape keydown handler; outside mousedown handler; FocusTrap wrapper; amber title + LiveDot header
