@@ -52,8 +52,16 @@ Phase 1 — Foundation (in progress)
 - `npm test` — 27/27 pass ✓
 - `npm run type-check` — zero errors ✓
 
+### P1.6 — Weather & air quality fetchers
+- `lib/data/weather.ts` — `fetchWeather(lat, lng)` (Open-Meteo, temp already °F from URL param), `parseWeatherResponse(json)` (weather_code→condition switch with 19 codes, maps first 24h of hourly to HourlyForecast[]); returns WEATHER_FALLBACK on any error
+- `lib/data/airQuality.ts` — `fetchAirQuality(lat, lng)` (OpenAQ v3, X-API-Key header); step 1: GET /v3/locations filtered to active within 48h; step 2: Promise.all GET /v3/locations/{id}/latest for up to 5 stations; averages PM2.5 values; EPA breakpoint AQI formula; returns AIR_QUALITY_FALLBACK on missing key or any error
+- `tests/lib/data/weather.test.ts` — 6 tests: happy path shape, HTTP 500 fallback, network throw fallback, °F passthrough, missing hourly → [], weather_code mapping
+- `tests/lib/data/airQuality.test.ts` — 3 tests: happy path AQI/category, all latest fail → fallback, empty locations → fallback
+- `npm test` — 36/36 pass ✓
+- `npm run type-check` — zero errors ✓
+
 ## In progress
-- [ ] P1.6 — Weather & air quality fetchers (`lib/data/weather.ts`, `lib/data/airQuality.ts`, tests)
+- [ ] P1.7 — Events fetcher & crime stub (`lib/data/events.ts`, `lib/data/crime.ts`, transit fetchers)
 
 
 
