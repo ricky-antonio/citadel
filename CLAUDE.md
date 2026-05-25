@@ -127,7 +127,7 @@ Every user action must produce immediate visible feedback. Silence after a click
 ## Scaffold command
 ```bash
 npx create-next-app@15 citadel --typescript --tailwind --app --no-src-dir
-npm install mapbox-gl react-map-gl @anthropic-ai/sdk @supabase/supabase-js @supabase/ssr next-themes @tanstack/react-virtual @upstash/ratelimit @vercel/kv react-focus-trap
+npm install mapbox-gl react-map-gl @anthropic-ai/sdk @supabase/supabase-js @supabase/ssr next-themes @tanstack/react-virtual @upstash/ratelimit @vercel/kv react-focus-trap gtfs-realtime-bindings
 npm install -D @types/mapbox-gl
 npm install -D vitest @vitest/coverage-v8 @vitejs/plugin-react @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom
 npm install -D @playwright/test && npx playwright install chromium

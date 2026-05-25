@@ -599,10 +599,22 @@ lib/data/transit/sf511.ts:
     route IDs, map to delay entries. Return TRANSIT_FALLBACK on error.
 
 lib/data/transit/cta.ts:
-  CTA Train Tracker:
-    https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key={CTA_API_KEY}&mapid=40380&outputType=JSON
+  CTA Customer Alerts API — system-wide, returns JSON (no protobuf):
+    https://www.transitchicago.com/api/1.0/alerts.aspx?outputType=JSON&activeonly=true
+    No API key required in the URL — this endpoint is public.
+    BUT still pass the CTA_API_KEY in the request in case it becomes required.
+    Response shape: { CTAAlerts: { Alert: Array<{
+      Headline, Impact, ImpactedService: { Service: Service | Service[] },
+      ...
+    }> } }
+    Note: ImpactedService.Service can be a single object OR an array — always
+    normalize to array: const services = Array.isArray(s) ? s : [s]
+    Service shape: { ServiceType ('T' = train, 'B' = bus), ServiceName, ServiceId }
+    Filter to train alerts only (ServiceType === 'T').
     fetchCtaStatus(apiKey: string): Promise<TransitData>
-    Parse arrivals for delay indicators. Return TRANSIT_FALLBACK on error.
+    delayCount = alerts where Impact !== 'Elevator Status' and ServiceType === 'T'
+    lines = unique ServiceName values from impacted train alerts, each with status
+    Return TRANSIT_FALLBACK on error.
 
 lib/data/transit/wmata.ts:
   WMATA Real-Time Train Positions:
