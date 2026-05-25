@@ -1,10 +1,18 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 3 — Orbital & Panels (not started)
+Phase 3 — Orbital & Panels (in progress)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P3.4 — TransitPanel + EventsPanel + AnomalyPanel + HistoryPanel
+- `components/panels/TransitPanel.tsx` — PanelBase anchor="bottom-right"; green all-clear when delayCount === 0; amber delay count + alert list (line name + severity badge + description, up to 5); unique lines derived from alerts (up to 8) with colored dots; severity 'minor' → amber, 'major' → red
+- `components/panels/EventsPanel.tsx` — PanelBase anchor="bottom-left"; empty state if no tonight events; count header; up to 5 events with name/time/venue + attendance badges (amber for 1K–9K, red for 10K+)
+- `components/panels/AnomalyPanel.tsx` — PanelBase anchor="left-center"; empty state if none; up to 10 anomalies with metric badge, deviation %, AI description or "Analyzing…", relative time via Intl.RelativeTimeFormat
+- `components/panels/HistoryPanel.tsx` — 'use client'; PanelBase anchor="right-center"; fetches /api/pulse/{cityId} on mount; empty state if < 2 points; 248×100px SVG polyline chart (oldest left, newest right); amber stroke #E8A020 strokeWidth=2; @tanstack/react-virtual horizontal virtualizer for circle points; current pulse in 32px amber text below
+- `npm run type-check` — zero errors ✓
+- `npm test` — 79/79 pass ✓
 
 ### P2.6 — Phase 2 final checklist
 - `app/page.tsx` — fixed redirect from `/city/chicago` → `/city/new-york` (regression from P2.3)
@@ -139,7 +147,7 @@ Phase 3 — Orbital & Panels (not started)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P3.4 — TransitPanel + EventsPanel + AnomalyPanel + HistoryPanel
+- [ ] P3.5 — Nav components + shared badges (CitySelector, LayerToggle, PulseScore, MetricBadge)
 
 ### P3.3 — PanelBase + WeatherPanel + AQPanel
 - `components/panels/PanelBase.tsx` — glass panel shell; position constants for all 6 anchors; slide-in animation via mounted state + 1ms setTimeout; Escape keydown handler; outside mousedown handler; FocusTrap wrapper; amber title + LiveDot header
