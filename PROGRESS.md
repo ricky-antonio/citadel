@@ -45,8 +45,15 @@ Phase 1 — Foundation (in progress)
 - `npm test` — 15/15 pass ✓
 - `npm run type-check` — zero errors ✓
 
+### P1.5 — Anomaly detection
+- `lib/anomaly.ts` — `detectAnomaly` (null if <10 pts or ≤2σ; baseline = mean rounded 2dp; deviation = (value−mean)/mean), `logAnomaly` (insert with snake_case column mapping, never throws), `getAnomalyHistory` (select last 7 days desc limit, maps rows to Anomaly[], returns [] on error); private `computeStdDev`
+- `tests/mocks/supabase.ts` — added `mockSupabaseOrder` (returns this) and `mockSupabaseLimit` (overridden per-test with `mockResolvedValueOnce` for multi-row terminal)
+- `tests/lib/anomaly.test.ts` — 6 tests: null within 2σ, anomaly above 2σ, null <10 pts, deviation formula, logAnomaly insert columns, getAnomalyHistory row mapping
+- `npm test` — 27/27 pass ✓
+- `npm run type-check` — zero errors ✓
+
 ## In progress
-- [ ] P1.5 — Anomaly detection (`lib/anomaly.ts`, `tests/lib/anomaly.test.ts`)
+- [ ] P1.6 — Weather & air quality fetchers (`lib/data/weather.ts`, `lib/data/airQuality.ts`, tests)
 
 
 
