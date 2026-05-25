@@ -60,8 +60,15 @@ Phase 1 — Foundation (in progress)
 - `npm test` — 36/36 pass ✓
 - `npm run type-check` — zero errors ✓
 
+### P1.7 — Events fetcher & crime stub
+- `lib/data/events.ts` — `fetchEvents(cityName)` Ticketmaster-only; parses events into `EventsData` (count, totalCapacity, tonight); private `parseTicketmasterEvent`; uses local date+time from Ticketmaster response for "tonight" filtering (≥18:00); returns `EVENTS_FALLBACK` on missing key, HTTP error, or any exception
+- `lib/data/crime.ts` — `fetchCrimeData(city)` stub returning `CRIME_FALLBACK`; real open-data implementations deferred to Phase 5
+- No tests for these two files — events integration covered by P1.10 snapshot test; crime is a zero-logic stub
+- `npm run type-check` — zero errors ✓
+- `npm test` — 36/36 pass ✓
+
 ## In progress
-- [ ] P1.7 — Events fetcher & crime stub (`lib/data/events.ts`, `lib/data/crime.ts`, transit fetchers)
+- [ ] P1.8 — Transit fetchers (`lib/data/transit/mta.ts`, `sf511.ts`, `cta.ts`, `wmata.ts`, `index.ts`)
 
 
 
