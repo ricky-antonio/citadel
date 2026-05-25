@@ -53,7 +53,7 @@ The technical focus is on multi-source data aggregation (weather, air quality, t
 | API                      | Data                        | Cities        |
 | ------------------------ | --------------------------- | ------------- |
 | Open-Meteo               | Weather (free, no key)      | All           |
-| OpenAQ                   | Air quality (free, no key)  | All           |
+| OpenAQ v3                | Air quality (free key)      | All           |
 | Ticketmaster Discovery   | Live events                 | All           |
 | Eventbrite               | Supplementary events        | All           |
 | MTA GTFS-RT              | Real-time transit            | New York      |
@@ -145,6 +145,7 @@ ANTHROPIC_API_KEY=                 # server-only
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=         # server-only — never client-side
+OPENAQ_API_KEY=
 TICKETMASTER_API_KEY=
 EVENTBRITE_API_KEY=
 MTA_API_KEY=

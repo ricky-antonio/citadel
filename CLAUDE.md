@@ -41,7 +41,7 @@ and the next task. Do not write a single line of code until this confirmation is
 
 **External APIs (all server-side except Mapbox):**
 - Open-Meteo (weather, free, no key)
-- OpenAQ (air quality, free, no key)
+- OpenAQ v3 (air quality, free, key required — register at openaq.org)
 - Ticketmaster Discovery API (events, key required)
 - Eventbrite API (supplementary events, key required)
 - MTA API (NYC transit, key required)
@@ -57,6 +57,7 @@ ANTHROPIC_API_KEY
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY
+OPENAQ_API_KEY
 TICKETMASTER_API_KEY
 EVENTBRITE_API_KEY
 MTA_API_KEY

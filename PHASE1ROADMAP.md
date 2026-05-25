@@ -379,9 +379,10 @@ Do not write any code until you have confirmed.
 ---
 
 You are building two data fetchers: weather from Open-Meteo and air quality from
-OpenAQ. Both are free with no API key. Both wrap the external fetch in try/catch
-and return typed fallbacks on any failure. They parse the raw API responses into
-the exact WeatherData and AirQualityData shapes from lib/types.ts.
+OpenAQ v3. Open-Meteo is free with no key. OpenAQ v3 requires OPENAQ_API_KEY sent
+as the X-API-Key request header (v1 and v2 are retired). Both wrap the external
+fetch in try/catch and return typed fallbacks on any failure. They parse the raw
+API responses into the exact WeatherData and AirQualityData shapes from lib/types.ts.
 
 Describe what you are about to create before writing any code:
 - lib/data/weather.ts — fetchWeather with Open-Meteo URL and response parser
@@ -416,22 +417,36 @@ lib/data/weather.ts:
     hourly: map first 24 hours of hourly data to the { hour, temp, condition } shape.
 
 lib/data/airQuality.ts:
-  OpenAQ v3 URL:
-    https://api.openaq.io/v3/locations/{locationId}/latest
-    Fetch each locationId separately and aggregate.
+  OpenAQ v3 base URL: https://api.openaq.org (NOT api.openaq.io — that domain is wrong)
+  All requests require header: X-API-Key: process.env.OPENAQ_API_KEY
 
-  fetchAirQuality(locationIds: number[]): Promise<AirQualityData>
-    Fetch all locationIds in parallel with Promise.all.
-    Parse PM2.5, NO2, ozone readings from each station.
-    Compute overall AQI from PM2.5 using the EPA standard breakpoints:
-      PM2.5 0-12 → AQI 0-50 (Good)
-      PM2.5 12.1-35.4 → AQI 51-100 (Moderate)
-      PM2.5 35.5-55.4 → AQI 101-150 (Unhealthy for Sensitive Groups)
-      PM2.5 55.5-150.4 → AQI 151-200 (Unhealthy)
-      PM2.5 150.5+ → AQI 201+ (Very Unhealthy)
-    category: map AQI range to EPA category name.
-    stations: array of { lat, lng, aqi } for each station (for the map heatmap).
-    Return AIR_QUALITY_FALLBACK on any error.
+  Search by coordinates — do NOT hardcode location IDs:
+    GET https://api.openaq.org/v3/locations
+      ?coordinates={lat},{lng}
+      &radius=25000
+      &limit=10
+      &order_by=distance
+    Header: X-API-Key: process.env.OPENAQ_API_KEY
+
+  fetchAirQuality(lat: number, lng: number): Promise<AirQualityData>
+    Single fetch to the locations endpoint above.
+    Parse the response: results array, each item has sensors array.
+    Find PM2.5 readings across all stations (parameter name "pm25").
+    Take the average PM2.5 across all stations that reported it.
+    Compute overall AQI from avg PM2.5 using EPA standard breakpoints:
+      PM2.5 0–12.0   → AQI 0–50   (Good)
+      PM2.5 12.1–35.4 → AQI 51–100  (Moderate)
+      PM2.5 35.5–55.4 → AQI 101–150 (Unhealthy for Sensitive Groups)
+      PM2.5 55.5–150.4 → AQI 151–200 (Unhealthy)
+      PM2.5 150.5+    → AQI 201+   (Very Unhealthy)
+    dominantPollutant: 'pm25' (default for now — extend later if needed)
+    stations: array of { name, lat, lng, aqi } for each result location
+    Return AIR_QUALITY_FALLBACK on any error (including missing OPENAQ_API_KEY).
+
+  NOTE: The actual response shape of OpenAQ v3 /v3/locations with sensor data
+  embedded may vary. When writing this fetcher, log the raw response in development
+  and adjust the parser to match what the API actually returns. Do not guess the
+  shape — inspect it first.
 
 tests/lib/data/weather.test.ts — 5 tests:
   Mock global.fetch for each test case. Supply realistic Open-Meteo JSON fixtures.

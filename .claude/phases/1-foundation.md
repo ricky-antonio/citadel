@@ -19,7 +19,7 @@ This phase produces no visible UI. It produces a fully typed, fully tested data 
 - [ ] `tests/lib/anomaly.test.ts` — all anomaly tests
 - [ ] `lib/data/weather.ts` — `fetchWeather(lat, lng)` — Open-Meteo, returns `WeatherData`
 - [ ] `tests/lib/data/weather.test.ts`
-- [ ] `lib/data/airQuality.ts` — `fetchAirQuality(locationIds)` — OpenAQ, returns `AirQualityData`
+- [ ] `lib/data/airQuality.ts` — `fetchAirQuality(lat, lng)` — OpenAQ v3 (requires `OPENAQ_API_KEY` in `X-API-Key` header; v1/v2 retired), returns `AirQualityData`
 - [ ] `tests/lib/data/airQuality.test.ts`
 - [ ] `lib/data/events.ts` — `fetchEvents(cityName)` — Ticketmaster + Eventbrite merged, returns `EventsData`
 - [ ] `lib/data/transit/mta.ts` — `fetchMtaStatus()` — returns `TransitData`

@@ -42,19 +42,26 @@ No other global tools required. All dev tooling runs via `npm run`.
 2. Copy → `ANTHROPIC_API_KEY`
 3. The app uses `claude-sonnet-4-6`. Ensure your account has access.
 
-### 2d. Ticketmaster
+### 2d. OpenAQ
+
+1. Go to [openaq.org](https://openaq.org) → Sign up (free)
+2. Once logged in: Account → API Keys → Create key
+3. Copy the key → `OPENAQ_API_KEY`
+4. Note: OpenAQ v1 and v2 are retired — the app uses v3 exclusively. The key goes in the `X-API-Key` request header.
+
+### 2e. Ticketmaster
 
 1. Go to [developer.ticketmaster.com](https://developer.ticketmaster.com) → Get Your API Key
 2. Create an app → copy the Consumer Key → `TICKETMASTER_API_KEY`
 3. Free tier: 5,000 API calls/day — more than sufficient
 
-### 2e. Eventbrite
+### 2f. Eventbrite
 
 1. Go to [eventbrite.com/platform](https://www.eventbrite.com/platform) → Get Started → Create an app
 2. Copy the Private Token → `EVENTBRITE_API_KEY`
 3. Free tier is sufficient for this app's usage
 
-### 2f. Transit APIs
+### 2g. Transit APIs
 
 **MTA (New York)**
 1. Go to [api.mta.info](https://api.mta.info) → Register
@@ -74,7 +81,7 @@ No other global tools required. All dev tooling runs via `npm run`.
 2. Copy the Primary Key → `WMATA_API_KEY`
 3. Default tier: 10 calls/second, 50,000/day — sufficient
 
-### 2g. Vercel KV (for rate limiting)
+### 2h. Vercel KV (for rate limiting)
 
 This step can be deferred until deploying to Vercel. For local development, rate limiting can be stubbed.
 
@@ -88,7 +95,7 @@ When ready to deploy:
    - `KV_REST_API_READ_ONLY_TOKEN`
 4. Add these to your Vercel project's environment variables for all environments
 
-### 2h. Sentry
+### 2i. Sentry
 
 Run from the project root after initial `npm install`:
 ```bash
@@ -118,6 +125,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL | Supabase Settings → API | All cache reads/writes fail |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key (public, read) | Supabase Settings → API | All cache reads fail |
 | `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server, write) | Supabase Settings → API | All cache writes fail; anomaly logging fails |
+| `OPENAQ_API_KEY` | OpenAQ v3 API key | openaq.org → Account → API Keys | Air quality falls back to empty; v1/v2 retired |
 | `TICKETMASTER_API_KEY` | Ticketmaster Discovery API | developer.ticketmaster.com | Events data falls back to empty |
 | `EVENTBRITE_API_KEY` | Eventbrite API | eventbrite.com/platform | Eventbrite events fall back to empty |
 | `MTA_API_KEY` | MTA real-time feed | api.mta.info | NYC transit falls back; other cities unaffected |
@@ -250,6 +258,13 @@ curl https://api.anthropic.com/v1/messages \
 
 **Mapbox:**
 Open `http://localhost:3000/city/new-york` after `npm run dev`. The map should render the dark Mapbox style centred on New York. If it shows a blank dark screen, the token is wrong or the map import is broken.
+
+**OpenAQ:**
+```bash
+curl "https://api.openaq.org/v3/locations?coordinates=40.7128,-74.0060&radius=25000&limit=1" \
+  -H "X-API-Key: $OPENAQ_API_KEY"
+# Expected: JSON with results array containing location objects
+```
 
 **Ticketmaster:**
 ```bash
