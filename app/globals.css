@@ -23,3 +23,102 @@
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
 }
+
+/* ─── Design tokens ─────────────────────────────────────────── */
+
+:root {
+  --amber:          #E8A020;
+  --amber-hover:    #C47D0A;
+  --amber-muted:    #7A4400;
+  --amber-bg:       rgba(232, 160, 32, 0.10);
+  --amber-border:   rgba(232, 160, 32, 0.15);
+
+  --panel-bg:       rgba(10, 13, 18, 0.85);
+  --panel-border:   rgba(232, 160, 32, 0.15);
+  --nav-bg:         rgba(10, 13, 18, 0.80);
+  --chat-bg:        rgba(10, 13, 18, 0.92);
+
+  --bg-base:        #060A0F;
+  --bg-surface:     #0F1318;
+  --bg-elevated:    #141820;
+  --border-subtle:  #1C2230;
+
+  --tx-1:           #F0EDE8;
+  --tx-2:           #8A9BAA;
+  --tx-3:           #3A4A5A;
+
+  --radius:         8px;
+  --radius-lg:      12px;
+  --radius-pill:    22px;
+
+  --z-map:          0;
+  --z-orbital:      10;
+  --z-panels:       20;
+  --z-nav:          30;
+  --z-chat:         40;
+  --z-modals:       50;
+}
+
+[data-theme='light'] {
+  --panel-bg:       rgba(245, 242, 236, 0.92);
+  --panel-border:   rgba(100, 80, 20, 0.15);
+  --nav-bg:         rgba(245, 242, 236, 0.88);
+  --chat-bg:        rgba(240, 236, 228, 0.95);
+
+  --bg-base:        #F5F0E8;
+  --bg-surface:     #FFFFFF;
+  --bg-elevated:    #F0EDE8;
+  --border-subtle:  #E0D8CC;
+
+  --tx-1:           #1A1200;
+  --tx-2:           #5A4A30;
+  --tx-3:           #9A8A70;
+}
+
+/* ─── Base styles ───────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-base);
+}
+
+/* ─── Custom scrollbar (panels) ─────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 2px;
+}
+
+/* ─── Keyframe animations ───────────────────────────────────── */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-3px); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}

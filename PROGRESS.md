@@ -106,7 +106,12 @@ Phase 2 — Shell & Map (not started)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P2.2 — Global CSS + root layout
+- [ ] P2.3 — Routing + error boundary
+
+### P2.2 — Global CSS + root layout
+- `app/globals.css` — added `:root` CSS variables (all `--amber-*`, `--panel-*`, `--nav-bg`, `--chat-bg`, `--bg-*`, `--border-subtle`, `--tx-*`, `--radius*`, `--z-*`); `[data-theme='light']` overrides; base html/body styles (overflow hidden, zero margin); custom 4px scrollbar; `@keyframes float`, `pulse-dot`, `blink-cursor`
+- `app/layout.tsx` — `Inter` + `JetBrains_Mono` via `next/font/google` with CSS variables; `ThemeProvider` (`attribute="data-theme"`, `defaultTheme="dark"`, `enableSystem={false}`); `suppressHydrationWarning`; updated metadata
+- `npm run type-check` — zero errors ✓
 
 ### P2.1 — Project bootstrap
 - `next.config.ts` — added `reactStrictMode: true` and webpack alias for `mapbox-gl`
