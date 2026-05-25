@@ -34,7 +34,7 @@ Phase 5 completed the full feature set. Phase 6 is about quality: empty states, 
 - [ ] Verify focus ring is visible on all interactive elements
 
 ### Performance audit
-- [ ] Run Lighthouse on `/city/new-york` (incognito, production URL or `npm run build && npm start`)
+- [ ] Run Lighthouse on `/city/chicago` (incognito, production URL or `npm run build && npm start`)
 - [ ] Target: Performance ≥ 85, Accessibility ≥ 90, Best Practices ≥ 90
 - [ ] Verify Mapbox is dynamically imported (check JS bundle — `mapbox-gl` should not be in the initial chunk)
 - [ ] Verify `HistoryPanel` uses `@tanstack/react-virtual` when showing > 20 data points
@@ -76,7 +76,7 @@ Phase 5 completed the full feature set. Phase 6 is about quality: empty states, 
 
 ### Full city experience
 ```
-1. Open the production URL → redirects to /city/new-york
+1. Open the production URL → redirects to /city/chicago
 2. Dark map renders with the custom amber-road dark style
 3. Orbital appears with a real pulse score (not 0 or a fallback number)
 4. Click each orbital node → correct panel opens from the correct edge
@@ -94,7 +94,7 @@ Phase 5 completed the full feature set. Phase 6 is about quality: empty states, 
 ### Anomaly detection (may need to wait for a spike)
 ```
 After the app has been running for a day or more:
-  → Check /api/anomalies/new-york for logged anomalies
+  → Check /api/anomalies/chicago for logged anomalies
   → If AnomalyPanel shows data, verify the AI description is present
   → Verify anomalies table in Supabase has rows
 ```

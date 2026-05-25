@@ -15,8 +15,8 @@ vi.mock('next/navigation', () => ({
     replace: vi.fn(),
     prefetch: vi.fn(),
   }),
-  useParams: () => ({ id: 'new-york' }),
-  usePathname: () => '/city/new-york',
+  useParams: () => ({ id: 'chicago' }),
+  usePathname: () => '/city/chicago',
 }))
 
 vi.mock('next-themes', () => ({

@@ -47,7 +47,7 @@ export default function CityPage() {
   useEffect(() => {
     const city = getCityById(cityId)
     if (!city) {
-      router.replace('/city/new-york')
+      router.replace('/city/chicago')
       return
     }
 

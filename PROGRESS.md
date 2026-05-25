@@ -1,10 +1,24 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 2 — Shell & Map (in progress)
+Phase 3 — Orbital & Panels (not started)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P2.6 — Phase 2 final checklist
+- `app/page.tsx` — fixed redirect from `/city/chicago` → `/city/new-york` (regression from P2.3)
+- `npm run type-check` — zero errors ✓
+- `npm test` — 63/63 pass ✓
+- `npm run test:coverage` — lines 92.89%, functions 97.91%, branches 78.1% (all above 75/75/70 thresholds) ✓
+- `npm run build` — production build succeeds; all 3 API routes dynamic ✓
+- Manual: `http://localhost:3002` → 307 → `/city/new-york` ✓
+- Manual: `/city/new-york`, `/city/san-francisco`, `/city/chicago`, `/city/washington-dc` → 200 ✓
+- Manual: `/city/xyz` → client-side redirect to `/city/new-york` ✓
+- Manual: loading skeleton (dark screen + "Loading…") appears before map tiles ✓
+- Manual: dark map fills full viewport with no white edges or scrollbar ✓
+- `npm audit` — no high/critical vulnerabilities (2 moderate PostCSS issues unfixable without breaking Next.js downgrade) ✓
+- Phase 2 complete
 
 ### P2.4 — CityMap component
 - `components/map/CityMap.tsx` — full-viewport react-map-gl/mapbox `Map` component; accepts `city`, `snapshot`, `activeLayers` props; `initialViewState` from `city.lat/lng/zoom`; `style={{ width: '100vw', height: '100vh' }}`; `attributionControl={false}`; mapRef for Phase 5 layer updates
@@ -125,7 +139,7 @@ Phase 2 — Shell & Map (in progress)
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
 
 ## In progress
-- [ ] P2.6 — Phase 2 final checklist
+- [ ] P3.1 — Phase 3 first task (see .claude/phases/3-orbital-and-panels.md)
 
 ### P2.5 — Shared UI atoms
 - `components/nav/ThemeToggle.tsx` — dark/light toggle using `next-themes` `useTheme`; renders ☀/◑ icon; `aria-label` describes switch target; min 44×44px tap target

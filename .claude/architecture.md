@@ -5,7 +5,7 @@
 ```
 citadel/
 ├── app/                          # Next.js App Router — pages and API routes
-│   ├── page.tsx                  # Root redirect → /city/new-york
+│   ├── page.tsx                  # Root redirect → /city/chicago
 │   ├── error.tsx                 # Global error boundary (client component)
 │   ├── layout.tsx                # Root layout — ThemeProvider, Sentry init, fonts
 │   ├── globals.css               # CSS variables, Tailwind base, scrollbar styles
@@ -220,10 +220,10 @@ useEffect(() => {
 
 ### 1. City page load
 ```
-browser → GET /city/new-york
+browser → GET /city/chicago
   → app/city/[id]/page.tsx renders (server)
   → dynamic imports CityMap with ssr: false
-  → page.tsx useEffect triggers GET /api/city/new-york/snapshot
+  → page.tsx useEffect triggers GET /api/city/chicago/snapshot
     → route.ts checks api_cache for each data type
     → cache hit: return payload
     → cache miss: fetch external API → write to api_cache → return payload

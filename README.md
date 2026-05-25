@@ -190,7 +190,7 @@ app/
     pulse/[id]/     # pulse score history
     anomalies/[id]/ # anomaly log with AI descriptions
   city/[id]/        # main dashboard page (dynamic import of CityMap)
-  page.tsx          # redirects to /city/new-york
+  page.tsx          # redirects to /city/chicago
 
 components/
   map/              # CityMap (ssr: false), all Mapbox layer components

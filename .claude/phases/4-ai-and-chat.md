@@ -74,12 +74,12 @@ User types "Is it a good day to be outside?"
 
 ### Daily briefing generation
 ```
-GET /api/city/new-york/briefing
+GET /api/city/chicago/briefing
   → today = new Date().toISOString().slice(0, 10)  // '2026-05-24'
-  → row = supabase.from('ai_briefings').select('briefing').eq('city_id', 'new-york').eq('date', today).single()
+  → row = supabase.from('ai_briefings').select('briefing').eq('city_id', 'chicago').eq('date', today).single()
   → if row: return { briefing: row.data.briefing }
   → else:
-      snapshot = await getCitySnapshot('new-york')
+      snapshot = await getCitySnapshot('chicago')
       context = buildCityContext(snapshot)
       start = Date.now()
       response = await anthropic.messages.create({
@@ -160,7 +160,7 @@ Before marking Phase 4 complete:
 - [ ] Rate limit works: send 21 messages rapidly → 21st returns a rate-limit error message in the UI (not a blank)
 - [ ] Escape closes the chat drawer
 - [ ] Clicking above the drawer (on the map) closes it
-- [ ] `GET /api/city/new-york/briefing` returns a briefing string (check Supabase `ai_briefings` table — a row should appear)
+- [ ] `GET /api/city/chicago/briefing` returns a briefing string (check Supabase `ai_briefings` table — a row should appear)
 - [ ] Second request to the same briefing endpoint returns the same cached text (no new Anthropic call)
 - [ ] `ai_usage` table in Supabase has rows after chat and briefing calls
 - [ ] Browser DevTools → Network: no direct Anthropic API calls from the client
