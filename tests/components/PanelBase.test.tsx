@@ -42,4 +42,44 @@ describe('PanelBase', () => {
     expect(dialog).toBeInTheDocument()
     expect(dialog).toHaveAttribute('aria-label', 'AIR QUALITY')
   })
+
+  it('renders with left-center anchor without error', () => {
+    render(
+      <PanelBase anchor="left-center" onClose={vi.fn()} title="ANOMALY">
+        <span>left-center content</span>
+      </PanelBase>
+    )
+    expect(screen.getByText('left-center content')).toBeInTheDocument()
+  })
+
+  it('renders with right-center anchor without error', () => {
+    render(
+      <PanelBase anchor="right-center" onClose={vi.fn()} title="HISTORY">
+        <span>right-center content</span>
+      </PanelBase>
+    )
+    expect(screen.getByText('right-center content')).toBeInTheDocument()
+  })
+
+  it('calls onClose when mousedown occurs outside the panel', () => {
+    const onClose = vi.fn()
+    render(
+      <PanelBase anchor="top-left" onClose={onClose} title="TEST">
+        <span>child</span>
+      </PanelBase>
+    )
+    fireEvent.mouseDown(document.body)
+    expect(onClose).toHaveBeenCalledOnce()
+  })
+
+  it('does not call onClose when mousedown occurs inside the panel', () => {
+    const onClose = vi.fn()
+    render(
+      <PanelBase anchor="top-left" onClose={onClose} title="TEST">
+        <span>inside content</span>
+      </PanelBase>
+    )
+    fireEvent.mouseDown(screen.getByText('inside content'))
+    expect(onClose).not.toHaveBeenCalled()
+  })
 })

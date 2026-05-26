@@ -1,10 +1,24 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 3 — Orbital & Panels (in progress)
+Phase 4 — AI & Chat (not started)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P3.7 — Phase 3 final checklist
+- `vitest.config.ts` — thresholds raised to Phase 3 targets: lines 78%, functions 78%, branches 72%
+- `tests/components/OrbitalLayout.test.tsx` — added 8 tests covering: Space key, transit/events click callbacks, "On time" transit display, AQI amber branch (aqi 51–100), AQI red branch (aqi > 100), transit red branch (delayCount > 5); 120 tests total
+- `tests/components/PanelBase.test.tsx` — added 4 tests covering: left-center anchor, right-center anchor, mousedown outside closes panel, mousedown inside does not close panel
+- `app/city/[id]/page.tsx` — added `position: 'absolute', inset: 0` to the fade wrapper div; fixes orbital scroll bug where FocusTrap focused inside a panel caused the browser to scroll the static fade div into view, shifting the map upward and creating a black area at the bottom of the viewport
+- `npm run type-check` — zero errors ✓
+- `npm test` — 120/120 pass ✓
+- `npm run test:coverage` — lines 91.69%, functions 93.93%, branches 77.57% (all above 78/78/72 thresholds) ✓
+- `npm run build` — production build succeeds ✓
+- `npm audit` — 0 high/critical vulnerabilities (2 moderate PostCSS unfixable without Next.js downgrade) ✓
+- `components/panels/PanelBase.tsx` — replaced broken `react-focus-trap` (uses `componentWillMount`, removed in React 18, so trap never fired on React 19) with manual focus trap: `tabIndex={-1}` on panel div, `useEffect` focusing panel on mount, Tab/Shift+Tab handler wrapping focus within focusable children
+- Manual verification (all 14 checks pass): orbital centred ✓; pulse score/label correct ✓; all 4 panels open from correct edges ✓; panels glassy ✓; Escape closes panel ✓; outside click closes panel ✓; Tab trapped inside open panel ✓; Tab reaches orbital nodes when closed ✓; Enter on orbital node opens panel ✓; city dropdown shows 4 cities with scores ✓; Escape/outside click close dropdown ✓; layer checkboxes toggle state ✓; city switch NY→Chicago fades and re-centres ✓; orbital float animation staggered ✓
+- Phase 3 complete
 
 ### P3.4 — TransitPanel + EventsPanel + AnomalyPanel + HistoryPanel
 - `components/panels/TransitPanel.tsx` — PanelBase anchor="bottom-right"; green all-clear when delayCount === 0; amber delay count + alert list (line name + severity badge + description, up to 5); unique lines derived from alerts (up to 8) with colored dots; severity 'minor' → amber, 'major' → red
@@ -145,9 +159,6 @@ Phase 3 — Orbital & Panels (in progress)
 - `npm run type-check` — zero errors ✓
 - `npm run test:coverage` — lines 92.46%, functions 97.67%, branches 76.92% (all above phase thresholds) ✓
 - `npm run build` — production build passes; all 3 routes appear as dynamic server routes ✓
-
-## In progress
-- [ ] P3.7 — Phase 3 final checklist
 
 ### P3.6 — Wire all overlays into page.tsx
 - `lib/types.ts` — added `anomalies: Anomaly[]` to `CitySnapshot` (was returned by route but missing from type)

@@ -105,4 +105,53 @@ describe('OrbitalLayout', () => {
     fireEvent.keyDown(screen.getByTestId('orbital-metric-weather'), { key: 'Enter' })
     expect(onOpenPanel).toHaveBeenCalledWith('weather')
   })
+
+  it('Space key on weather node triggers onOpenPanel("weather")', () => {
+    const onOpenPanel = vi.fn()
+    render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
+    fireEvent.keyDown(screen.getByTestId('orbital-metric-weather'), { key: ' ' })
+    expect(onOpenPanel).toHaveBeenCalledWith('weather')
+  })
+
+  it('calls onOpenPanel with "transit" when transit node is clicked', () => {
+    const onOpenPanel = vi.fn()
+    render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
+    fireEvent.click(screen.getByTestId('orbital-metric-transit'))
+    expect(onOpenPanel).toHaveBeenCalledWith('transit')
+  })
+
+  it('calls onOpenPanel with "events" when events node is clicked', () => {
+    const onOpenPanel = vi.fn()
+    render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
+    fireEvent.click(screen.getByTestId('orbital-metric-events'))
+    expect(onOpenPanel).toHaveBeenCalledWith('events')
+  })
+
+  it('renders "On time" when transit delayCount is 0', () => {
+    const snapshot = makeMockSnapshot()
+    snapshot.transit.delayCount = 0
+    render(<OrbitalLayout snapshot={snapshot} onOpenPanel={vi.fn()} />)
+    expect(screen.getByText('On time')).toBeInTheDocument()
+  })
+
+  it('renders AQI amber color when aqi is between 51 and 100', () => {
+    const snapshot = makeMockSnapshot()
+    snapshot.airQuality.aqi = 75
+    render(<OrbitalLayout snapshot={snapshot} onOpenPanel={vi.fn()} />)
+    expect(screen.getByText('AQI 75')).toBeInTheDocument()
+  })
+
+  it('renders AQI red color when aqi is above 100', () => {
+    const snapshot = makeMockSnapshot()
+    snapshot.airQuality.aqi = 150
+    render(<OrbitalLayout snapshot={snapshot} onOpenPanel={vi.fn()} />)
+    expect(screen.getByText('AQI 150')).toBeInTheDocument()
+  })
+
+  it('renders delay count when transit delayCount is above 5', () => {
+    const snapshot = makeMockSnapshot()
+    snapshot.transit.delayCount = 6
+    render(<OrbitalLayout snapshot={snapshot} onOpenPanel={vi.fn()} />)
+    expect(screen.getByText('6 delays')).toBeInTheDocument()
+  })
 })

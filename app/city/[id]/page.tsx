@@ -115,6 +115,8 @@ export default function CityPage() {
       {snapshot && (
         <div
           style={{
+            position: 'absolute',
+            inset: 0,
             opacity: fading ? 0 : 1,
             transition: 'opacity 300ms ease',
           }}

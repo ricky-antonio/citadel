@@ -1,11 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import FocusTrap from 'react-focus-trap'
 import LiveDot from '@/components/shared/LiveDot'
 
-// react-focus-trap types predate React 19 — explicit children cast required
-const FT = FocusTrap as React.ComponentType<{ children: React.ReactNode }>
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 
 export type PanelAnchor =
   | 'top-left'
@@ -55,6 +53,35 @@ export default function PanelBase({ anchor, onClose, title, children }: PanelBas
     return () => clearTimeout(id)
   }, [])
 
+  // Focus the panel div on open so Tab starts inside it
+  useEffect(() => {
+    if (mounted) panelRef.current?.focus()
+  }, [mounted])
+
+  // Manual focus trap — wraps Tab/Shift+Tab within the panel
+  useEffect(() => {
+    function handleTab(e: KeyboardEvent) {
+      if (e.key !== 'Tab') return
+      const panel = panelRef.current
+      if (!panel) return
+      const focusable = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE))
+      if (focusable.length === 0) { e.preventDefault(); return }
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey) {
+        if (document.activeElement === first || document.activeElement === panel) {
+          e.preventDefault(); last.focus()
+        }
+      } else {
+        if (document.activeElement === last || document.activeElement === panel) {
+          e.preventDefault(); first.focus()
+        }
+      }
+    }
+    document.addEventListener('keydown', handleTab)
+    return () => document.removeEventListener('keydown', handleTab)
+  }, [])
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -74,12 +101,12 @@ export default function PanelBase({ anchor, onClose, title, children }: PanelBas
   }, [onClose])
 
   return (
-    <FT>
-      <div
-        ref={panelRef}
-        role="dialog"
-        aria-label={title}
-        style={{
+    <div
+      ref={panelRef}
+      role="dialog"
+      tabIndex={-1}
+      aria-label={title}
+      style={{
           position: 'absolute',
           width: '280px',
           maxHeight: '60vh',
@@ -119,6 +146,5 @@ export default function PanelBase({ anchor, onClose, title, children }: PanelBas
         </div>
         {children}
       </div>
-    </FT>
   )
 }
