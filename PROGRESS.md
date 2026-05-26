@@ -6,6 +6,16 @@ Phase 4 — AI & Chat (in progress)
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P4.3 — StreamingText + ChatMessage components
+- `lib/types.ts` — added `streaming?: boolean` to `ChatMessage` interface
+- `components/chat/StreamingText.tsx` — inline `<span>` renders text as plain text; shows blinking amber `|` cursor via `blink-cursor` keyframe when `streaming` is true; never uses dangerouslySetInnerHTML
+- `components/chat/ChatMessage.tsx` — user messages: right-aligned, amber-tinted background, plain text; assistant messages: left-aligned, glass surface, rendered via `<StreamingText streaming={message.streaming ?? false}`; aria-label on both
+- `tests/components/StreamingText.test.tsx` — 4 tests: text render, cursor visible when streaming, cursor hidden when not, empty string
+- `tests/components/ChatMessage.test.tsx` — 4 tests: user message text, right-alignment style, StreamingText for assistant, streaming=true passed through to cursor span
+- `npm run type-check` — zero errors ✓
+- `npm test` — 142/142 pass ✓
+- Next: P4.4 — ChatSuggestions + ChatDrawer
+
 ### P4.2 — Chat + briefing API routes
 - `app/api/chat/route.ts` — POST, rate-limited (Ratelimit.slidingWindow 20/1m), validates message (required, string, ≤500 chars), cityId (in VALID_CITY_IDS), history (array, slice to 20); calls getCitySnapshot → buildSystemPrompt/buildUserMessage → Anthropic messages.stream; fire-and-forget ai_usage insert; returns ReadableStream with Content-Type: text/event-stream; fails open if KV unavailable
 - `app/api/city/[id]/briefing/route.ts` — GET, validates city via getCityById, calls getDailyBriefing, returns { cityId, briefing }; wrapped in try/catch → 500 on failure
@@ -13,8 +23,6 @@ Phase 4 — AI & Chat (in progress)
 - `tests/mocks/anthropic.ts` — updated: added mockFinalMessage to mockStream; changed default export mock from vi.fn(arrow) → class (arrow functions can't be used as constructors with new Anthropic())
 - `npm run type-check` — zero errors ✓
 - `npm test` — 134/134 pass ✓
-- Next: P4.3 — StreamingText + ChatMessage components
-
 ### P4.1 — AI lib functions
 - `lib/ai/chat.ts` — `buildSystemPrompt(snapshot)` (system prompt with city name) and `buildUserMessage(userMessage, snapshot)` (prepends buildCityContext output); both pure, no side effects
 - `lib/ai/briefing.ts` — `getCitySnapshot(cityId)` (cache-first snapshot assembler, same logic as snapshot route but callable from lib); `getDailyBriefing(cityId)` (checks ai_briefings for today, generates via Anthropic messages.create if missing, upserts to ai_briefings, inserts to ai_usage)

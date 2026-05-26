@@ -98,6 +98,7 @@ export interface Anomaly {
 export interface ChatMessage {
   role: 'user' | 'assistant'
   content: string
+  streaming?: boolean
 }
 
 // ── API error ────────────────────────────────────────────────────────────────
