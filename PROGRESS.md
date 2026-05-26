@@ -6,6 +6,15 @@ Phase 4 — AI & Chat (in progress)
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P4.2 — Chat + briefing API routes
+- `app/api/chat/route.ts` — POST, rate-limited (Ratelimit.slidingWindow 20/1m), validates message (required, string, ≤500 chars), cityId (in VALID_CITY_IDS), history (array, slice to 20); calls getCitySnapshot → buildSystemPrompt/buildUserMessage → Anthropic messages.stream; fire-and-forget ai_usage insert; returns ReadableStream with Content-Type: text/event-stream; fails open if KV unavailable
+- `app/api/city/[id]/briefing/route.ts` — GET, validates city via getCityById, calls getDailyBriefing, returns { cityId, briefing }; wrapped in try/catch → 500 on failure
+- `tests/api/chat.test.ts` — 8 integration tests: 400 missing message, 400 missing cityId, 400 message >500 chars, 404 unknown cityId, 429 rate limited, 200 streaming response, city name in system prompt, 500 on Anthropic error
+- `tests/mocks/anthropic.ts` — updated: added mockFinalMessage to mockStream; changed default export mock from vi.fn(arrow) → class (arrow functions can't be used as constructors with new Anthropic())
+- `npm run type-check` — zero errors ✓
+- `npm test` — 134/134 pass ✓
+- Next: P4.3 — StreamingText + ChatMessage components
+
 ### P4.1 — AI lib functions
 - `lib/ai/chat.ts` — `buildSystemPrompt(snapshot)` (system prompt with city name) and `buildUserMessage(userMessage, snapshot)` (prepends buildCityContext output); both pure, no side effects
 - `lib/ai/briefing.ts` — `getCitySnapshot(cityId)` (cache-first snapshot assembler, same logic as snapshot route but callable from lib); `getDailyBriefing(cityId)` (checks ai_briefings for today, generates via Anthropic messages.create if missing, upserts to ai_briefings, inserts to ai_usage)
@@ -13,7 +22,6 @@ Phase 4 — AI & Chat (in progress)
 - `tests/lib/ai/chat.test.ts` — 6 tests: city name in system prompt, Citadel identity, user question in message, Live city data prefix, buildCityContext embedded, question positioned after context
 - `npm run type-check` — zero errors ✓
 - `npm test` — 126/126 pass ✓
-- Next: P4.2 — Chat + briefing API routes
 
 ### P3.7 — Phase 3 final checklist
 - `vitest.config.ts` — thresholds raised to Phase 3 targets: lines 78%, functions 78%, branches 72%
