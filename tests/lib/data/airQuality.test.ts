@@ -46,6 +46,9 @@ describe('fetchAirQuality', () => {
     expect(result.aqi).toBeLessThanOrEqual(50)
     expect(result.category).toBe('Good')
     expect(result.dominantPollutant).toBe('pm25')
+    expect(result.stations).toHaveLength(1)
+    expect(result.stations[0]).toMatchObject({ lat: 40.71, lng: -74.01 })
+    expect(result.stations[0].aqi).toBeGreaterThan(0)
   })
 
   it('returns AIR_QUALITY_FALLBACK when all location fetches fail', async () => {

@@ -17,6 +17,7 @@ vi.mock('@/lib/data/airQuality', () => ({
     aqi: 25,
     category: 'Good',
     dominantPollutant: 'PM2.5',
+    stations: [],
   }),
 }))
 

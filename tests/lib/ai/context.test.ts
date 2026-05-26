@@ -28,6 +28,7 @@ function makeMockSnapshot(overrides: Partial<CitySnapshot> = {}): CitySnapshot {
       aqi: 42,
       category: 'Good',
       dominantPollutant: 'PM2.5',
+      stations: [],
     },
     events: {
       count: 12,

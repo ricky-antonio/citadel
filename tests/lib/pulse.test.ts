@@ -24,7 +24,7 @@ function makeMockSnapshot(overrides: Partial<CitySnapshot> = {}): CitySnapshot {
       windSpeed: 10,
       hourlyForecast: [],
     },
-    airQuality: { aqi: 50, category: 'Moderate', dominantPollutant: 'PM2.5' },
+    airQuality: { aqi: 50, category: 'Moderate', dominantPollutant: 'PM2.5', stations: [] },
     events: { tonight: [], count: 25, totalCapacity: 50000 },
     transit: { provider: 'mta', alerts: [], delayCount: 0, status: 'normal' },
     pulseScore: 0,
@@ -52,7 +52,7 @@ describe('computePulseScore', () => {
   it('score never exceeds 100', () => {
     const snapshot = makeMockSnapshot({
       events: { tonight: [], count: 1000, totalCapacity: 10_000_000 },
-      airQuality: { aqi: 0, category: 'Good', dominantPollutant: 'PM2.5' },
+      airQuality: { aqi: 0, category: 'Good', dominantPollutant: 'PM2.5', stations: [] },
     })
     expect(computePulseScore(snapshot)).toBe(100)
   })
@@ -62,7 +62,7 @@ describe('computePulseScore', () => {
     const snapshot = makeMockSnapshot({
       events: { tonight: [], count: 0, totalCapacity: 0 },
       transit: { provider: 'mta', alerts: [], delayCount: 100, status: 'disrupted' },
-      airQuality: { aqi: 300, category: 'Hazardous', dominantPollutant: 'PM2.5' },
+      airQuality: { aqi: 300, category: 'Hazardous', dominantPollutant: 'PM2.5', stations: [] },
       timestamp: '2024-07-15T07:00:00.000Z',
     })
     expect(computePulseScore(snapshot)).toBeGreaterThanOrEqual(0)

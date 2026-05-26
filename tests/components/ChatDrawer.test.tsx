@@ -25,7 +25,7 @@ const mockSnapshot: CitySnapshot = {
     windSpeed: 10,
     hourlyForecast: [],
   },
-  airQuality: { aqi: 42, category: 'Good', dominantPollutant: 'PM2.5' },
+  airQuality: { aqi: 42, category: 'Good', dominantPollutant: 'PM2.5', stations: [] },
   events: {
     count: 1,
     totalCapacity: 5000,

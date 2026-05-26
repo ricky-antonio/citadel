@@ -30,6 +30,7 @@ const mockSnapshot: CitySnapshot = {
     aqi: 42,
     category: 'Good',
     dominantPollutant: 'PM2.5',
+    stations: [],
   },
   events: {
     count: 3,

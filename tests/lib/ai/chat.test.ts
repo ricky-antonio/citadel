@@ -25,7 +25,7 @@ function makeMockSnapshot(): CitySnapshot {
       windSpeed: 10,
       hourlyForecast: [],
     },
-    airQuality: { aqi: 42, category: 'Good', dominantPollutant: 'PM2.5' },
+    airQuality: { aqi: 42, category: 'Good', dominantPollutant: 'PM2.5', stations: [] },
     events: { count: 5, totalCapacity: 10000, tonight: [] },
     transit: { provider: 'mta', alerts: [], delayCount: 0, status: 'normal' },
     pulseScore: 55,

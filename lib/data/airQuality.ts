@@ -89,12 +89,20 @@ export async function fetchAirQuality(lat: number, lng: number): Promise<AirQual
     )
 
     const pm25Values: number[] = []
+    const stations: Array<{ lat: number; lng: number; aqi: number }> = []
     for (const result of latestResults) {
       if (!result) continue
       const pm25Sensor = result.location.sensors.find(s => s.parameter.name === 'pm25')
       if (!pm25Sensor) continue
       const reading = result.data.results.find(r => r.sensorsId === pm25Sensor.id)
-      if (reading !== undefined) pm25Values.push(reading.value)
+      if (reading !== undefined) {
+        pm25Values.push(reading.value)
+        stations.push({
+          lat: result.location.coordinates.latitude,
+          lng: result.location.coordinates.longitude,
+          aqi: computeAQI(reading.value),
+        })
+      }
     }
 
     if (pm25Values.length === 0) return AIR_QUALITY_FALLBACK
@@ -106,6 +114,7 @@ export async function fetchAirQuality(lat: number, lng: number): Promise<AirQual
       aqi,
       category: getAQICategory(aqi),
       dominantPollutant: 'pm25',
+      stations,
     }
   } catch (err) {
     console.error('Air quality fetch failed:', err)

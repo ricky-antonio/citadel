@@ -41,10 +41,17 @@ export interface WeatherData {
 
 // ── Air quality ───────────────────────────────────────────────────────────────
 
+export interface AQStation {
+  lat: number
+  lng: number
+  aqi: number
+}
+
 export interface AirQualityData {
   aqi: number
   category: string
   dominantPollutant: string
+  stations: AQStation[]
 }
 
 // ── Events ────────────────────────────────────────────────────────────────────

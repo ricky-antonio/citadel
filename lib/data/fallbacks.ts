@@ -13,6 +13,7 @@ export const AIR_QUALITY_FALLBACK: AirQualityData = {
   aqi: 0,
   category: 'Unavailable',
   dominantPollutant: 'Unavailable',
+  stations: [],
 }
 
 export const EVENTS_FALLBACK: EventsData = {

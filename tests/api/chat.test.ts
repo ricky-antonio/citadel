@@ -20,7 +20,7 @@ const mockSnapshot = vi.hoisted(() => ({
     crimeProvider: 'nyc-open-data' as const,
   },
   weather: { temperature: 72, feelsLike: 70, condition: 'Clear', humidity: 50, windSpeed: 10, hourlyForecast: [] },
-  airQuality: { aqi: 42, category: 'Good', dominantPollutant: 'PM2.5' },
+  airQuality: { aqi: 42, category: 'Good', dominantPollutant: 'PM2.5', stations: [] },
   events: { count: 5, totalCapacity: 10000, tonight: [] },
   transit: { provider: 'mta' as const, alerts: [], delayCount: 0, status: 'normal' as const },
   pulseScore: 55,

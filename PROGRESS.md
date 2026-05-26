@@ -6,6 +6,19 @@ Phase 5 — Map Layers
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P5.1 — MapLayers manager + AQ heatmap
+- `lib/types.ts` — added `AQStation` interface (`lat, lng, aqi`) and `stations: AQStation[]` to `AirQualityData`
+- `lib/data/fallbacks.ts` — added `stations: []` to `AIR_QUALITY_FALLBACK`
+- `lib/data/airQuality.ts` — updated to collect per-station coordinates and AQI; returns `stations[]` in result alongside averaged `aqi`
+- `components/map/AQLayer.tsx` — plain function `updateAQLayer(map, airQuality, visible)`: converts stations to GeoJSON FeatureCollection; addSource+addLayer on first call, setData on subsequent calls; heatmap paint with green→amber→red color ramp at 0.4 opacity; setLayoutProperty for visibility
+- `components/map/MapLayers.tsx` — `'use client'` component; renders null; `useEffect([snapshot, activeLayers, mapRef])` calls `updateAQLayer` via `doUpdate`; guards `getMap` availability (defensive check for test environment); waits for style load with `map.once('style.load', doUpdate)` if not yet loaded
+- `components/map/CityMap.tsx` — removed `_snapshot`/`_activeLayers` prefixes; renders `<MapLayers snapshot={snapshot} activeLayers={activeLayers} mapRef={mapRef} />` inside `<Map>`
+- All 9 existing test files with inline `airQuality` mocks updated to include `stations: []`; `tests/lib/data/airQuality.test.ts` updated to assert `stations` array in happy-path result
+- `tests/components/MapLayers.test.tsx` — 3 tests: renders null, calls updateAQLayer with correct args on valid snapshot, does not throw when snapshot is null
+- `npm run type-check` — zero errors ✓
+- `npm test` — 178/178 pass ✓
+- Next: P5.2 — Event pins layer
+
 ### P4.5 — Phase 4 final checklist
 - `vitest.config.ts` — thresholds raised to Phase 4 targets: lines 80%, functions 80%, branches 75%
 - `npm run type-check` — zero errors ✓

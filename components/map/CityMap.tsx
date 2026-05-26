@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { Map, type MapRef } from 'react-map-gl/mapbox'
 import type { City, CitySnapshot } from '@/lib/types'
+import MapLayers from './MapLayers'
 
 interface CityMapProps {
   city: City
@@ -10,7 +11,7 @@ interface CityMapProps {
   activeLayers: string[]
 }
 
-export default function CityMap({ city, snapshot: _snapshot, activeLayers: _activeLayers }: CityMapProps) {
+export default function CityMap({ city, snapshot, activeLayers }: CityMapProps) {
   const mapRef = useRef<MapRef>(null)
 
   return (
@@ -26,7 +27,7 @@ export default function CityMap({ city, snapshot: _snapshot, activeLayers: _acti
       mapStyle={city.mapStyle}
       attributionControl={false}
     >
-      {/* MapLayers component added in Phase 5 */}
+      <MapLayers snapshot={snapshot} activeLayers={activeLayers} mapRef={mapRef} />
     </Map>
   )
 }

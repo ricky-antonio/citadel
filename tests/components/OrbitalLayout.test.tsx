@@ -29,6 +29,7 @@ function makeMockSnapshot(): CitySnapshot {
       aqi: 45,
       category: 'Good',
       dominantPollutant: 'PM2.5',
+      stations: [],
     },
     events: {
       tonight: [],
