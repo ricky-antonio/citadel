@@ -63,6 +63,7 @@ const mockSnapshot: CitySnapshot = {
   pulseComponents: { eventScore: 10, crowdScore: 10, transitScore: 15, aqScore: 10, timeScore: 10 },
   timestamp: new Date().toISOString(),
   anomalies: [],
+  crime: { totalIncidents: 0, recentIncidents: [], safetyScore: 50 },
 }
 
 beforeEach(() => {

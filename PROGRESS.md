@@ -6,6 +6,18 @@ Phase 5 — Map Layers
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P5.4 — Crime data real implementations
+- `lib/types.ts` — added `CrimeIncident` and `CrimeData` interfaces (`totalIncidents`, `recentIncidents[]`, `safetyScore`); added `crime: CrimeData` to `CitySnapshot`
+- `lib/data/fallbacks.ts` — replaced untyped `CRIME_FALLBACK: Record<string, unknown> = {}` with `CRIME_FALLBACK: CrimeData = { totalIncidents: 0, recentIncidents: [], safetyScore: 50 }`
+- `lib/data/crime.ts` — replaced Phase 1 stub with real per-city Socrata implementations: NYC (`data.cityofnewyork.us/resource/5uac-w243.json`, field `cmplnt_fr_dt`), SF (`data.sfgov.org/resource/wg3w-h783.json`, `incident_date`), Chicago (`data.cityofchicago.org/resource/ijzp-q8t2.json`, `date`); DC uses DCGIS ArcGIS REST endpoint (`maps2.dcgis.dc.gov` MapServer layer 6); all route by `city.crimeProvider`; `safetyScore = 100 - Math.min(100, (total/500)*100)`; returns `CRIME_FALLBACK` on any error
+- `lib/ai/briefing.ts` — updated `getCitySnapshot` to fetch/cache crime and include it in the returned `CitySnapshot`
+- `app/api/city/[id]/snapshot/route.ts` — updated crime section to properly type `CrimeData` (cache-first, same pattern as weather/transit); added `crime` to assembled `CitySnapshot`
+- `tests/lib/data/crime.test.ts` — 3 tests: routes to NYC Socrata URL, parses rows into correct `CrimeData` shape with correct `safetyScore`, returns `CRIME_FALLBACK` on fetch failure
+- All 8 test files with `CitySnapshot` mock fixtures updated to include `crime: { totalIncidents: 0, recentIncidents: [], safetyScore: 50 }`
+- `npm run type-check` — zero errors ✓
+- `npm test` — 237/237 pass ✓
+- Next: P5.5 — Wire layers into CityMap + toggle
+
 ### P5.3 — Transit lines + crowd density
 - `public/geojson/transit/{new-york,san-francisco,chicago,washington-dc}.json` — GeoJSON FeatureCollection with LineString features per line; line_ids match provider route IDs (MTA: "1"/"A"/etc, SF: "N"/"J"/etc, CTA: "Red Line"/etc, WMATA: "RD"/"BL"/etc)
 - `public/geojson/neighbourhoods/{new-york,san-francisco,chicago,washington-dc}.json` — 10–11 polygon features per city for crowd density

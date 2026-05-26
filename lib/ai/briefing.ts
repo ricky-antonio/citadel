@@ -10,7 +10,7 @@ import { fetchCrimeData } from '@/lib/data/crime'
 import { computePulseScore, getPulseLabel, getPulseColor, getTimeOfDayScore } from '@/lib/pulse'
 import { getAnomalyHistory } from '@/lib/anomaly'
 import { buildCityContext } from '@/lib/ai/context'
-import type { CitySnapshot, WeatherData, AirQualityData, EventsData, TransitData, PulseComponents } from '@/lib/types'
+import type { CitySnapshot, WeatherData, AirQualityData, EventsData, TransitData, CrimeData, PulseComponents } from '@/lib/types'
 
 function getClient() {
   return createClient(
@@ -44,13 +44,12 @@ export async function getCitySnapshot(cityId: string): Promise<CitySnapshot> {
     : await fetchTransitStatus(city).then(t => { void setCached(city.id, 'transit', t); return t })
 
   const cachedCrime = await getCached(city.id, 'crime')
-  if (!cachedCrime) {
-    const crime = await fetchCrimeData(city)
-    void setCached(city.id, 'crime', crime)
-  }
+  const crime: CrimeData = cachedCrime
+    ? (cachedCrime as CrimeData)
+    : await fetchCrimeData(city).then(c => { void setCached(city.id, 'crime', c); return c })
 
   const timestamp = new Date().toISOString()
-  const partial = { city, weather, airQuality, events, transit, timestamp } as CitySnapshot
+  const partial = { city, weather, airQuality, events, transit, crime, timestamp } as CitySnapshot
 
   const pulseScore = computePulseScore(partial)
   const pulseLabel = getPulseLabel(pulseScore)
@@ -65,7 +64,7 @@ export async function getCitySnapshot(cityId: string): Promise<CitySnapshot> {
 
   const anomalies = await getAnomalyHistory(city.id)
 
-  return { city, weather, airQuality, events, transit, pulseScore, pulseLabel, pulseColor, pulseComponents, timestamp, anomalies }
+  return { city, weather, airQuality, events, transit, crime, pulseScore, pulseLabel, pulseColor, pulseComponents, timestamp, anomalies }
 }
 
 export async function getDailyBriefing(cityId: string): Promise<string> {

@@ -39,7 +39,11 @@ vi.mock('@/lib/data/transit', () => ({
 }))
 
 vi.mock('@/lib/data/crime', () => ({
-  fetchCrimeData: vi.fn().mockResolvedValue({}),
+  fetchCrimeData: vi.fn().mockResolvedValue({
+    totalIncidents: 5,
+    recentIncidents: [],
+    safetyScore: 99,
+  }),
 }))
 
 vi.mock('@/lib/cache', () => ({

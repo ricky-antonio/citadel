@@ -34,6 +34,7 @@ function makeMockSnapshot(overrides: Partial<CitySnapshot> = {}): CitySnapshot {
     // 2024-07-15T23:00:00Z = 19:00 EDT (UTC-4, summer) → timeScore 20
     timestamp: '2024-07-15T23:00:00.000Z',
     anomalies: [],
+    crime: { totalIncidents: 0, recentIncidents: [], safetyScore: 50 },
     ...overrides,
   }
 }

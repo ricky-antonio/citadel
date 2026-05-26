@@ -1,4 +1,4 @@
-import type { WeatherData, AirQualityData, EventsData, TransitData } from '@/lib/types'
+import type { WeatherData, AirQualityData, EventsData, TransitData, CrimeData } from '@/lib/types'
 
 export const WEATHER_FALLBACK: WeatherData = {
   temperature: 0,
@@ -29,4 +29,8 @@ export const TRANSIT_FALLBACK: TransitData = {
   status: 'unknown',
 }
 
-export const CRIME_FALLBACK: Record<string, unknown> = {}
+export const CRIME_FALLBACK: CrimeData = {
+  totalIncidents: 0,
+  recentIncidents: [],
+  safetyScore: 50,
+}

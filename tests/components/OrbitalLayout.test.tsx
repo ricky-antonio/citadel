@@ -54,6 +54,7 @@ function makeMockSnapshot(): CitySnapshot {
     },
     timestamp: '2024-01-01T00:00:00Z',
     anomalies: [],
+    crime: { totalIncidents: 0, recentIncidents: [], safetyScore: 50 },
   }
 }
 

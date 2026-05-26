@@ -127,6 +127,21 @@ export interface PulseComponents {
   timeScore: number
 }
 
+// ── Crime ─────────────────────────────────────────────────────────────────────
+
+export interface CrimeIncident {
+  lat: number
+  lng: number
+  category: string
+  date: string
+}
+
+export interface CrimeData {
+  totalIncidents: number
+  recentIncidents: CrimeIncident[]
+  safetyScore: number
+}
+
 // ── City snapshot ─────────────────────────────────────────────────────────────
 
 export interface CitySnapshot {
@@ -135,6 +150,7 @@ export interface CitySnapshot {
   airQuality: AirQualityData
   events: EventsData
   transit: TransitData
+  crime: CrimeData
   pulseScore: number
   pulseLabel: PulseLabel
   pulseColor: string

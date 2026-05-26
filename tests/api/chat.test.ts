@@ -29,6 +29,7 @@ const mockSnapshot = vi.hoisted(() => ({
   pulseComponents: { eventScore: 10, crowdScore: 10, transitScore: 15, aqScore: 10, timeScore: 10 },
   timestamp: '2024-06-15T20:00:00.000Z',
   anomalies: [],
+  crime: { totalIncidents: 0, recentIncidents: [], safetyScore: 50 },
 }))
 
 vi.mock('@upstash/ratelimit', () => ({

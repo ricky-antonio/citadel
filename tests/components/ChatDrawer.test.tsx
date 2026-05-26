@@ -53,6 +53,7 @@ const mockSnapshot: CitySnapshot = {
   },
   timestamp: '2024-06-15T20:00:00.000Z',
   anomalies: [],
+  crime: { totalIncidents: 0, recentIncidents: [], safetyScore: 50 },
 }
 
 function makeStream(body: string): ReadableStream {

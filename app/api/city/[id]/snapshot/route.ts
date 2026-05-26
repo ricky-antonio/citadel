@@ -15,6 +15,7 @@ import type {
   AirQualityData,
   EventsData,
   TransitData,
+  CrimeData,
   PulseComponents,
 } from '@/lib/types'
 
@@ -70,10 +71,13 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       void setCached(city.id, 'transit', transit)
     }
 
-    // Crime — stub; cache to avoid unnecessary re-runs
+    // Crime
     const cachedCrime = await getCached(city.id, 'crime')
-    if (!cachedCrime) {
-      const crime = await fetchCrimeData(city)
+    let crime: CrimeData
+    if (cachedCrime) {
+      crime = cachedCrime as CrimeData
+    } else {
+      crime = await fetchCrimeData(city)
       void setCached(city.id, 'crime', crime)
     }
 
@@ -81,7 +85,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     // computePulseScore needs CitySnapshot shape, but pulse fields aren't computed yet —
     // it only reads events, transit, airQuality, timestamp, and city.timezone
-    const partial = { city, weather, airQuality, events, transit, timestamp } as CitySnapshot
+    const partial = { city, weather, airQuality, events, transit, crime, timestamp } as CitySnapshot
 
     const pulseScore = computePulseScore(partial)
     const pulseLabel = getPulseLabel(pulseScore)
@@ -112,6 +116,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       airQuality,
       events,
       transit,
+      crime,
       pulseScore,
       pulseLabel,
       pulseColor,

@@ -45,6 +45,7 @@ const mockSnapshot: CitySnapshot = {
   },
   timestamp: new Date().toISOString(),
   anomalies: [],
+  crime: { totalIncidents: 0, recentIncidents: [], safetyScore: 50 },
 }
 
 describe('CityMap', () => {
