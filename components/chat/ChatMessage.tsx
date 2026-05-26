@@ -1,5 +1,5 @@
 import { ChatMessage as ChatMessageType } from '@/lib/types'
-import StreamingText from './StreamingText'
+import MarkdownText from './MarkdownText'
 
 interface Props {
   message: ChatMessageType
@@ -41,7 +41,7 @@ export default function ChatMessage({ message }: Props) {
       }}
       aria-label={`Citadel: ${message.content}`}
     >
-      <StreamingText text={message.content} streaming={message.streaming ?? false} />
+      <MarkdownText text={message.content} streaming={message.streaming ?? false} />
     </div>
   )
 }

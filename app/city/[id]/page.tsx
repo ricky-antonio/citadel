@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { getCityById } from '@/lib/cities'
 import type { CitySnapshot } from '@/lib/types'
 import NavBar from '@/components/nav/NavBar'
+import ChatDrawer from '@/components/chat/ChatDrawer'
 import { OrbitalLayout } from '@/components/orbital/OrbitalLayout'
 import WeatherPanel from '@/components/panels/WeatherPanel'
 import AQPanel from '@/components/panels/AQPanel'
@@ -111,6 +112,14 @@ export default function CityPage() {
         onLayerChange={setActiveLayers}
         onAskClick={() => setChatOpen(true)}
       />
+
+      {chatOpen && snapshot && (
+        <ChatDrawer
+          cityId={cityId}
+          snapshot={snapshot}
+          onClose={() => setChatOpen(false)}
+        />
+      )}
 
       {snapshot && (
         <div

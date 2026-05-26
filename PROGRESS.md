@@ -1,10 +1,34 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 4 — AI & Chat (in progress)
+Phase 5 — Map Layers
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P4.5 — Phase 4 final checklist
+- `vitest.config.ts` — thresholds raised to Phase 4 targets: lines 80%, functions 80%, branches 75%
+- `npm run type-check` — zero errors ✓
+- `npm test` — 175/175 pass ✓
+- `npm run test:coverage` — lines 88.56%, functions 92.41%, branches 75.19% (all above 80/80/75 thresholds) ✓
+- `npm run build` — production build succeeds; all 5 API routes dynamic ✓
+- Manual verification: all 10 checks pass ✓ (drawer, chips, streaming, cursor, rate limit, Escape, briefing, cache, ai_usage briefing, no direct Anthropic calls from client)
+- `ai_usage` for streaming chat deferred to Phase 6 — tracked in PHASE6ROADMAP.md P6.7
+- Phase 4 complete ✓
+- Next: P5.1 — Phase 5 map layers
+
+### P4.4 — ChatSuggestions + ChatDrawer + wire into page
+- `components/chat/ChatSuggestions.tsx` — horizontal scrollable row of up to 3 amber chip buttons; tabIndex/Enter keyboard accessible; calls onSelect(suggestion) on click or Enter
+- `components/chat/ChatDrawer.tsx` — 'use client'; 42vh slide-up drawer; generates suggestions from snapshot on mount; handleSend: setStreaming(true) first, builds user+assistant messages, fetches /api/chat, parses Anthropic SSE (content_block_delta) and E2E mock (type:text) formats; connection error caught and shown in UI; Escape key closes via onClose; auto-scroll to bottom on new messages; send button disabled when empty or streaming
+- `app/city/[id]/page.tsx` — imported ChatDrawer; renders `{chatOpen && snapshot && <ChatDrawer cityId={cityId} snapshot={snapshot} onClose={() => setChatOpen(false)} />}` above the fade overlay section
+- `tests/setup.tsx` — added `window.HTMLElement.prototype.scrollIntoView = vi.fn()` to silence jsdom's lack of scrollIntoView
+- `tests/components/ChatSuggestions.test.tsx` — 4 tests: renders chips, limits to 3, click calls onSelect, Enter calls onSelect
+- `tests/components/ChatDrawer.test.tsx` — 13 tests: header, close button, close-on-click, close-on-Escape, input a11y, suggestions visible when empty, send disabled when empty, send enables on type, fetch called on submit, non-ok API shows error, fetch throws shows connection error, Anthropic SSE streaming (content_block_delta), simplified mock SSE format, malformed JSON lines skipped
+- `npm run type-check` — zero errors ✓
+- `npm test` — 160/160 pass ✓
+- `npm run test:coverage` — lines 88.86%, functions 94.85%, branches 74.12% (all above 78/78/72 thresholds) ✓
+- `npm run build` — production build succeeds ✓
+- Next: P4.5 — Phase 4 final checklist
 
 ### P4.3 — StreamingText + ChatMessage components
 - `lib/types.ts` — added `streaming?: boolean` to `ChatMessage` interface

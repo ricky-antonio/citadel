@@ -61,6 +61,11 @@ describe('POST /api/chat', () => {
     mockMessagesStream.mockResolvedValue({
       toReadableStream: vi.fn(() => new ReadableStream()),
       finalMessage: vi.fn().mockResolvedValue({ usage: { input_tokens: 100, output_tokens: 50 } }),
+      on: vi.fn((event: string, cb: (msg: unknown) => void) => {
+        if (event === 'message' || event === 'finalMessage') {
+          cb({ usage: { input_tokens: 100, output_tokens: 50 } })
+        }
+      }),
     })
   })
 

@@ -17,16 +17,15 @@ describe('ChatMessage', () => {
     expect(bubble).toHaveStyle({ marginLeft: 'auto' })
   })
 
-  it('renders assistant message via StreamingText', () => {
+  it('renders assistant message text content via MarkdownText', () => {
     const msg: ChatMessageType = { role: 'assistant', content: 'The weather is clear.' }
     render(<ChatMessage message={msg} />)
     expect(screen.getByText('The weather is clear.', { exact: false })).toBeInTheDocument()
   })
 
-  it('passes streaming=true to StreamingText when message.streaming is true', () => {
+  it('shows blinking cursor when streaming=true for assistant messages', () => {
     const msg: ChatMessageType = { role: 'assistant', content: 'Thinking', streaming: true }
     const { container } = render(<ChatMessage message={msg} />)
-    // cursor span is present when streaming=true is passed to StreamingText
     const cursorSpan = Array.from(container.querySelectorAll('span')).find(
       (s) => s.textContent === '|'
     )

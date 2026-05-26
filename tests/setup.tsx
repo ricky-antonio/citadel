@@ -38,3 +38,6 @@ vi.mock('react-focus-trap', () => ({
 }))
 
 global.fetch = vi.fn()
+
+// jsdom does not implement scrollIntoView — stub it globally
+window.HTMLElement.prototype.scrollIntoView = vi.fn()

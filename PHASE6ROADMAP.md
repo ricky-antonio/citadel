@@ -777,6 +777,16 @@ POST-DEPLOY VERIFICATION (on the live production URL):
 - [ ] GET https://your-domain.com/api/city/new-york/snapshot → valid CitySnapshot JSON
 - [ ] GET https://your-domain.com/api/city/new-york/briefing → briefing text
 
+AI USAGE LOGGING (deferred from Phase 4):
+Implement `ai_usage` row insertion for `/api/chat` streaming responses. Briefing logging works
+(non-streaming). Chat logging was deferred because `stream.on('finalMessage', ...)` and
+`pipeTo().then()` both proved unreliable in local dev Next.js route handlers with streaming
+responses. In production on Vercel, the streaming lifecycle may behave differently — test by
+sending a chat message and checking the `ai_usage` table in Supabase. If it still doesn't log,
+consider wrapping `stream.toReadableStream()` in a custom TransformStream with a `flush()` callback,
+or logging without token counts via a fire-and-forget `fetch` to an internal logging endpoint.
+- [ ] `ai_usage` table has a row with `route: /api/chat` after sending a message in production
+
 RATE LIMITING (production):
 Send 21 rapid chat requests to verify rate limiting is active:
   for(let i=0;i<21;i++) fetch('https://your-domain.com/api/chat', { method:'POST',

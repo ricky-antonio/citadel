@@ -10,7 +10,7 @@ const VALID_CITY_IDS = ['new-york', 'san-francisco', 'chicago', 'washington-dc']
 
 const chatRatelimit = new Ratelimit({
   redis: kv,
-  limiter: Ratelimit.slidingWindow(20, '1m'),
+  limiter: Ratelimit.slidingWindow(15, '1m'),
   prefix: 'citadel:chat',
 })
 
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
     const client = new Anthropic()
     const stream = await client.messages.stream({
       model: 'claude-sonnet-4-6',
-      max_tokens: 300,
+      max_tokens: 1024,
       system: buildSystemPrompt(snapshot),
       messages: [
         ...history,
@@ -93,22 +93,7 @@ export async function POST(req: Request) {
       ],
     })
 
-    void (async () => {
-      try {
-        const usage = await stream.finalMessage()
-        const supabase = getClient()
-        void supabase.from('ai_usage').insert({
-          city_id: cityId,
-          route: '/api/chat',
-          tokens_in: usage.usage.input_tokens,
-          tokens_out: usage.usage.output_tokens,
-          duration_ms: Date.now() - start,
-        })
-      } catch {
-        // Non-critical — swallow logging errors
-      }
-    })()
-
+    // ai_usage logging for streaming chat deferred to Phase 6 — see PHASE6ROADMAP.md P6.7
     return new Response(stream.toReadableStream(), {
       headers: { 'Content-Type': 'text/event-stream' },
     })

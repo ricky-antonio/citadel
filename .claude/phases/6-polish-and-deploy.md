@@ -146,6 +146,9 @@ Before marking Phase 6 (and the project) complete:
 - [ ] Service role key not in client bundle
 - [ ] Rate limiting rejects the 21st chat request in 1 minute
 
+**Deferred from Phase 4:**
+- [ ] `ai_usage` logging for `/api/chat` streaming responses — implement and verify a row appears in Supabase after a chat message is sent (briefing logging works; chat logging was deferred because post-stream callbacks are unreliable in Next.js route handlers with streaming responses)
+
 **Tests:**
 - [ ] `npm run type-check` — zero errors
 - [ ] `npm test` — all tests pass
