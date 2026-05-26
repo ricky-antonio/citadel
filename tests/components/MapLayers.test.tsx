@@ -33,6 +33,8 @@ const mockMap = {
   addLayer: vi.fn(),
   setLayoutProperty: vi.fn(),
   once: vi.fn(),
+  on: vi.fn(),
+  off: vi.fn(),
 }
 
 function makeMapRef(): MutableRefObject<MapRef | null> {

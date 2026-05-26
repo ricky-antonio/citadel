@@ -26,8 +26,10 @@ type ActivePanel = 'weather' | 'aq' | 'transit' | 'events' | 'anomaly' | 'histor
 
 export default function CityPage() {
   const rawParams = useParams()
-  const cityId = rawParams.id as string
   const router = useRouter()
+
+  const [cityId, setCityId] = useState(() => rawParams.id as string)
+  const city = getCityById(cityId)
 
   const [snapshot, setSnapshot] = useState<CitySnapshot | null>(null)
   const [loading, setLoading] = useState(true)
@@ -50,7 +52,6 @@ export default function CityPage() {
   }, [cityId])
 
   useEffect(() => {
-    const city = getCityById(cityId)
     if (!city) {
       router.replace('/city/new-york')
       return
@@ -59,7 +60,12 @@ export default function CityPage() {
     refetch()
     const interval = setInterval(refetch, 5 * 60 * 1000)
     return () => clearInterval(interval)
-  }, [cityId, router, refetch])
+  }, [cityId, router, refetch, city])
+
+  // Fade overlays back in once new snapshot arrives after a city switch
+  useEffect(() => {
+    if (snapshot !== null) setFading(false)
+  }, [snapshot])
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -78,31 +84,35 @@ export default function CityPage() {
   function handleCityChange(newCityId: string) {
     setFading(true)
     setTimeout(() => {
-      router.push(`/city/${newCityId}`)
+      setCityId(newCityId)
+      setActivePanel(null)
+      setChatOpen(false)
+      window.history.pushState({}, '', `/city/${newCityId}`)
     }, 300)
   }
 
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
+      {city && (
+        <CityMap city={city} snapshot={snapshot} activeLayers={activeLayers} />
+      )}
+
       {loading && !snapshot && (
         <div
           style={{
-            width: '100vw',
-            height: '100vh',
+            position: 'absolute',
+            inset: 0,
             background: '#060A0F',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            zIndex: 60,
           }}
         >
           <div style={{ color: 'var(--amber)', fontFamily: 'var(--font-inter)' }}>
             Loading...
           </div>
         </div>
-      )}
-
-      {snapshot && (
-        <CityMap city={snapshot.city} snapshot={snapshot} activeLayers={activeLayers} />
       )}
 
       <NavBar

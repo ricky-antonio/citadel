@@ -37,11 +37,13 @@ export default function MapLayers({ snapshot, activeLayers, mapRef }: MapLayersP
       )
     }
 
-    if (!map.isStyleLoaded()) {
-      map.once('style.load', doUpdate)
-      return
+    map.on('style.load', doUpdate)
+    if (map.isStyleLoaded()) {
+      doUpdate()
     }
-    doUpdate()
+    return () => {
+      map.off('style.load', doUpdate)
+    }
   }, [snapshot, activeLayers, mapRef])
 
   if (!activeLayers.includes('crowd')) return null
