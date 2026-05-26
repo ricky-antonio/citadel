@@ -6,9 +6,14 @@ import MapLayers from '@/components/map/MapLayers'
 import type { CitySnapshot } from '@/lib/types'
 import { CITIES } from '@/lib/cities'
 import { updateAQLayer } from '@/components/map/AQLayer'
+import { updateEventLayer } from '@/components/map/EventLayer'
 
 vi.mock('@/components/map/AQLayer', () => ({
   updateAQLayer: vi.fn(),
+}))
+
+vi.mock('@/components/map/EventLayer', () => ({
+  updateEventLayer: vi.fn(),
 }))
 
 const mockMap = {
@@ -73,10 +78,22 @@ describe('MapLayers', () => {
     expect(updateAQLayer).toHaveBeenCalledWith(mockMap, mockSnapshot.airQuality, true)
   })
 
+  it('calls updateEventLayer with events data and visibility flag', () => {
+    render(
+      <MapLayers
+        snapshot={mockSnapshot}
+        activeLayers={['events']}
+        mapRef={makeMapRef()}
+      />
+    )
+    expect(updateEventLayer).toHaveBeenCalledWith(mockMap, mockSnapshot.events, true)
+  })
+
   it('does not throw when snapshot is null', () => {
     expect(() =>
       render(<MapLayers snapshot={null} activeLayers={[]} mapRef={makeMapRef()} />)
     ).not.toThrow()
     expect(updateAQLayer).toHaveBeenCalledWith(mockMap, null, false)
+    expect(updateEventLayer).toHaveBeenCalledWith(mockMap, null, false)
   })
 })

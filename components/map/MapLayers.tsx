@@ -5,6 +5,7 @@ import type { MapRef } from 'react-map-gl/mapbox'
 import type { Map as MapboxMap } from 'mapbox-gl'
 import type { CitySnapshot } from '@/lib/types'
 import { updateAQLayer } from './AQLayer'
+import { updateEventLayer } from './EventLayer'
 
 interface MapLayersProps {
   snapshot: CitySnapshot | null
@@ -19,6 +20,7 @@ export default function MapLayers({ snapshot, activeLayers, mapRef }: MapLayersP
 
     const doUpdate = () => {
       updateAQLayer(map, snapshot?.airQuality ?? null, activeLayers.includes('air-quality'))
+      updateEventLayer(map, snapshot?.events ?? null, activeLayers.includes('events'))
     }
 
     if (!map.isStyleLoaded()) {

@@ -94,5 +94,18 @@ function parseTicketmasterEvent(raw: unknown): Event | null {
   // Ticketmaster's events endpoint does not reliably expose venue capacity
   const capacity = 0
 
-  return { id, name, venue, time, capacity, source: 'ticketmaster' }
+  // Extract venue coordinates — present only when Ticketmaster provides them
+  const venueLocation = firstVenue?.location as Record<string, unknown> | undefined
+  const lat = venueLocation ? parseFloat(String(venueLocation.latitude ?? '')) : NaN
+  const lng = venueLocation ? parseFloat(String(venueLocation.longitude ?? '')) : NaN
+
+  return {
+    id,
+    name,
+    venue,
+    time,
+    capacity,
+    source: 'ticketmaster',
+    ...(isNaN(lat) || isNaN(lng) ? {} : { lat, lng }),
+  }
 }

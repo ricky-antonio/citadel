@@ -6,6 +6,16 @@ Phase 5 — Map Layers
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P5.2 — Event pins layer
+- `lib/types.ts` — added `lat?: number`, `lng?: number` to `Event`; coordinates travel with the event so panel and map are always the same source of truth
+- `lib/data/events.ts` — `parseTicketmasterEvent` extracts venue coordinates from `_embedded.venues[0].location.latitude/longitude` and spreads them onto `Event` when valid; events without coordinates simply omit the fields
+- `components/map/EventLayer.tsx` — plain function `updateEventLayer(map, events, visible)`: derives GeoJSON from `events.tonight` filtered to events with `lat`/`lng` — if an event has no pin it has no coordinates, never a silent mismatch with the panel; addSource+addLayers (clusters, cluster-count, event-points) on first call, setData on subsequent; cluster click → `getClusterExpansionZoom` + `easeTo`; pin click → styled Popup; cursor pointer on hover; `WeakSet` prevents duplicate handler registration; setLayoutProperty for visibility on all three layers
+- `components/map/MapLayers.tsx` — imports and calls `updateEventLayer(map, snapshot?.events ?? null, activeLayers.includes('events'))` in `doUpdate`
+- `tests/components/MapLayers.test.tsx` — added mock for `updateEventLayer`; 2 new tests: calls updateEventLayer with events + visibility flag, calls with null when snapshot is null; 179/179 tests pass
+- `npm run type-check` — zero errors ✓
+- `npm test` — 179/179 pass ✓
+- Next: P5.3 — Transit lines + crowd density
+
 ### P5.1 — MapLayers manager + AQ heatmap
 - `lib/types.ts` — added `AQStation` interface (`lat, lng, aqi`) and `stations: AQStation[]` to `AirQualityData`
 - `lib/data/fallbacks.ts` — added `stations: []` to `AIR_QUALITY_FALLBACK`
@@ -17,7 +27,7 @@ Phase 5 — Map Layers
 - `tests/components/MapLayers.test.tsx` — 3 tests: renders null, calls updateAQLayer with correct args on valid snapshot, does not throw when snapshot is null
 - `npm run type-check` — zero errors ✓
 - `npm test` — 178/178 pass ✓
-- Next: P5.2 — Event pins layer
+- Next: P5.2 complete ✓
 
 ### P4.5 — Phase 4 final checklist
 - `vitest.config.ts` — thresholds raised to Phase 4 targets: lines 80%, functions 80%, branches 75%

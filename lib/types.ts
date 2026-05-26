@@ -63,6 +63,8 @@ export interface Event {
   time: string
   capacity: number
   source: 'ticketmaster' | 'eventbrite'
+  lat?: number
+  lng?: number
 }
 
 export interface EventsData {
