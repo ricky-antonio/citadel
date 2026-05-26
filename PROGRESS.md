@@ -1,10 +1,19 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 4 — AI & Chat (not started)
+Phase 4 — AI & Chat (in progress)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P4.1 — AI lib functions
+- `lib/ai/chat.ts` — `buildSystemPrompt(snapshot)` (system prompt with city name) and `buildUserMessage(userMessage, snapshot)` (prepends buildCityContext output); both pure, no side effects
+- `lib/ai/briefing.ts` — `getCitySnapshot(cityId)` (cache-first snapshot assembler, same logic as snapshot route but callable from lib); `getDailyBriefing(cityId)` (checks ai_briefings for today, generates via Anthropic messages.create if missing, upserts to ai_briefings, inserts to ai_usage)
+- `lib/ai/suggestions.ts` — `generateSuggestions(snapshot)` returns 3 contextual chip strings; rule-based on weather temp/condition, transit delay count, AQI, events tonight, pulse score
+- `tests/lib/ai/chat.test.ts` — 6 tests: city name in system prompt, Citadel identity, user question in message, Live city data prefix, buildCityContext embedded, question positioned after context
+- `npm run type-check` — zero errors ✓
+- `npm test` — 126/126 pass ✓
+- Next: P4.2 — Chat + briefing API routes
 
 ### P3.7 — Phase 3 final checklist
 - `vitest.config.ts` — thresholds raised to Phase 3 targets: lines 78%, functions 78%, branches 72%
