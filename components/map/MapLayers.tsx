@@ -6,6 +6,8 @@ import type { Map as MapboxMap } from 'mapbox-gl'
 import type { CitySnapshot } from '@/lib/types'
 import { updateAQLayer } from './AQLayer'
 import { updateEventLayer } from './EventLayer'
+import { updateTransitLayer } from './TransitLayer'
+import { updateCrowdLayer } from './CrowdLayer'
 
 interface MapLayersProps {
   snapshot: CitySnapshot | null
@@ -21,6 +23,18 @@ export default function MapLayers({ snapshot, activeLayers, mapRef }: MapLayersP
     const doUpdate = () => {
       updateAQLayer(map, snapshot?.airQuality ?? null, activeLayers.includes('air-quality'))
       updateEventLayer(map, snapshot?.events ?? null, activeLayers.includes('events'))
+      updateTransitLayer(
+        map,
+        snapshot?.transit ?? null,
+        snapshot?.city.id ?? '',
+        activeLayers.includes('transit')
+      )
+      updateCrowdLayer(
+        map,
+        snapshot?.events ?? null,
+        snapshot?.city.id ?? '',
+        activeLayers.includes('crowd')
+      )
     }
 
     if (!map.isStyleLoaded()) {
@@ -30,5 +44,20 @@ export default function MapLayers({ snapshot, activeLayers, mapRef }: MapLayersP
     doUpdate()
   }, [snapshot, activeLayers, mapRef])
 
-  return null
+  if (!activeLayers.includes('crowd')) return null
+
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        bottom: '40px',
+        right: '16px',
+        fontSize: '9px',
+        color: 'var(--tx-3)',
+        pointerEvents: 'none',
+      }}
+    >
+      Crowd density (estimated)
+    </div>
+  )
 }

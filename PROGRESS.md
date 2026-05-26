@@ -6,6 +6,24 @@ Phase 5 — Map Layers
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P5.3 — Transit lines + crowd density
+- `public/geojson/transit/{new-york,san-francisco,chicago,washington-dc}.json` — GeoJSON FeatureCollection with LineString features per line; line_ids match provider route IDs (MTA: "1"/"A"/etc, SF: "N"/"J"/etc, CTA: "Red Line"/etc, WMATA: "RD"/"BL"/etc)
+- `public/geojson/neighbourhoods/{new-york,san-francisco,chicago,washington-dc}.json` — 10–11 polygon features per city for crowd density
+- `components/map/TransitLayer.tsx` — `updateTransitLayer(map, transit, cityId, visible)`: fetches GeoJSON once (module-scope cache); joins delay status to features via `getLineStatus` (handles comma-separated WMATA format + exact MTA/CTA IDs); line-color match expression (green/amber/red); 2px width + 3px hover via feature state on `generateId: true` source; cursor pointer; mousemove/mouseleave hover tracking with WeakMap per map
+- `components/map/CrowdLayer.tsx` — `updateCrowdLayer(map, events, cityId, visible)`: fetches neighbourhood GeoJSON once; `computeCrowdScore` counts events within polygon bounding box, normalises to 0–1 (cap 5 events = 1.0); fill-opacity interpolated 0→0.4; both layers guard `!cityId` and handle fetch failures gracefully
+- `components/map/MapLayers.tsx` — wired in `updateTransitLayer` and `updateCrowdLayer` in `doUpdate`; renders "Crowd density (estimated)" label (absolute, bottom 40px, right 16px, 9px, var(--tx-3)) when crowd layer is active
+- `app/api/chat/route.ts` — removed unused `getClient` function and `start` variable (leftover deferred ai_usage logging; was breaking production build)
+- `tests/components/TransitLayer.test.ts` — 13 tests: empty cityId guard, fetch+addSource+addLayer, delayed/suspended/normal status, WMATA comma-separated matching, visibility, cache hit setData, fetch fail/non-ok, isStyleLoaded guard, no re-registration, hover mousemove/mouseleave handlers
+- `tests/components/CrowdLayer.test.ts` — 11 tests: empty cityId guard, fetch+addSource+addLayer, crowd_score 0/positive/capped/outside bbox, non-Polygon geometry, events without coordinates, visibility, cache hit setData, fetch fail, isStyleLoaded guard
+- `tests/components/AQLayer.test.ts` — 7 direct tests for AQLayer covering addSource/addLayer, GeoJSON mapping, null/empty inputs, setData path, visibility; these were previously only mocked in MapLayers tests
+- `tests/components/MapLayers.test.tsx` — added mocks and 4 new tests for updateTransitLayer/updateCrowdLayer calls and crowd density label rendering
+- `tests/lib/ai/suggestions.test.ts` — 14 tests covering all branches in generateSuggestions (temp ≥90, ≤35, rain/storm, pleasant; delayCount >10/>0/0; AQI >100, events tonight, pulse ≥75, ≤25, normal)
+- `npm run type-check` — zero errors ✓
+- `npm test` — 234/234 pass ✓
+- `npm run test:coverage` — lines 86.39%, functions 86.48%, branches 76.39%, statements 84.61% (all above 80/80/75 thresholds) ✓
+- `npm run build` — production build succeeds ✓
+- Next: P5.4 — Crime data real implementations
+
 ### P5.2 — Event pins layer
 - `lib/types.ts` — added `lat?: number`, `lng?: number` to `Event`; coordinates travel with the event so panel and map are always the same source of truth
 - `lib/data/events.ts` — `parseTicketmasterEvent` extracts venue coordinates from `_embedded.venues[0].location.latitude/longitude` and spreads them onto `Event` when valid; events without coordinates simply omit the fields

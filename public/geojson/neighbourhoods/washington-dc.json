@@ -1,0 +1,115 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Capitol Hill", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.010, 38.885], [-76.985, 38.885], [-76.985, 38.902],
+          [-77.010, 38.902], [-77.010, 38.885]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Georgetown", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.080, 38.905], [-77.058, 38.905], [-77.058, 38.915],
+          [-77.080, 38.915], [-77.080, 38.905]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Dupont Circle", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.050, 38.905], [-77.035, 38.905], [-77.035, 38.915],
+          [-77.050, 38.915], [-77.050, 38.905]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Adams Morgan", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.045, 38.920], [-77.030, 38.920], [-77.030, 38.930],
+          [-77.045, 38.930], [-77.045, 38.920]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Columbia Heights", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.035, 38.928], [-77.020, 38.928], [-77.020, 38.938],
+          [-77.035, 38.938], [-77.035, 38.928]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Shaw", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.025, 38.910], [-77.010, 38.910], [-77.010, 38.920],
+          [-77.025, 38.920], [-77.025, 38.910]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "H Street NE", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.005, 38.898], [-76.985, 38.898], [-76.985, 38.910],
+          [-77.005, 38.910], [-77.005, 38.898]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Navy Yard", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.010, 38.873], [-76.992, 38.873], [-76.992, 38.882],
+          [-77.010, 38.882], [-77.010, 38.873]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Penn Quarter", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.025, 38.895], [-77.010, 38.895], [-77.010, 38.905],
+          [-77.025, 38.905], [-77.025, 38.895]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Foggy Bottom", "city": "washington-dc" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-77.058, 38.895], [-77.043, 38.895], [-77.043, 38.905],
+          [-77.058, 38.905], [-77.058, 38.895]
+        ]]
+      }
+    }
+  ]
+}

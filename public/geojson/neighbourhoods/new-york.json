@@ -1,0 +1,126 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Midtown", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.000, 40.748], [-73.970, 40.748], [-73.970, 40.764],
+          [-74.000, 40.764], [-74.000, 40.748]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Lower Manhattan", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.015, 40.700], [-73.985, 40.700], [-73.985, 40.720],
+          [-74.015, 40.720], [-74.015, 40.700]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Upper West Side", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.990, 40.775], [-73.965, 40.775], [-73.965, 40.803],
+          [-73.990, 40.803], [-73.990, 40.775]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Upper East Side", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.970, 40.775], [-73.930, 40.775], [-73.930, 40.800],
+          [-73.970, 40.800], [-73.970, 40.775]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Harlem", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.975, 40.800], [-73.920, 40.800], [-73.920, 40.823],
+          [-73.975, 40.823], [-73.975, 40.800]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Chelsea", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.005, 40.740], [-73.980, 40.740], [-73.980, 40.755],
+          [-74.005, 40.755], [-74.005, 40.740]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "East Village", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.990, 40.720], [-73.960, 40.720], [-73.960, 40.738],
+          [-73.990, 40.738], [-73.990, 40.720]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Greenwich Village", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.005, 40.725], [-73.975, 40.725], [-73.975, 40.740],
+          [-74.005, 40.740], [-74.005, 40.725]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Brooklyn Heights", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.010, 40.693], [-73.990, 40.693], [-73.990, 40.705],
+          [-74.010, 40.705], [-74.010, 40.693]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Williamsburg", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.975, 40.706], [-73.940, 40.706], [-73.940, 40.722],
+          [-73.975, 40.722], [-73.975, 40.706]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hell's Kitchen", "city": "new-york" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.005, 40.755], [-73.985, 40.755], [-73.985, 40.770],
+          [-74.005, 40.770], [-74.005, 40.755]
+        ]]
+      }
+    }
+  ]
+}

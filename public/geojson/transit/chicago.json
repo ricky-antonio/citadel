@@ -1,0 +1,69 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "line_id": "Red Line", "line_name": "Red Line", "color": "#C60C30" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6348, 41.9716], [-87.6299, 41.9283], [-87.6278, 41.8862],
+          [-87.6277, 41.8558], [-87.6277, 41.8319], [-87.6277, 41.7831], [-87.6262, 41.7191]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "Blue Line", "line_name": "Blue Line", "color": "#00A1DE" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.9906, 41.9842], [-87.8456, 41.9682], [-87.7086, 41.9277],
+          [-87.6530, 41.8855], [-87.6264, 41.8781], [-87.6264, 41.8638], [-87.7697, 41.8638]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "Brown Line", "line_name": "Brown Line", "color": "#62361B" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.7134, 41.9672], [-87.6942, 41.9527], [-87.6759, 41.9183],
+          [-87.6539, 41.8858], [-87.6264, 41.8781]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "Green Line", "line_name": "Green Line", "color": "#009B3A" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.8065, 41.8855], [-87.7086, 41.8855], [-87.6538, 41.8855],
+          [-87.6264, 41.8781], [-87.6264, 41.7791], [-87.6076, 41.7791]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "Orange Line", "line_name": "Orange Line", "color": "#F9461C" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.7370, 41.7863], [-87.6847, 41.8205], [-87.6539, 41.8546], [-87.6264, 41.8781]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "Purple Line", "line_name": "Purple Line", "color": "#522398" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.6883, 42.0457], [-87.6838, 41.9927], [-87.6348, 41.9716]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "line_id": "RD", "line_name": "Red Line", "color": "#BF0D3E" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.1659, 39.0842], [-77.1135, 38.9842], [-77.0833, 38.9497],
+          [-77.0455, 38.9007], [-77.0365, 38.8973], [-77.0283, 38.8984],
+          [-76.9944, 38.8988], [-76.9693, 38.9283], [-76.9122, 38.9497]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "BL", "line_name": "Blue Line", "color": "#009CDE" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.1740, 38.7739], [-77.1135, 38.8189], [-77.0574, 38.8693],
+          [-77.0455, 38.8843], [-77.0283, 38.8984], [-76.9944, 38.8988],
+          [-76.9284, 38.8843]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "OR", "line_name": "Orange Line", "color": "#ED8B00" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.3305, 38.8453], [-77.1938, 38.8583], [-77.0574, 38.8693],
+          [-77.0455, 38.8843], [-77.0283, 38.8984], [-76.9944, 38.8988],
+          [-76.9284, 38.8843]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "SV", "line_name": "Silver Line", "color": "#919D9D" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.4574, 38.9536], [-77.3305, 38.8843], [-77.1938, 38.8583],
+          [-77.0574, 38.8693], [-77.0455, 38.8843], [-77.0283, 38.8984],
+          [-76.9944, 38.8988], [-76.9284, 38.8843]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "GR", "line_name": "Green Line", "color": "#00B140" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.0079, 38.8144], [-77.0079, 38.8453], [-77.0079, 38.8693],
+          [-77.0217, 38.8843], [-77.0217, 38.8988], [-77.0217, 38.9283],
+          [-77.0217, 38.9693]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "YL", "line_name": "Yellow Line", "color": "#FFD100" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-77.0536, 38.7948], [-77.0536, 38.8144], [-77.0574, 38.8453],
+          [-77.0217, 38.8843], [-77.0217, 38.8988], [-77.0217, 38.9283]
+        ]
+      }
+    }
+  ]
+}

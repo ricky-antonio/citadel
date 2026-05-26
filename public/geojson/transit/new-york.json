@@ -1,0 +1,214 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "line_id": "1", "line_name": "1 Train", "color": "#EE352E" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.8921, 40.8878], [-73.9191, 40.8631], [-73.9601, 40.8119],
+          [-73.9810, 40.7807], [-73.9929, 40.7506], [-74.0000, 40.7431], [-74.0115, 40.7021]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "2", "line_name": "2 Train", "color": "#EE352E" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.8921, 40.8878], [-73.9191, 40.8631], [-73.9601, 40.8119],
+          [-73.9810, 40.7807], [-73.9929, 40.7506], [-74.0000, 40.7431], [-74.0115, 40.7021]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "3", "line_name": "3 Train", "color": "#EE352E" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.8921, 40.8878], [-73.9191, 40.8631], [-73.9601, 40.8119],
+          [-73.9810, 40.7807], [-73.9929, 40.7506], [-74.0000, 40.7431], [-74.0115, 40.7021]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "4", "line_name": "4 Train", "color": "#00933C" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.8981, 40.8754], [-73.9256, 40.8499], [-73.9458, 40.8094],
+          [-73.9558, 40.7826], [-73.9722, 40.7622], [-73.9743, 40.7506], [-73.9903, 40.7022]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "5", "line_name": "5 Train", "color": "#00933C" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.8981, 40.8754], [-73.9256, 40.8499], [-73.9458, 40.8094],
+          [-73.9558, 40.7826], [-73.9722, 40.7622], [-73.9743, 40.7506], [-73.9903, 40.7022]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "6", "line_name": "6 Train", "color": "#00933C" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.8981, 40.8754], [-73.9256, 40.8499], [-73.9458, 40.8094],
+          [-73.9558, 40.7826], [-73.9722, 40.7622], [-73.9743, 40.7506], [-73.9903, 40.7022]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "7", "line_name": "7 Train", "color": "#B933AD" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.8295, 40.7455], [-73.8834, 40.7461], [-73.9223, 40.7455],
+          [-73.9497, 40.7536], [-73.9929, 40.7547]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "A", "line_name": "A Train", "color": "#0039A6" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9186, 40.8678], [-73.9502, 40.8119], [-73.9878, 40.7682],
+          [-74.0002, 40.7499], [-74.0099, 40.7191], [-74.0157, 40.7029]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "C", "line_name": "C Train", "color": "#0039A6" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9186, 40.8678], [-73.9502, 40.8119], [-73.9878, 40.7682],
+          [-74.0002, 40.7499], [-74.0099, 40.7191], [-74.0157, 40.7029]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "E", "line_name": "E Train", "color": "#0039A6" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9186, 40.8678], [-73.9502, 40.8119], [-73.9878, 40.7682],
+          [-74.0002, 40.7499], [-74.0099, 40.7191], [-74.0157, 40.7029]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "B", "line_name": "B Train", "color": "#FF6319" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9432, 40.8119], [-73.9563, 40.7958], [-73.9763, 40.7626],
+          [-73.9882, 40.7458], [-74.0004, 40.7282], [-74.0101, 40.7191]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "D", "line_name": "D Train", "color": "#FF6319" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9432, 40.8119], [-73.9563, 40.7958], [-73.9763, 40.7626],
+          [-73.9882, 40.7458], [-74.0004, 40.7282], [-74.0101, 40.7191]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "F", "line_name": "F Train", "color": "#FF6319" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9432, 40.8119], [-73.9563, 40.7958], [-73.9763, 40.7626],
+          [-73.9882, 40.7458], [-74.0004, 40.7282], [-74.0101, 40.7191]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "M", "line_name": "M Train", "color": "#FF6319" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9432, 40.8119], [-73.9563, 40.7958], [-73.9763, 40.7626],
+          [-73.9882, 40.7458], [-74.0004, 40.7282], [-74.0101, 40.7191]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "L", "line_name": "L Train", "color": "#A7A9AC" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-74.0015, 40.7373], [-73.9982, 40.7375], [-73.9897, 40.7357],
+          [-73.9723, 40.7352], [-73.9580, 40.7354], [-73.9364, 40.7165]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "N", "line_name": "N Train", "color": "#FCCC0A" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9303, 40.7752], [-73.9452, 40.7634], [-73.9678, 40.7549],
+          [-73.9897, 40.7484], [-73.9993, 40.7241], [-73.9927, 40.6881]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "Q", "line_name": "Q Train", "color": "#FCCC0A" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9303, 40.7752], [-73.9452, 40.7634], [-73.9678, 40.7549],
+          [-73.9897, 40.7484], [-73.9993, 40.7241], [-73.9927, 40.6881]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "R", "line_name": "R Train", "color": "#FCCC0A" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9303, 40.7752], [-73.9452, 40.7634], [-73.9678, 40.7549],
+          [-73.9897, 40.7484], [-73.9993, 40.7241], [-73.9927, 40.6881]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "W", "line_name": "W Train", "color": "#FCCC0A" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-73.9303, 40.7752], [-73.9452, 40.7634], [-73.9678, 40.7549],
+          [-73.9897, 40.7484], [-73.9993, 40.7241], [-73.9927, 40.6881]
+        ]
+      }
+    }
+  ]
+}

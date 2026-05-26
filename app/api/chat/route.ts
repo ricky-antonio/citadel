@@ -1,7 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { Ratelimit } from '@upstash/ratelimit'
 import { kv } from '@vercel/kv'
-import { createClient } from '@supabase/supabase-js'
 import { getCitySnapshot } from '@/lib/ai/briefing'
 import { buildSystemPrompt, buildUserMessage } from '@/lib/ai/chat'
 import type { ApiError, ChatMessage } from '@/lib/types'
@@ -14,16 +13,7 @@ const chatRatelimit = new Ratelimit({
   prefix: 'citadel:chat',
 })
 
-function getClient() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-    process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
-  )
-}
-
 export async function POST(req: Request) {
-  const start = Date.now()
-
   try {
     const ip = req.headers.get('x-forwarded-for') ?? 'anonymous'
     try {

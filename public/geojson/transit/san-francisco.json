@@ -1,0 +1,81 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "line_id": "N", "line_name": "N Judah", "color": "#CC6600" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.5085, 37.7598], [-122.4688, 37.7596], [-122.4501, 37.7618],
+          [-122.4088, 37.7765], [-122.3924, 37.7904]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "J", "line_name": "J Church", "color": "#CC6600" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.4271, 37.7493], [-122.4261, 37.7634], [-122.4255, 37.7704],
+          [-122.4268, 37.7811], [-122.3924, 37.7904]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "K", "line_name": "K Ingleside", "color": "#CC6600" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.4271, 37.7293], [-122.4451, 37.7448], [-122.4451, 37.7618],
+          [-122.4088, 37.7765], [-122.3924, 37.7904]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "L", "line_name": "L Taraval", "color": "#CC6600" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.5065, 37.7427], [-122.4802, 37.7427], [-122.4601, 37.7448],
+          [-122.4451, 37.7618], [-122.4088, 37.7765], [-122.3924, 37.7904]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "M", "line_name": "M Ocean View", "color": "#CC6600" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.4646, 37.7216], [-122.4501, 37.7293], [-122.4451, 37.7448],
+          [-122.4451, 37.7618], [-122.4088, 37.7765], [-122.3924, 37.7904]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "T", "line_name": "T Third Street", "color": "#CC0033" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.4018, 37.7071], [-122.3929, 37.7453], [-122.3901, 37.7713], [-122.3921, 37.7864]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "line_id": "BART", "line_name": "BART", "color": "#0066CC" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.4271, 37.7293], [-122.4146, 37.7495], [-122.4079, 37.7742],
+          [-122.4031, 37.7808], [-122.3969, 37.7904]
+        ]
+      }
+    }
+  ]
+}

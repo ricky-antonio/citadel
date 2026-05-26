@@ -1,0 +1,115 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Mission District", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.425, 37.748], [-122.408, 37.748], [-122.408, 37.770],
+          [-122.425, 37.770], [-122.425, 37.748]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "SoMa", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.415, 37.775], [-122.385, 37.775], [-122.385, 37.789],
+          [-122.415, 37.789], [-122.415, 37.775]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Financial District", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.410, 37.789], [-122.392, 37.789], [-122.392, 37.802],
+          [-122.410, 37.802], [-122.410, 37.789]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "North Beach", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.415, 37.800], [-122.400, 37.800], [-122.400, 37.812],
+          [-122.415, 37.812], [-122.415, 37.800]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Castro", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.435, 37.760], [-122.420, 37.760], [-122.420, 37.772],
+          [-122.435, 37.772], [-122.435, 37.760]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Richmond District", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.500, 37.773], [-122.455, 37.773], [-122.455, 37.787],
+          [-122.500, 37.787], [-122.500, 37.773]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Sunset District", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.510, 37.752], [-122.455, 37.752], [-122.455, 37.768],
+          [-122.510, 37.768], [-122.510, 37.752]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Nob Hill", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.420, 37.791], [-122.407, 37.791], [-122.407, 37.800],
+          [-122.420, 37.800], [-122.420, 37.791]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Pacific Heights", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.445, 37.791], [-122.422, 37.791], [-122.422, 37.800],
+          [-122.445, 37.800], [-122.445, 37.791]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Haight-Ashbury", "city": "san-francisco" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-122.455, 37.768], [-122.438, 37.768], [-122.438, 37.776],
+          [-122.455, 37.776], [-122.455, 37.768]
+        ]]
+      }
+    }
+  ]
+}

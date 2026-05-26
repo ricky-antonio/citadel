@@ -1,0 +1,115 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "The Loop", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.635, 41.875], [-87.615, 41.875], [-87.615, 41.888],
+          [-87.635, 41.888], [-87.635, 41.875]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "River North", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.640, 41.888], [-87.622, 41.888], [-87.622, 41.898],
+          [-87.640, 41.898], [-87.640, 41.888]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Lincoln Park", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.650, 41.913], [-87.627, 41.913], [-87.627, 41.932],
+          [-87.650, 41.932], [-87.650, 41.913]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Wicker Park", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.685, 41.907], [-87.668, 41.907], [-87.668, 41.918],
+          [-87.685, 41.918], [-87.685, 41.907]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Hyde Park", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.610, 41.780], [-87.590, 41.780], [-87.590, 41.795],
+          [-87.610, 41.795], [-87.610, 41.780]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Lakeview", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.660, 41.942], [-87.638, 41.942], [-87.638, 41.956],
+          [-87.660, 41.956], [-87.660, 41.942]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Old Town", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.640, 41.905], [-87.624, 41.905], [-87.624, 41.917],
+          [-87.640, 41.917], [-87.640, 41.905]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Gold Coast", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.630, 41.898], [-87.617, 41.898], [-87.617, 41.911],
+          [-87.630, 41.911], [-87.630, 41.898]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Pilsen", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.670, 41.849], [-87.647, 41.849], [-87.647, 41.860],
+          [-87.670, 41.860], [-87.670, 41.849]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Logan Square", "city": "chicago" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-87.710, 41.920], [-87.690, 41.920], [-87.690, 41.930],
+          [-87.710, 41.930], [-87.710, 41.920]
+        ]]
+      }
+    }
+  ]
+}
