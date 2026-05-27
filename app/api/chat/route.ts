@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { Ratelimit } from '@upstash/ratelimit'
 import { kv } from '@vercel/kv'
+import { createClient } from '@supabase/supabase-js'
 import { getCitySnapshot } from '@/lib/ai/briefing'
 import { buildSystemPrompt, buildUserMessage } from '@/lib/ai/chat'
 import type { ApiError, ChatMessage } from '@/lib/types'
@@ -79,6 +80,7 @@ export async function POST(req: Request) {
       }
     }
 
+    const start = Date.now()
     const client = new Anthropic()
     const stream = await client.messages.stream({
       model: 'claude-sonnet-4-6',
@@ -90,8 +92,32 @@ export async function POST(req: Request) {
       ],
     })
 
-    // ai_usage logging for streaming chat deferred to Phase 6 — see PHASE6ROADMAP.md P6.7
-    return new Response(stream.toReadableStream(), {
+    // Capture token counts when the stream finalises (fires before stream closes)
+    let inputTokens: number | null = null
+    let outputTokens: number | null = null
+    stream.on('finalMessage', (msg) => {
+      inputTokens = msg.usage.input_tokens
+      outputTokens = msg.usage.output_tokens
+    })
+
+    // Log ai_usage after the stream is fully consumed via flush()
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+      process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
+    )
+    const logger = new TransformStream({
+      flush() {
+        void supabase.from('ai_usage').insert({
+          city_id: cityId,
+          route: '/api/chat',
+          tokens_in: inputTokens,
+          tokens_out: outputTokens,
+          duration_ms: Date.now() - start,
+        })
+      },
+    })
+
+    return new Response(stream.toReadableStream().pipeThrough(logger), {
       headers: { 'Content-Type': 'text/event-stream' },
     })
   } catch {

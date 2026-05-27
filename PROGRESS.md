@@ -1,10 +1,23 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 6 — Polish & Deploy (in progress)
+Complete — all 6 phases shipped
+
+**Live URL:** https://citadel.rickycodes.dev
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P6.7 — Pre-deploy + production launch
+- `app/api/chat/route.ts` — implemented `ai_usage` logging for streaming chat via `TransformStream` with `flush()` callback; `stream.on('finalMessage', ...)` captures `tokens_in`/`tokens_out`; flush fires fire-and-forget Supabase insert after stream closes; tokens are null if `finalMessage` didn't fire before flush (graceful degradation)
+- `CHANGELOG.md` — all 6 phases documented with 2026-05-27 date
+- `README.md` — status updated to "Phase 6 — Complete"; live URL `citadel.rickycodes.dev` added; build phases table all marked ✅ Complete
+- `npm run type-check` — zero errors ✓
+- `npm test` — 306/306 pass ✓
+- `npm run test:coverage` — lines 92.58%, functions 93.18%, branches 82.35% (all above 85/85/80) ✓
+- `npm run build` — production build succeeds; first-load JS 121 kB ✓
+- `npm audit` — 2 moderate PostCSS (unfixable without Next.js 9 downgrade, pre-existing) — no high/critical ✓
+- [2026-05-27] — Phase 6 complete — app live at https://citadel.rickycodes.dev
 
 ### P6.6 — Playwright E2E setup + tests
 - `playwright.config.ts` — Chromium-only; `baseURL: http://localhost:3000`; `testDir: ./tests/e2e`; `webServer` block pointing at `npm run dev`; `reuseExistingServer: !process.env.CI`

@@ -1,3 +1,5 @@
+import { Ratelimit } from '@upstash/ratelimit'
+import { kv } from '@vercel/kv'
 import { getCityById } from '@/lib/cities'
 import { getCached, setCached } from '@/lib/cache'
 import { computePulseScore, getPulseLabel, getPulseColor, getTimeOfDayScore } from '@/lib/pulse'
@@ -19,8 +21,35 @@ import type {
   PulseComponents,
 } from '@/lib/types'
 
+const snapshotRatelimit = new Ratelimit({
+  redis: kv,
+  limiter: Ratelimit.slidingWindow(60, '1m'),
+  prefix: 'citadel:snapshot',
+})
+
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const ip = req.headers.get('x-forwarded-for') ?? 'anonymous'
+    try {
+      const { success, limit, remaining, reset } = await snapshotRatelimit.limit(ip)
+      if (!success) {
+        return Response.json(
+          { error: 'Too many requests. Please wait a moment.', code: 'RATE_LIMITED' } satisfies ApiError,
+          {
+            status: 429,
+            headers: {
+              'X-RateLimit-Limit': String(limit),
+              'X-RateLimit-Remaining': String(remaining),
+              'X-RateLimit-Reset': String(reset),
+              'Retry-After': String(Math.ceil((reset - Date.now()) / 1000)),
+            },
+          }
+        )
+      }
+    } catch {
+      // KV not available locally — fail open
+    }
+
     const { id } = await params
     const city = getCityById(id)
 

@@ -1,6 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import '@/tests/mocks/supabase'
 
+const mockSnapshotLimit = vi.hoisted(() =>
+  vi.fn().mockResolvedValue({ success: true, limit: 60, remaining: 59, reset: 0 })
+)
+
+vi.mock('@upstash/ratelimit', () => ({
+  Ratelimit: class {
+    limit = mockSnapshotLimit
+    static slidingWindow = vi.fn().mockReturnValue({})
+  },
+}))
+
+vi.mock('@vercel/kv', () => ({ kv: {} }))
+
 vi.mock('@/lib/data/weather', () => ({
   fetchWeather: vi.fn().mockResolvedValue({
     temperature: 72,
@@ -73,6 +86,18 @@ function makeContext(id: string) {
 describe('GET /api/city/[id]/snapshot', () => {
   beforeEach(() => {
     vi.mocked(getCached).mockResolvedValue(null)
+    mockSnapshotLimit.mockResolvedValue({ success: true, limit: 60, remaining: 59, reset: 0 })
+  })
+
+  it('returns 429 when rate limit is exceeded', async () => {
+    mockSnapshotLimit.mockResolvedValueOnce({ success: false, limit: 60, remaining: 0, reset: Date.now() + 60000 })
+    const res = await GET(
+      new Request('http://localhost/api/city/new-york/snapshot'),
+      makeContext('new-york')
+    )
+    expect(res.status).toBe(429)
+    const body = await res.json()
+    expect(body.code).toBe('RATE_LIMITED')
   })
 
   it('returns 404 for unknown city ID xyz', async () => {

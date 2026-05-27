@@ -4,7 +4,7 @@
 
 A live city intelligence dashboard where the map is the entire interface. Four US cities, eight external APIs aggregated server-side, a custom orbital SVG pulse UI, and a streaming Anthropic AI assistant that answers questions about current city conditions.
 
-> Status: In development &nbsp;·&nbsp; Stack: Next.js 15 · TypeScript · Mapbox GL JS · Anthropic Claude · Supabase
+> **Live:** [citadel.rickycodes.dev](https://citadel.rickycodes.dev) &nbsp;·&nbsp; Phase 6 — Complete &nbsp;·&nbsp; Stack: Next.js 15 · TypeScript · Mapbox GL JS · Anthropic Claude · Supabase
 
 ---
 
@@ -223,12 +223,12 @@ tests/
 
 | Phase | Description | Status |
 |-------|-------------|--------|
-| 1 — Foundation | Types, lib functions, all data fetchers, API routes, Supabase cache | In progress |
-| 2 — Shell & Map | Next.js app, full-viewport Mapbox map, city routing, dark/light mode | Not started |
-| 3 — Orbital & Panels | Custom SVG orbital UI, all 6 data panels, nav | Not started |
-| 4 — AI & Chat | Streaming chat, city briefings, anomaly AI descriptions | Not started |
-| 5 — Map Layers | GeoJSON layers (AQ, events, transit, crowd, crime) | Not started |
-| 6 — Polish & Deploy | Accessibility audit, performance, E2E tests, Vercel deploy | Not started |
+| 1 — Foundation | Types, lib functions, all data fetchers, API routes, Supabase cache | ✅ Complete |
+| 2 — Shell & Map | Next.js app, full-viewport Mapbox map, city routing, dark/light mode | ✅ Complete |
+| 3 — Orbital & Panels | Custom SVG orbital UI, all 6 data panels, nav | ✅ Complete |
+| 4 — AI & Chat | Streaming chat, city briefings, anomaly AI descriptions | ✅ Complete |
+| 5 — Map Layers | GeoJSON layers (AQ, events, transit, crowd, crime) | ✅ Complete |
+| 6 — Polish & Deploy | Accessibility audit, performance, E2E tests, Vercel deploy | ✅ Complete |
 
 ---
 
