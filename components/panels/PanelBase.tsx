@@ -111,6 +111,7 @@ export default function PanelBase({ anchor, onClose, title, children }: PanelBas
       aria-modal="true"
       tabIndex={-1}
       aria-label={title}
+      data-panel="true"
       style={{
           position: 'absolute',
           width: '280px',

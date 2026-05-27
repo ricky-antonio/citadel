@@ -6,6 +6,19 @@ Phase 6 — Polish & Deploy (in progress)
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P6.4 — Light mode polish + responsive breakpoints
+- `app/globals.css` — added `--wordmark-color: var(--amber)` to `:root`; added `--wordmark-color: #1A1200` to `[data-theme='light']`; added responsive breakpoints: tablet (≤1023px): panels 240px, orbital scale 0.8, nav gap/padding compressed; mobile (≤767px): orbital repositioned to bottom-center at 60% scale, panels become full-width bottom sheets (max-height 70vh), chat drawer 85vh; all overrides use `!important` to beat inline styles
+- `components/nav/NavBar.tsx` — CITADEL wordmark `color: 'var(--amber)'` → `color: 'var(--wordmark-color)'` (amber on dark, `#1A1200` on light for WCAG AA contrast); added `data-nav="true"` to pill container for responsive target
+- `components/orbital/OrbitalLayout.tsx` — added `data-orbital="true"` to outer container for responsive scale/reposition
+- `components/panels/PanelBase.tsx` — added `data-panel="true"` to dialog div for responsive width and mobile bottom-sheet
+- `components/chat/ChatDrawer.tsx` — added `data-chat-drawer="true"` for mobile height override; replaced hardcoded `rgba(232,160,32,0.20)` border with `var(--panel-border)`
+- `app/city/[id]/page.tsx` — loading skeleton: `background: '#060A0F'` → `background: 'var(--bg-base)'` (adapts to light mode)
+- `components/panels/HistoryPanel.tsx` — SVG midpoint guide: `stroke="rgba(255,255,255,0.06)"` → `stroke="var(--border-subtle)"` (was invisible on light panel background)
+- `components/panels/AnomalyPanel.tsx` — MetricBadge: `#E8A020` → `var(--amber)`, `#E8A0201A` → `var(--amber-bg)`, `#E8A0204D` → `rgba(232,160,32,0.30)` for semantic correctness
+- `npm run type-check` — zero errors ✓
+- `npm test` — 289/289 pass ✓
+- Next: P6.5 — Performance audit
+
 ### P6.3 — Accessibility audit + fixes
 - `components/orbital/OrbitalMetric.tsx` — updated `aria-label` from "Click to expand" → "Press Enter to expand"; added `isExpanded` prop; added `aria-expanded={isExpanded}` attribute
 - `components/orbital/OrbitalLayout.tsx` — added optional `activePanel?: string | null` prop; passes `isExpanded={activePanel === metric}` to each of the 5 OrbitalMetric nodes

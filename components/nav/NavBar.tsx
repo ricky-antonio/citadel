@@ -22,6 +22,7 @@ export default function NavBar({
 }: NavBarProps) {
   return (
     <div
+      data-nav="true"
       style={{
         position: 'absolute',
         top: '16px',
@@ -46,7 +47,7 @@ export default function NavBar({
           fontWeight: 900,
           fontSize: '14px',
           letterSpacing: '0.2em',
-          color: 'var(--amber)',
+          color: 'var(--wordmark-color)',
         }}
       >
         CITADEL

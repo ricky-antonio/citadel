@@ -82,7 +82,7 @@ export default function HistoryPanel({ cityId, onClose }: HistoryPanelProps) {
               <line
                 x1={0} y1={CHART_H / 2}
                 x2={CHART_W} y2={CHART_H / 2}
-                stroke="rgba(255,255,255,0.06)"
+                stroke="var(--border-subtle)"
                 strokeWidth={1}
               />
               <polyline

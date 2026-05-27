@@ -114,7 +114,7 @@ export default function CityPage() {
           style={{
             position: 'absolute',
             inset: 0,
-            background: '#060A0F',
+            background: 'var(--bg-base)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

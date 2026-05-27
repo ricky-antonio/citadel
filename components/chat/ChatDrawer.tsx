@@ -175,6 +175,7 @@ export default function ChatDrawer({ cityId, snapshot, onClose }: Props) {
 
   return (
     <div
+      data-chat-drawer="true"
       style={{
         position: 'absolute',
         bottom: 0,
@@ -183,7 +184,7 @@ export default function ChatDrawer({ cityId, snapshot, onClose }: Props) {
         height: '42vh',
         background: 'var(--chat-bg)',
         backdropFilter: 'blur(16px)',
-        borderTop: '1px solid rgba(232, 160, 32, 0.20)',
+        borderTop: '1px solid var(--panel-border)',
         zIndex: 'var(--z-chat)' as unknown as number,
         display: 'flex',
         flexDirection: 'column',
