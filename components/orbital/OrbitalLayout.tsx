@@ -57,6 +57,7 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         zIndex: 'var(--z-orbital)',
+        pointerEvents: 'auto',
       }}
     >
       <div style={{ position: 'relative' }}>

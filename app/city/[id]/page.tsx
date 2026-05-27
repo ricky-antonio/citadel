@@ -139,6 +139,7 @@ export default function CityPage() {
             inset: 0,
             opacity: fading ? 0 : 1,
             transition: 'opacity 300ms ease',
+            pointerEvents: 'none',
           }}
         >
           <OrbitalLayout snapshot={snapshot} onOpenPanel={setActivePanel} />

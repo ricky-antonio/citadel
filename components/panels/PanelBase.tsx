@@ -121,6 +121,7 @@ export default function PanelBase({ anchor, onClose, title, children }: PanelBas
           borderRadius: 'var(--radius-lg)',
           padding: '16px',
           zIndex: 'var(--z-panels)',
+          pointerEvents: 'auto',
           opacity: mounted ? 1 : 0,
           transform: getTransform(anchor, mounted),
           transition: 'opacity 200ms ease, transform 200ms ease',
