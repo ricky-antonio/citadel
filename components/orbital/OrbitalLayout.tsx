@@ -27,6 +27,19 @@ function getTransitColor(delayCount: number): string {
   return '#E8A020'
 }
 
+// Returns CSS position for a node on a circle of radius r,
+// at angle degrees clockwise from North, centered in a 280×280 container.
+function nodePos(angleDeg: number, r = 160): { top: string; left: string; transform: string } {
+  const rad = (angleDeg * Math.PI) / 180
+  const x = Math.round(r * Math.sin(rad))
+  const y = Math.round(-r * Math.cos(rad))
+  return {
+    top: `calc(50% + ${y}px)`,
+    left: `calc(50% + ${x}px)`,
+    transform: 'translate(-50%, -50%)',
+  }
+}
+
 export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
   const aqiColor = getAqiColor(snapshot.airQuality.aqi)
   const transitColor = getTransitColor(snapshot.transit.delayCount)
@@ -53,15 +66,8 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
           pulseColor={snapshot.pulseColor}
         />
 
-        {/* Weather — North */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-48px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        >
+        {/* Weather — 0° (North) */}
+        <div style={{ position: 'absolute', ...nodePos(0) }}>
           <OrbitalMetric
             metric="weather"
             value={`${snapshot.weather.temperature}°F`}
@@ -72,77 +78,50 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
           />
         </div>
 
-        {/* AQI — East */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            right: '-88px',
-            transform: 'translateY(-50%)',
-          }}
-        >
+        {/* AQI — 72° (NE) */}
+        <div style={{ position: 'absolute', ...nodePos(72) }}>
           <OrbitalMetric
             metric="aq"
             value={`AQI ${snapshot.airQuality.aqi}`}
             label="AQI"
             color={aqiColor}
-            animationDelay="1s"
+            animationDelay="0.8s"
             onOpen={() => onOpenPanel('aq')}
           />
         </div>
 
-        {/* Transit — South */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '-48px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        >
+        {/* Transit — 144° (SE) */}
+        <div style={{ position: 'absolute', ...nodePos(144) }}>
           <OrbitalMetric
             metric="transit"
             value={transitValue}
             label="TRANSIT"
             color={transitColor}
-            animationDelay="2s"
+            animationDelay="1.6s"
             onOpen={() => onOpenPanel('transit')}
           />
         </div>
 
-        {/* Events — West */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '-88px',
-            transform: 'translateY(-50%)',
-          }}
-        >
+        {/* Events — 216° (SW) */}
+        <div style={{ position: 'absolute', ...nodePos(216) }}>
           <OrbitalMetric
             metric="events"
             value={`${snapshot.events.count} events`}
             label="EVENTS"
             color="#E8A020"
-            animationDelay="3s"
+            animationDelay="2.4s"
             onOpen={() => onOpenPanel('events')}
           />
         </div>
 
-        {/* Safety — NE diagonal */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-28px',
-            right: '-72px',
-          }}
-        >
+        {/* Safety — 288° (NW) */}
+        <div style={{ position: 'absolute', ...nodePos(288) }}>
           <OrbitalMetric
             metric="crime"
             value={`${snapshot.crime.safetyScore}`}
             label="SAFETY"
             color={safetyColor}
-            animationDelay="4s"
+            animationDelay="3.2s"
             onOpen={() => onOpenPanel('crime')}
           />
         </div>

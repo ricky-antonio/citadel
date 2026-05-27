@@ -1,21 +1,14 @@
 import type { City, CrimeData, CrimeIncident } from '@/lib/types'
 import { CRIME_FALLBACK } from '@/lib/data/fallbacks'
 
-function thirtyDaysAgoIso(): string {
-  const d = new Date()
-  d.setDate(d.getDate() - 30)
-  return d.toISOString().split('T')[0]
-}
-
 function safetyScore(totalIncidents: number): number {
   return Math.round(100 - Math.min(100, (totalIncidents / 500) * 100))
 }
 
 async function fetchNycCrime(): Promise<CrimeData> {
-  const since = thirtyDaysAgoIso()
   const url =
     `https://data.cityofnewyork.us/resource/5uac-w243.json` +
-    `?$where=cmplnt_fr_dt>'${since}'&$limit=500&$select=latitude,longitude,ofns_desc,cmplnt_fr_dt`
+    `?$order=cmplnt_fr_dt+DESC&$limit=500&$select=latitude,longitude,ofns_desc,cmplnt_fr_dt`
   const res = await fetch(url)
   if (!res.ok) throw new Error(`NYC crime HTTP ${res.status}`)
   const rows = (await res.json()) as Array<Record<string, string>>
@@ -31,10 +24,9 @@ async function fetchNycCrime(): Promise<CrimeData> {
 }
 
 async function fetchSfCrime(): Promise<CrimeData> {
-  const since = thirtyDaysAgoIso()
   const url =
     `https://data.sfgov.org/resource/wg3w-h783.json` +
-    `?$where=incident_date>'${since}'&$limit=500&$select=latitude,longitude,incident_category,incident_date`
+    `?$order=incident_date+DESC&$limit=500&$select=latitude,longitude,incident_category,incident_date`
   const res = await fetch(url)
   if (!res.ok) throw new Error(`SF crime HTTP ${res.status}`)
   const rows = (await res.json()) as Array<Record<string, string>>
@@ -50,10 +42,9 @@ async function fetchSfCrime(): Promise<CrimeData> {
 }
 
 async function fetchChicagoCrime(): Promise<CrimeData> {
-  const since = thirtyDaysAgoIso()
   const url =
     `https://data.cityofchicago.org/resource/ijzp-q8t2.json` +
-    `?$where=date>'${since}'&$limit=500&$select=latitude,longitude,primary_type,date`
+    `?$order=date+DESC&$limit=500&$select=latitude,longitude,primary_type,date`
   const res = await fetch(url)
   if (!res.ok) throw new Error(`Chicago crime HTTP ${res.status}`)
   const rows = (await res.json()) as Array<Record<string, string>>
@@ -78,11 +69,11 @@ interface DcFeature {
 }
 
 async function fetchDcCrime(): Promise<CrimeData> {
-  const since = thirtyDaysAgoIso()
   const params = new URLSearchParams({
-    where: `REPORT_DAT >= DATE '${since}'`,
+    where: '1=1',
     outFields: 'LATITUDE,LONGITUDE,OFFENSE,REPORT_DAT',
     returnGeometry: 'false',
+    orderByFields: 'REPORT_DAT DESC',
     resultRecordCount: '500',
     f: 'json',
   })
