@@ -13,6 +13,7 @@ export function OrbitalCore({ pulseScore, pulseLabel }: OrbitalCoreProps) {
       role="img"
       aria-label={`Pulse score ${pulseScore} — ${pulseLabel}`}
       aria-live="polite"
+      aria-atomic="true"
     >
       <circle cx="140" cy="140" r="139" fill="none" stroke="rgba(232,160,32,0.12)" strokeWidth="1" />
       <circle cx="140" cy="140" r="99"  fill="none" stroke="rgba(232,160,32,0.18)" strokeWidth="1" />

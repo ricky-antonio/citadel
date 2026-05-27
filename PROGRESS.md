@@ -6,6 +6,26 @@ Phase 6 — Polish & Deploy (in progress)
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P6.3 — Accessibility audit + fixes
+- `components/orbital/OrbitalMetric.tsx` — updated `aria-label` from "Click to expand" → "Press Enter to expand"; added `isExpanded` prop; added `aria-expanded={isExpanded}` attribute
+- `components/orbital/OrbitalLayout.tsx` — added optional `activePanel?: string | null` prop; passes `isExpanded={activePanel === metric}` to each of the 5 OrbitalMetric nodes
+- `components/panels/PanelBase.tsx` — added `aria-modal="true"` to the dialog div
+- `components/orbital/OrbitalCore.tsx` — added `aria-atomic="true"` to the `aria-live="polite"` SVG region
+- `components/chat/ChatDrawer.tsx` — added `aria-live="polite" aria-atomic="false"` to the messages container div
+- `components/nav/LayerToggle.tsx` — added `aria-label="Toggle map layers"` to trigger button
+- `components/nav/CitySelector.tsx` — added `aria-label="Select city"` to trigger button
+- `app/globals.css` — added `.sr-only` utility class (position absolute, 1×1px, hidden from visual layout)
+- `components/map/CityMap.tsx` — added `aria-label="Interactive city map. Use the orbital controls above to view data."` to the Map container
+- `app/city/[id]/page.tsx` — added `cityAnnouncement` state; `handleCityChange` sets "Now showing [City Name]" on switch; visually-hidden `<span class="sr-only" aria-live="polite" aria-atomic="true">` announces city switch to screen readers; `activePanel` passed to `OrbitalLayout`
+- **Color contrast audit (dark theme):** `--tx-1 #F0EDE8` on panel bg ≈ 16.9:1 ✓; `--tx-2 #8A9BAA` on panel bg ≈ 7.3:1 ✓; amber `#E8A020` on `#060A0F` ≈ 9.2:1 ✓ — all pass WCAG AA
+- **ThemeToggle**: ✓ already had `aria-label`; **ChatDrawer close button**: ✓ already had `aria-label="Close chat"`
+- `tests/components/OrbitalLayout.test.tsx` — added test: `aria-expanded` true on active metric, false on inactive
+- `tests/components/PanelBase.test.tsx` — updated dialog test to also assert `aria-modal="true"`
+- `tests/components/CitySelector.test.tsx` — updated 7 tests to query trigger button via `{ name: /select city/i }` (aria-label now overrides city-name visible text as accessible name)
+- `npm run type-check` — zero errors ✓
+- `npm test` — 289/289 pass ✓
+- Next: P6.4 — Light mode polish + responsive
+
 ### P6.1 — Empty states + error recovery
 - `components/panels/TransitPanel.tsx` — added `transit.status === 'unknown'` check → "Transit data temporarily unavailable." (above the existing delayCount === 0 check)
 - `components/panels/EventsPanel.tsx` — updated empty state: calendar icon 📅 + "No major events tonight." + sub-text "Check back this afternoon for evening event listings."

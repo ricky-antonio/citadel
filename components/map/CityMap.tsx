@@ -51,6 +51,7 @@ export default function CityMap({ city, snapshot, activeLayers }: CityMapProps) 
       style={{ width: '100vw', height: '100vh' }}
       mapStyle={city.mapStyle}
       attributionControl={false}
+      aria-label="Interactive city map. Use the orbital controls above to view data."
     >
       <MapLayers snapshot={snapshot} activeLayers={activeLayers} mapRef={mapRef} />
     </Map>

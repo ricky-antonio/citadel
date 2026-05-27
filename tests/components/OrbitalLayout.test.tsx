@@ -175,4 +175,16 @@ describe('OrbitalLayout', () => {
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={vi.fn()} />)
     expect(screen.getByTestId('orbital-metric-crime')).toHaveAttribute('tabindex', '0')
   })
+
+  it('sets aria-expanded on the active metric node', () => {
+    render(
+      <OrbitalLayout
+        snapshot={makeMockSnapshot()}
+        onOpenPanel={vi.fn()}
+        activePanel="weather"
+      />
+    )
+    expect(screen.getByTestId('orbital-metric-weather')).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByTestId('orbital-metric-aq')).toHaveAttribute('aria-expanded', 'false')
+  })
 })

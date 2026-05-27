@@ -30,7 +30,7 @@ describe('CitySelector', () => {
         onCityChange={vi.fn()}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: /new york/i }))
+    fireEvent.click(screen.getByRole('button', { name: /select city/i }))
     expect(screen.getByRole('listbox')).toBeInTheDocument()
   })
 
@@ -41,7 +41,7 @@ describe('CitySelector', () => {
         onCityChange={vi.fn()}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: /new york/i }))
+    fireEvent.click(screen.getByRole('button', { name: /select city/i }))
     expect(screen.getByText(/Chicago/)).toBeInTheDocument()
     expect(screen.getByText(/San Francisco/)).toBeInTheDocument()
     expect(screen.getByText(/Washington/)).toBeInTheDocument()
@@ -55,7 +55,7 @@ describe('CitySelector', () => {
         onCityChange={onCityChange}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: /new york/i }))
+    fireEvent.click(screen.getByRole('button', { name: /select city/i }))
     const chicagoOption = screen.getAllByRole('option').find(
       el => el.textContent?.includes('Chicago')
     )!
@@ -70,7 +70,7 @@ describe('CitySelector', () => {
         onCityChange={vi.fn()}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: /new york/i }))
+    fireEvent.click(screen.getByRole('button', { name: /select city/i }))
     const chicagoOption = screen.getAllByRole('option').find(
       el => el.textContent?.includes('Chicago')
     )!
@@ -85,7 +85,7 @@ describe('CitySelector', () => {
         onCityChange={vi.fn()}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: /new york/i }))
+    fireEvent.click(screen.getByRole('button', { name: /select city/i }))
     expect(screen.getByRole('listbox')).toBeInTheDocument()
     fireEvent.keyDown(document, { key: 'Escape' })
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
@@ -98,7 +98,7 @@ describe('CitySelector', () => {
         onCityChange={vi.fn()}
       />
     )
-    const trigger = screen.getByRole('button', { name: /new york/i })
+    const trigger = screen.getByRole('button', { name: /select city/i })
     expect(trigger).toHaveAttribute('aria-haspopup', 'listbox')
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
     fireEvent.click(trigger)
@@ -113,7 +113,7 @@ describe('CitySelector', () => {
         pulseScores={{ 'new-york': 55, chicago: 30 }}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: /new york/i }))
+    fireEvent.click(screen.getByRole('button', { name: /select city/i }))
     // scores 55 and 30 should appear in the dropdown
     expect(screen.getAllByText('55').length).toBeGreaterThan(0)
     expect(screen.getByText('30')).toBeInTheDocument()
@@ -126,7 +126,7 @@ describe('CitySelector', () => {
         onCityChange={vi.fn()}
       />
     )
-    fireEvent.click(screen.getByRole('button', { name: /chicago/i }))
+    fireEvent.click(screen.getByRole('button', { name: /select city/i }))
     const selected = screen.getAllByRole('option').find(
       el => el.getAttribute('aria-selected') === 'true'
     )!

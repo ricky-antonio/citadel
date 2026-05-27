@@ -67,6 +67,7 @@ export default function CitySelector({
       <button
         aria-haspopup="listbox"
         aria-expanded={open}
+        aria-label="Select city"
         onClick={() => setOpen(prev => !prev)}
         style={{
           display: 'flex',

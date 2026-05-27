@@ -30,6 +30,7 @@ export default function CityPage() {
   const router = useRouter()
 
   const [cityId, setCityId] = useState(() => rawParams.id as string)
+  const [cityAnnouncement, setCityAnnouncement] = useState('')
   const city = getCityById(cityId)
 
   const [snapshot, setSnapshot] = useState<CitySnapshot | null>(null)
@@ -97,6 +98,8 @@ export default function CityPage() {
       setActivePanel(null)
       setChatOpen(false)
       window.history.pushState({}, '', `/city/${newCityId}`)
+      const newCity = getCityById(newCityId)
+      if (newCity) setCityAnnouncement(`Now showing ${newCity.name}`)
     }, 300)
   }
 
@@ -150,6 +153,14 @@ export default function CityPage() {
         </div>
       )}
 
+      <span
+        className="sr-only"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {cityAnnouncement}
+      </span>
+
       <NavBar
         cityId={cityId}
         activeLayers={activeLayers}
@@ -176,7 +187,7 @@ export default function CityPage() {
             pointerEvents: 'none',
           }}
         >
-          <OrbitalLayout snapshot={snapshot} onOpenPanel={setActivePanel} />
+          <OrbitalLayout snapshot={snapshot} onOpenPanel={setActivePanel} activePanel={activePanel} />
 
           {activePanel === 'weather' && (
             <WeatherPanel weather={snapshot.weather} onClose={() => setActivePanel(null)} />

@@ -52,6 +52,7 @@ export default function LayerToggle({ activeLayers, onLayerChange }: LayerToggle
       <button
         onClick={() => setOpen(prev => !prev)}
         aria-expanded={open}
+        aria-label="Toggle map layers"
         style={{
           display: 'flex',
           alignItems: 'center',

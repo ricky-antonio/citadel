@@ -9,9 +9,10 @@ type OrbitalMetricProps = {
   color: string
   animationDelay: string
   onOpen: () => void
+  isExpanded?: boolean
 }
 
-export function OrbitalMetric({ metric, value, label, color, animationDelay, onOpen }: OrbitalMetricProps) {
+export function OrbitalMetric({ metric, value, label, color, animationDelay, onOpen, isExpanded = false }: OrbitalMetricProps) {
   function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
@@ -23,7 +24,8 @@ export function OrbitalMetric({ metric, value, label, color, animationDelay, onO
     <div
       role="button"
       tabIndex={0}
-      aria-label={`${label}: ${value}. Click to expand.`}
+      aria-label={`${label}: ${value}. Press Enter to expand.`}
+      aria-expanded={isExpanded}
       data-testid={`orbital-metric-${metric}`}
       onClick={onOpen}
       onKeyDown={handleKeyDown}

@@ -32,7 +32,7 @@ describe('PanelBase', () => {
     expect(onClose).toHaveBeenCalledOnce()
   })
 
-  it('has role="dialog" and aria-label matching the title', () => {
+  it('has role="dialog", aria-label matching the title, and aria-modal="true"', () => {
     render(
       <PanelBase anchor="bottom-left" onClose={vi.fn()} title="AIR QUALITY">
         <span>child</span>
@@ -41,6 +41,7 @@ describe('PanelBase', () => {
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()
     expect(dialog).toHaveAttribute('aria-label', 'AIR QUALITY')
+    expect(dialog).toHaveAttribute('aria-modal', 'true')
   })
 
   it('renders with left-center anchor without error', () => {

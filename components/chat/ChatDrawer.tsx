@@ -234,6 +234,8 @@ export default function ChatDrawer({ cityId, snapshot, onClose }: Props) {
       {/* Messages area */}
       <div
         ref={messagesContainerRef}
+        aria-live="polite"
+        aria-atomic="false"
         style={{
           flex: 1,
           overflowY: 'auto',

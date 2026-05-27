@@ -108,6 +108,7 @@ export default function PanelBase({ anchor, onClose, title, children }: PanelBas
     <div
       ref={panelRef}
       role="dialog"
+      aria-modal="true"
       tabIndex={-1}
       aria-label={title}
       style={{

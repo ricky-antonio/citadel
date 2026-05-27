@@ -7,6 +7,7 @@ import { OrbitalMetric } from './OrbitalMetric'
 type OrbitalLayoutProps = {
   snapshot: CitySnapshot
   onOpenPanel: (panel: 'weather' | 'aq' | 'transit' | 'events' | 'crime') => void
+  activePanel?: string | null
 }
 
 function getAqiColor(aqi: number): string {
@@ -40,7 +41,7 @@ function nodePos(angleDeg: number, r = 160): { top: string; left: string; transf
   }
 }
 
-export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
+export function OrbitalLayout({ snapshot, onOpenPanel, activePanel }: OrbitalLayoutProps) {
   const aqiColor = getAqiColor(snapshot.airQuality.aqi)
   const transitColor = getTransitColor(snapshot.transit.delayCount)
   const safetyColor = getSafetyColor(snapshot.crime.safetyScore)
@@ -76,6 +77,7 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
             color="#60A5FA"
             animationDelay="0s"
             onOpen={() => onOpenPanel('weather')}
+            isExpanded={activePanel === 'weather'}
           />
         </div>
 
@@ -88,6 +90,7 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
             color={aqiColor}
             animationDelay="0.8s"
             onOpen={() => onOpenPanel('aq')}
+            isExpanded={activePanel === 'aq'}
           />
         </div>
 
@@ -100,6 +103,7 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
             color={transitColor}
             animationDelay="1.6s"
             onOpen={() => onOpenPanel('transit')}
+            isExpanded={activePanel === 'transit'}
           />
         </div>
 
@@ -112,6 +116,7 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
             color="#E8A020"
             animationDelay="2.4s"
             onOpen={() => onOpenPanel('events')}
+            isExpanded={activePanel === 'events'}
           />
         </div>
 
@@ -124,6 +129,7 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
             color={safetyColor}
             animationDelay="3.2s"
             onOpen={() => onOpenPanel('crime')}
+            isExpanded={activePanel === 'crime'}
           />
         </div>
       </div>
