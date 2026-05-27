@@ -72,6 +72,13 @@ export async function POST(req: Request) {
 
     const snapshot = await getCitySnapshot(cityId)
 
+    if (process.env.NODE_ENV === 'development') {
+      const userMsg = buildUserMessage(message, snapshot)
+      if (userMsg.length > 3200) {
+        console.warn('Context budget exceeded:', userMsg.length, 'chars')
+      }
+    }
+
     const client = new Anthropic()
     const stream = await client.messages.stream({
       model: 'claude-sonnet-4-6',

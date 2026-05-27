@@ -20,9 +20,9 @@ export default defineConfig({
         'vitest.config.ts',
       ],
       thresholds: {
-        lines: 82,
-        functions: 82,
-        branches: 77,
+        lines: 85,
+        functions: 85,
+        branches: 80,
       },
     },
   },

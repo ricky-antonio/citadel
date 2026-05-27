@@ -6,6 +6,21 @@ Phase 6 — Polish & Deploy (in progress)
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P6.5 — Performance audit
+- **Bundle analysis:** mapbox-gl is in the 1.77 MB lazy chunk `c36f3faa` — absent from all initial page chunks; `/city/[id]` first-load JS is 121 kB. Dynamic import with `ssr: false` confirmed working.
+- **CityMap remount:** no `key` prop on `<CityMap>` in `page.tsx` — city switch flows through prop changes only; map never remounts on 5-minute poll.
+- **Context budget:** dev warning already present in `lib/ai/context.ts:49`; added prescribed dev-only guard to `app/api/chat/route.ts` checking full `buildUserMessage` output length.
+- **Virtual list:** `@tanstack/react-virtual` wired in HistoryPanel for circle points; with dense data (200 pts in 248px SVG) all points fall within the virtual window — structurally correct, virtualization benefit is design-limited by the fixed-width chart.
+- **Lighthouse:** requires a running browser + production server — manual step; target Performance ≥ 85, Accessibility ≥ 90, Best Practices ≥ 90.
+- `vitest.config.ts` — thresholds raised to Phase 6 targets: lines 85%, functions 85%, branches 80%.
+- `tests/lib/data/crime.test.ts` — expanded from 3 → 20 tests: added SF, Chicago, DC city branch coverage; null field fallbacks (`"Unknown"`, empty date); HTTP error paths for all four providers; DC missing-features array; DC null lat/lng filter; branches raised from 35.71% → ~80%+ for crime.ts.
+- `app/api/chat/route.ts` — added dev-only context budget guard: logs warning when `buildUserMessage` output exceeds 3200 chars.
+- `npm run type-check` — zero errors ✓
+- `npm test` — 309/309 pass ✓
+- `npm run test:coverage` — lines 92.58%, functions 93.18%, branches 82.02% (all above 85/85/80 Phase 6 thresholds) ✓
+- `npm run build` — production build succeeds; first-load JS 121 kB ✓
+- Next: P6.6 — Playwright E2E setup + tests
+
 ### P6.4 — Light mode polish + responsive breakpoints
 - `app/globals.css` — added `--wordmark-color: var(--amber)` to `:root`; added `--wordmark-color: #1A1200` to `[data-theme='light']`; added responsive breakpoints: tablet (≤1023px): panels 240px, orbital scale 0.8, nav gap/padding compressed; mobile (≤767px): orbital repositioned to bottom-center at 60% scale, panels become full-width bottom sheets (max-height 70vh), chat drawer 85vh; all overrides use `!important` to beat inline styles
 - `components/nav/NavBar.tsx` — CITADEL wordmark `color: 'var(--amber)'` → `color: 'var(--wordmark-color)'` (amber on dark, `#1A1200` on light for WCAG AA contrast); added `data-nav="true"` to pill container for responsive target
