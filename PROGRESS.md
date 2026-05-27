@@ -1,10 +1,22 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 5 — Map Layers
+Phase 6 — Polish & Deploy (not started)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P5.6 — Phase 5 final checklist
+- `vitest.config.ts` — thresholds raised to Phase 5 targets: lines 82%, functions 82%, branches 77%
+- `npm audit fix` — resolved high-severity `tmp` path traversal CVE; 2 moderate PostCSS issues remain (unfixable without downgrading Next.js to v9) ✓
+- `npm run type-check` — zero errors ✓
+- `npm test` — 271/271 pass ✓
+- `npm run test:coverage` — lines 89.09%, functions 88.51%, branches 77.26% (all above 82/82/77 thresholds) ✓
+- `npm run build` — production build succeeds; all 5 API routes dynamic ✓
+- Crime data verified: `GET /api/city/new-york/snapshot` → `crime.totalIncidents: 500`, `crime.recentIncidents` has 500 entries with lat/lng/category from NYC Open Data — not the fallback stub ✓
+- `/city/new-york` — HTTP 200, no `__NEXT_ERROR__`, clean server log ✓
+- Phase 5 complete ✓
+- Next: Phase 6 — Polish & Deploy
 
 ### P5.5b — Crime display surfaces (safety orbital node + CrimePanel + CrimeLayer)
 - `components/orbital/OrbitalMetric.tsx` — added `'crime'` to metric type union
