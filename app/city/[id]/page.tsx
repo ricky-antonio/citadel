@@ -14,6 +14,7 @@ import TransitPanel from '@/components/panels/TransitPanel'
 import EventsPanel from '@/components/panels/EventsPanel'
 import AnomalyPanel from '@/components/panels/AnomalyPanel'
 import HistoryPanel from '@/components/panels/HistoryPanel'
+import CrimePanel from '@/components/panels/CrimePanel'
 
 const CityMap = dynamic(() => import('@/components/map/CityMap'), {
   ssr: false,
@@ -22,7 +23,7 @@ const CityMap = dynamic(() => import('@/components/map/CityMap'), {
   ),
 })
 
-type ActivePanel = 'weather' | 'aq' | 'transit' | 'events' | 'anomaly' | 'history' | null
+type ActivePanel = 'weather' | 'aq' | 'transit' | 'events' | 'anomaly' | 'history' | 'crime' | null
 
 export default function CityPage() {
   const rawParams = useParams()
@@ -35,7 +36,7 @@ export default function CityPage() {
   const [loading, setLoading] = useState(true)
   const [activePanel, setActivePanel] = useState<ActivePanel>(null)
   const [chatOpen, setChatOpen] = useState(false)
-  const [activeLayers, setActiveLayers] = useState<string[]>(['air-quality', 'events', 'transit', 'crowd'])
+  const [activeLayers, setActiveLayers] = useState<string[]>(['air-quality', 'events', 'transit', 'crowd', 'crime'])
   const [fading, setFading] = useState(false)
 
   const refetch = useCallback(async () => {
@@ -159,6 +160,9 @@ export default function CityPage() {
           )}
           {activePanel === 'history' && (
             <HistoryPanel cityId={cityId} onClose={() => setActivePanel(null)} />
+          )}
+          {activePanel === 'crime' && snapshot && (
+            <CrimePanel crime={snapshot.crime} onClose={() => setActivePanel(null)} />
           )}
         </div>
       )}

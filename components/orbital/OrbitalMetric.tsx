@@ -3,7 +3,7 @@
 import React from 'react'
 
 type OrbitalMetricProps = {
-  metric: 'weather' | 'aq' | 'transit' | 'events'
+  metric: 'weather' | 'aq' | 'transit' | 'events' | 'crime'
   value: string
   label: string
   color: string

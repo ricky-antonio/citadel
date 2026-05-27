@@ -9,6 +9,7 @@ import { updateAQLayer } from '@/components/map/AQLayer'
 import { updateEventLayer } from '@/components/map/EventLayer'
 import { updateTransitLayer } from '@/components/map/TransitLayer'
 import { updateCrowdLayer } from '@/components/map/CrowdLayer'
+import { updateCrimeLayer } from '@/components/map/CrimeLayer'
 
 vi.mock('@/components/map/AQLayer', () => ({
   updateAQLayer: vi.fn(),
@@ -24,6 +25,10 @@ vi.mock('@/components/map/TransitLayer', () => ({
 
 vi.mock('@/components/map/CrowdLayer', () => ({
   updateCrowdLayer: vi.fn(),
+}))
+
+vi.mock('@/components/map/CrimeLayer', () => ({
+  updateCrimeLayer: vi.fn(),
 }))
 
 const mockMap = {
@@ -141,6 +146,17 @@ describe('MapLayers', () => {
     )
   })
 
+  it('calls updateCrimeLayer with crime data and visibility flag', () => {
+    render(
+      <MapLayers
+        snapshot={mockSnapshot}
+        activeLayers={['crime']}
+        mapRef={makeMapRef()}
+      />
+    )
+    expect(updateCrimeLayer).toHaveBeenCalledWith(mockMap, mockSnapshot.crime, true)
+  })
+
   it('does not throw when snapshot is null', () => {
     expect(() =>
       render(<MapLayers snapshot={null} activeLayers={[]} mapRef={makeMapRef()} />)
@@ -149,6 +165,7 @@ describe('MapLayers', () => {
     expect(updateEventLayer).toHaveBeenCalledWith(mockMap, null, false)
     expect(updateTransitLayer).toHaveBeenCalledWith(mockMap, null, '', false)
     expect(updateCrowdLayer).toHaveBeenCalledWith(mockMap, null, '', false)
+    expect(updateCrimeLayer).toHaveBeenCalledWith(mockMap, null, false)
   })
 
   it('passes transit visibility as false when transit layer not in activeLayers', () => {

@@ -156,4 +156,23 @@ describe('OrbitalLayout', () => {
     render(<OrbitalLayout snapshot={snapshot} onOpenPanel={vi.fn()} />)
     expect(screen.getByText('6 delays')).toBeInTheDocument()
   })
+
+  it('renders safety score from crime data', () => {
+    const snapshot = makeMockSnapshot()
+    snapshot.crime.safetyScore = 78
+    render(<OrbitalLayout snapshot={snapshot} onOpenPanel={vi.fn()} />)
+    expect(screen.getByText('78')).toBeInTheDocument()
+  })
+
+  it('calls onOpenPanel with "crime" when safety node is clicked', () => {
+    const onOpenPanel = vi.fn()
+    render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
+    fireEvent.click(screen.getByTestId('orbital-metric-crime'))
+    expect(onOpenPanel).toHaveBeenCalledWith('crime')
+  })
+
+  it('safety node has tabIndex={0}', () => {
+    render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={vi.fn()} />)
+    expect(screen.getByTestId('orbital-metric-crime')).toHaveAttribute('tabindex', '0')
+  })
 })

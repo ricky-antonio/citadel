@@ -7,6 +7,7 @@ const LAYERS: { id: string; label: string }[] = [
   { id: 'events',      label: 'Events' },
   { id: 'transit',     label: 'Transit' },
   { id: 'crowd',       label: 'Crowd' },
+  { id: 'crime',       label: 'Crime' },
 ]
 
 interface LayerToggleProps {

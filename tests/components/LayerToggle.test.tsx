@@ -20,6 +20,7 @@ describe('LayerToggle', () => {
     expect(screen.getByLabelText('Events')).toBeInTheDocument()
     expect(screen.getByLabelText('Transit')).toBeInTheDocument()
     expect(screen.getByLabelText('Crowd')).toBeInTheDocument()
+    expect(screen.getByLabelText('Crime')).toBeInTheDocument()
   })
 
   it('shows checkboxes as unchecked when activeLayers is empty', () => {

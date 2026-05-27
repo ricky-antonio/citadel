@@ -6,6 +6,27 @@ Phase 5 — Map Layers
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P5.5b — Crime display surfaces (safety orbital node + CrimePanel + CrimeLayer)
+- `components/orbital/OrbitalMetric.tsx` — added `'crime'` to metric type union
+- `components/orbital/OrbitalLayout.tsx` — added `getSafetyColor()` helper; NE diagonal safety node showing `snapshot.crime.safetyScore` with green/amber/red coloring; `onOpenPanel('crime')` wired; panel type extended to include `'crime'`
+- `components/panels/PanelBase.tsx` — added `'top-center'` anchor: `top: '80px', left: '50%'` position; `translateX(-50%)` + slide-up transform on mount/unmount
+- `components/panels/CrimePanel.tsx` — new panel (anchor `'top-center'`); shows 36px colored safety score + label (Low risk/Moderate/Elevated); total incidents count; top-5 incident category breakdown with percentage bars
+- `components/map/CrimeLayer.tsx` — new `updateCrimeLayer(map, crime, visible)` with GeoJSON clustering (clusterRadius 40, clusterMaxZoom 14); red circle clusters + counts; individual point circles; cluster click → `getClusterExpansionZoom` + `easeTo`; point click → styled `Popup` showing category + date; cursor pointer on hover; `WeakSet` prevents duplicate handler registration
+- `components/nav/LayerToggle.tsx` — added `{ id: 'crime', label: 'Crime' }` to LAYERS array
+- `components/map/MapLayers.tsx` — imported and wired `updateCrimeLayer(map, snapshot?.crime ?? null, activeLayers.includes('crime'))`
+- `app/city/[id]/page.tsx` — `ActivePanel` type extended with `'crime'`; `CrimePanel` rendered when `activePanel === 'crime'`; `activeLayers` default now includes `'crime'`; city switch refactored to local state + `window.history.pushState` (no `router.push`) to keep CityMap mounted across city switches; loading overlay absolutely positioned over map; `setFading(false)` triggered by `snapshot !== null` in `useEffect`
+- `tests/components/CrimeLayer.test.ts` — 15 tests (7 existing + 8 new handler tests): cluster click → easeTo, no features → no-op, undefined cluster_id → no-op, getClusterExpansionZoom error → no-op, point click → Popup with coords+HTML, no properties → no-op, mouseenter sets pointer cursor, mouseleave resets cursor; uses `vi.hoisted` for `mockPopupMethods` + `vi.fn().mockImplementation(function)` for constructable Popup mock
+- `tests/components/CrimePanel.test.tsx` — 9 tests: score/label renders, Elevated/Moderate/Low risk color labels, categories + count + progress bar, empty state, top-5 capped at 5, panel title
+- `tests/components/OrbitalLayout.test.tsx` — 3 new tests: crime safety score renders, crime node click opens panel, crime node tabIndex
+- `tests/components/PanelBase.test.tsx` — 1 new test: top-center anchor renders without error
+- `tests/components/LayerToggle.test.tsx` — updated: Crime checkbox appears in dropdown
+- `tests/components/MapLayers.test.tsx` — updated: `updateCrimeLayer` mock + 2 new tests (with crime data, null snapshot)
+- `npm run type-check` — zero errors ✓
+- `npm test` — 271/271 pass ✓
+- `npm run test:coverage` — lines 88.74%, functions 88.51%, branches 77.22% (all above 82/82/77 thresholds) ✓
+- `npm run build` — production build succeeds ✓
+- Next: P5.6 — Phase 5 final checklist
+
 ### P5.5 — Wire layers into CityMap + layer toggle integration
 - `components/map/CityMap.tsx` — added `useTheme` from `next-themes`; `prevCityIdRef` + `useEffect([city.id, city.lng, city.lat, city.zoom])` calls `mapRef.current.flyTo({center, zoom, duration: 1500, essential: true})` on city change, skipping initial mount via ref comparison; `prevThemeRef` + `useEffect([theme, city.mapStyle])` calls `map.setStyle(dark style or light-v11)` on theme change, skipping initial mount via ref comparison
 - `components/map/MapLayers.tsx` — replaced `map.once('style.load', doUpdate)` + early return with `map.on('style.load', doUpdate)` (persistent) + `if (map.isStyleLoaded()) doUpdate()` + cleanup `map.off('style.load', doUpdate)`; layers now survive theme-triggered style reloads

@@ -72,6 +72,15 @@ describe('PanelBase', () => {
     expect(onClose).toHaveBeenCalledOnce()
   })
 
+  it('renders with top-center anchor without error', () => {
+    render(
+      <PanelBase anchor="top-center" onClose={vi.fn()} title="SAFETY">
+        <span>top-center content</span>
+      </PanelBase>
+    )
+    expect(screen.getByText('top-center content')).toBeInTheDocument()
+  })
+
   it('does not call onClose when mousedown occurs inside the panel', () => {
     const onClose = vi.fn()
     render(

@@ -8,6 +8,7 @@ import { updateAQLayer } from './AQLayer'
 import { updateEventLayer } from './EventLayer'
 import { updateTransitLayer } from './TransitLayer'
 import { updateCrowdLayer } from './CrowdLayer'
+import { updateCrimeLayer } from './CrimeLayer'
 
 interface MapLayersProps {
   snapshot: CitySnapshot | null
@@ -35,6 +36,7 @@ export default function MapLayers({ snapshot, activeLayers, mapRef }: MapLayersP
         snapshot?.city.id ?? '',
         activeLayers.includes('crowd')
       )
+      updateCrimeLayer(map, snapshot?.crime ?? null, activeLayers.includes('crime'))
     }
 
     map.on('style.load', doUpdate)

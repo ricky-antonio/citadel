@@ -6,12 +6,18 @@ import { OrbitalMetric } from './OrbitalMetric'
 
 type OrbitalLayoutProps = {
   snapshot: CitySnapshot
-  onOpenPanel: (panel: 'weather' | 'aq' | 'transit' | 'events') => void
+  onOpenPanel: (panel: 'weather' | 'aq' | 'transit' | 'events' | 'crime') => void
 }
 
 function getAqiColor(aqi: number): string {
   if (aqi <= 50) return '#4ADE80'
   if (aqi <= 100) return '#E8A020'
+  return '#EF4444'
+}
+
+function getSafetyColor(score: number): string {
+  if (score >= 70) return '#4ADE80'
+  if (score >= 40) return '#E8A020'
   return '#EF4444'
 }
 
@@ -24,6 +30,7 @@ function getTransitColor(delayCount: number): string {
 export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
   const aqiColor = getAqiColor(snapshot.airQuality.aqi)
   const transitColor = getTransitColor(snapshot.transit.delayCount)
+  const safetyColor = getSafetyColor(snapshot.crime.safetyScore)
   const transitValue =
     snapshot.transit.delayCount === 0
       ? 'On time'
@@ -119,6 +126,24 @@ export function OrbitalLayout({ snapshot, onOpenPanel }: OrbitalLayoutProps) {
             color="#E8A020"
             animationDelay="3s"
             onOpen={() => onOpenPanel('events')}
+          />
+        </div>
+
+        {/* Safety — NE diagonal */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-28px',
+            right: '-72px',
+          }}
+        >
+          <OrbitalMetric
+            metric="crime"
+            value={`${snapshot.crime.safetyScore}`}
+            label="SAFETY"
+            color={safetyColor}
+            animationDelay="4s"
+            onOpen={() => onOpenPanel('crime')}
           />
         </div>
       </div>

@@ -8,6 +8,7 @@ const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabi
 export type PanelAnchor =
   | 'top-left'
   | 'top-right'
+  | 'top-center'
   | 'bottom-left'
   | 'bottom-right'
   | 'left-center'
@@ -23,6 +24,7 @@ interface PanelBaseProps {
 const POSITIONS: Record<PanelAnchor, React.CSSProperties> = {
   'top-left':     { top: '80px', left: '16px' },
   'top-right':    { top: '80px', right: '16px' },
+  'top-center':   { top: '80px', left: '50%' },
   'bottom-left':  { bottom: '16px', left: '16px' },
   'bottom-right': { bottom: '16px', right: '16px' },
   'left-center':  { top: '50%', left: '16px' },
@@ -34,6 +36,8 @@ function getTransform(anchor: PanelAnchor, mounted: boolean): string {
     case 'top-left':
     case 'top-right':
       return mounted ? 'translateY(0)' : 'translateY(-8px)'
+    case 'top-center':
+      return mounted ? 'translateX(-50%)' : 'translateX(-50%) translateY(-8px)'
     case 'bottom-left':
     case 'bottom-right':
       return mounted ? 'translateY(0)' : 'translateY(8px)'
