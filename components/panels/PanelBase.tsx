@@ -19,6 +19,7 @@ interface PanelBaseProps {
   onClose: () => void
   title: string
   children: React.ReactNode
+  testId?: string
 }
 
 const POSITIONS: Record<PanelAnchor, React.CSSProperties> = {
@@ -48,7 +49,7 @@ function getTransform(anchor: PanelAnchor, mounted: boolean): string {
   }
 }
 
-export default function PanelBase({ anchor, onClose, title, children }: PanelBaseProps) {
+export default function PanelBase({ anchor, onClose, title, children, testId }: PanelBaseProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const [mounted, setMounted] = useState(false)
 
@@ -112,6 +113,7 @@ export default function PanelBase({ anchor, onClose, title, children }: PanelBas
       tabIndex={-1}
       aria-label={title}
       data-panel="true"
+      data-testid={testId}
       style={{
           position: 'absolute',
           width: '280px',

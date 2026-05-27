@@ -29,6 +29,7 @@ export function OrbitalCore({ pulseScore, pulseLabel }: OrbitalCoreProps) {
         fontWeight="800"
         fill="#E8A020"
         fontFamily="var(--font-inter)"
+        data-testid="pulse-score"
       >
         {pulseScore}
       </text>

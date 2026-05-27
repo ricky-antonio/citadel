@@ -68,6 +68,7 @@ export default function NavBar({
 
       <button
         onClick={onAskClick}
+        data-testid="chat-open-button"
         style={{
           height: '28px',
           padding: '0 12px',

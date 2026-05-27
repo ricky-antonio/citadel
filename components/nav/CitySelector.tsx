@@ -68,6 +68,7 @@ export default function CitySelector({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label="Select city"
+        data-testid="city-selector"
         onClick={() => setOpen(prev => !prev)}
         style={{
           display: 'flex',
@@ -116,6 +117,7 @@ export default function CitySelector({
                 ref={el => { optionRefs.current[idx] = el }}
                 role="option"
                 aria-selected={isActive}
+                data-testid={`city-option-${city.id}`}
                 onClick={() => {
                   onCityChange(city.id)
                   setOpen(false)

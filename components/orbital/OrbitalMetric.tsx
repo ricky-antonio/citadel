@@ -26,7 +26,7 @@ export function OrbitalMetric({ metric, value, label, color, animationDelay, onO
       tabIndex={0}
       aria-label={`${label}: ${value}. Press Enter to expand.`}
       aria-expanded={isExpanded}
-      data-testid={`orbital-metric-${metric}`}
+      data-testid={`orbital-node-${metric}`}
       onClick={onOpen}
       onKeyDown={handleKeyDown}
       style={{

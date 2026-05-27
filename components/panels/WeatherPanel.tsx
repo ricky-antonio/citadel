@@ -46,7 +46,7 @@ export default function WeatherPanel({ weather, onClose }: WeatherPanelProps) {
   const isUnavailable = weather.condition === 'Unavailable'
 
   return (
-    <PanelBase anchor="top-left" onClose={onClose} title="WEATHER">
+    <PanelBase anchor="top-left" onClose={onClose} title="WEATHER" testId="panel-weather">
       {isUnavailable && (
         <div style={{ marginBottom: '10px' }}>
           <ErrorBanner message="Weather data temporarily unavailable." />

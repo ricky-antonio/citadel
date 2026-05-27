@@ -6,6 +6,29 @@ Phase 6 — Polish & Deploy (in progress)
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
 
+### P6.6 — Playwright E2E setup + tests
+- `playwright.config.ts` — Chromium-only; `baseURL: http://localhost:3000`; `testDir: ./tests/e2e`; `webServer` block pointing at `npm run dev`; `reuseExistingServer: !process.env.CI`
+- `tests/e2e/fixtures/snapshot.ts` — `buildMockSnapshot(cityId, overrides?)` factory; builds a fully-typed `CitySnapshot` from `getCityById(cityId)` — no fake property shapes
+- `tests/e2e/city-dashboard.spec.ts` — 5 critical path tests, all routes mocked via `page.route()`, no real API or Anthropic calls leave the process
+- **data-testid gaps filled:**
+  - `components/orbital/OrbitalCore.tsx` — `data-testid="pulse-score"` on SVG score `<text>` element
+  - `components/orbital/OrbitalMetric.tsx` — renamed `orbital-metric-${metric}` → `orbital-node-${metric}`
+  - `tests/components/OrbitalLayout.test.tsx` — all `orbital-metric-*` references updated to `orbital-node-*`
+  - `components/panels/PanelBase.tsx` — added optional `testId` prop; passed as `data-testid` on root div
+  - `components/panels/WeatherPanel.tsx` — passes `testId="panel-weather"` to PanelBase
+  - `components/chat/ChatDrawer.tsx` — `data-testid="chat-messages"` on messages container; `data-testid="chat-input"` on input
+  - `components/nav/NavBar.tsx` — `data-testid="chat-open-button"` on Ask button
+  - `components/nav/CitySelector.tsx` — `data-testid="city-selector"` on trigger; `data-testid="city-option-{city.id}"` on each option
+- `vitest.config.ts` — added `exclude: ['**/tests/e2e/**']` to prevent Vitest from picking up Playwright spec files
+- `.github/workflows/ci.yml` — added `npx playwright install --with-deps chromium` step + `npm run test:e2e` step
+- **E2E fix:** orbital node clicks use `{ force: true }` to bypass Playwright's stability check — the `float` CSS animation keeps nodes in perpetual motion but hit targets are always correct
+- `npm run type-check` — zero errors ✓
+- `npm test` — 306/306 pass ✓
+- `npm run test:coverage` — lines 92.58%, functions 93.18%, branches 82.35% (all above 85/85/80 Phase 6 thresholds) ✓
+- `npm run build` — production build succeeds; first-load JS 121 kB ✓
+- `npm run test:e2e` — 5/5 pass ✓
+- Next: P6.7 — Pre-deploy + production launch
+
 ### P6.5 — Performance audit
 - **Bundle analysis:** mapbox-gl is in the 1.77 MB lazy chunk `c36f3faa` — absent from all initial page chunks; `/city/[id]` first-load JS is 121 kB. Dynamic import with `ssr: false` confirmed working.
 - **CityMap remount:** no `key` prop on `<CityMap>` in `page.tsx` — city switch flows through prop changes only; map never remounts on 5-minute poll.

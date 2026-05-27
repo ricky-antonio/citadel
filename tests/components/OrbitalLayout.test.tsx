@@ -82,14 +82,14 @@ describe('OrbitalLayout', () => {
   it('calls onOpenPanel with "weather" when weather node is clicked', () => {
     const onOpenPanel = vi.fn()
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
-    fireEvent.click(screen.getByTestId('orbital-metric-weather'))
+    fireEvent.click(screen.getByTestId('orbital-node-weather'))
     expect(onOpenPanel).toHaveBeenCalledWith('weather')
   })
 
   it('calls onOpenPanel with "aq" when AQI node is clicked', () => {
     const onOpenPanel = vi.fn()
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
-    fireEvent.click(screen.getByTestId('orbital-metric-aq'))
+    fireEvent.click(screen.getByTestId('orbital-node-aq'))
     expect(onOpenPanel).toHaveBeenCalledWith('aq')
   })
 
@@ -97,35 +97,35 @@ describe('OrbitalLayout', () => {
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={vi.fn()} />)
     const metrics = ['weather', 'aq', 'transit', 'events']
     for (const metric of metrics) {
-      expect(screen.getByTestId(`orbital-metric-${metric}`)).toHaveAttribute('tabindex', '0')
+      expect(screen.getByTestId(`orbital-node-${metric}`)).toHaveAttribute('tabindex', '0')
     }
   })
 
   it('Enter key on weather node triggers onOpenPanel("weather")', () => {
     const onOpenPanel = vi.fn()
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
-    fireEvent.keyDown(screen.getByTestId('orbital-metric-weather'), { key: 'Enter' })
+    fireEvent.keyDown(screen.getByTestId('orbital-node-weather'), { key: 'Enter' })
     expect(onOpenPanel).toHaveBeenCalledWith('weather')
   })
 
   it('Space key on weather node triggers onOpenPanel("weather")', () => {
     const onOpenPanel = vi.fn()
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
-    fireEvent.keyDown(screen.getByTestId('orbital-metric-weather'), { key: ' ' })
+    fireEvent.keyDown(screen.getByTestId('orbital-node-weather'), { key: ' ' })
     expect(onOpenPanel).toHaveBeenCalledWith('weather')
   })
 
   it('calls onOpenPanel with "transit" when transit node is clicked', () => {
     const onOpenPanel = vi.fn()
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
-    fireEvent.click(screen.getByTestId('orbital-metric-transit'))
+    fireEvent.click(screen.getByTestId('orbital-node-transit'))
     expect(onOpenPanel).toHaveBeenCalledWith('transit')
   })
 
   it('calls onOpenPanel with "events" when events node is clicked', () => {
     const onOpenPanel = vi.fn()
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
-    fireEvent.click(screen.getByTestId('orbital-metric-events'))
+    fireEvent.click(screen.getByTestId('orbital-node-events'))
     expect(onOpenPanel).toHaveBeenCalledWith('events')
   })
 
@@ -167,13 +167,13 @@ describe('OrbitalLayout', () => {
   it('calls onOpenPanel with "crime" when safety node is clicked', () => {
     const onOpenPanel = vi.fn()
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={onOpenPanel} />)
-    fireEvent.click(screen.getByTestId('orbital-metric-crime'))
+    fireEvent.click(screen.getByTestId('orbital-node-crime'))
     expect(onOpenPanel).toHaveBeenCalledWith('crime')
   })
 
   it('safety node has tabIndex={0}', () => {
     render(<OrbitalLayout snapshot={makeMockSnapshot()} onOpenPanel={vi.fn()} />)
-    expect(screen.getByTestId('orbital-metric-crime')).toHaveAttribute('tabindex', '0')
+    expect(screen.getByTestId('orbital-node-crime')).toHaveAttribute('tabindex', '0')
   })
 
   it('sets aria-expanded on the active metric node', () => {
@@ -184,7 +184,7 @@ describe('OrbitalLayout', () => {
         activePanel="weather"
       />
     )
-    expect(screen.getByTestId('orbital-metric-weather')).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByTestId('orbital-metric-aq')).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByTestId('orbital-node-weather')).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByTestId('orbital-node-aq')).toHaveAttribute('aria-expanded', 'false')
   })
 })

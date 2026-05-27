@@ -235,6 +235,7 @@ export default function ChatDrawer({ cityId, snapshot, onClose }: Props) {
       {/* Messages area */}
       <div
         ref={messagesContainerRef}
+        data-testid="chat-messages"
         aria-live="polite"
         aria-atomic="false"
         style={{
@@ -280,6 +281,7 @@ export default function ChatDrawer({ cityId, snapshot, onClose }: Props) {
           }}
           placeholder="Ask about the city..."
           disabled={streaming}
+          data-testid="chat-input"
           aria-label="Chat input"
           style={{
             flex: 1,
