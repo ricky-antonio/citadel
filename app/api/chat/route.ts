@@ -106,8 +106,8 @@ export async function POST(req: Request) {
       process.env.SUPABASE_SERVICE_ROLE_KEY ?? ''
     )
     const logger = new TransformStream({
-      flush() {
-        void supabase.from('ai_usage').insert({
+      async flush() {
+        await supabase.from('ai_usage').insert({
           city_id: cityId,
           route: '/api/chat',
           tokens_in: inputTokens,
