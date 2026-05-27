@@ -34,6 +34,7 @@ export default function CityPage() {
 
   const [snapshot, setSnapshot] = useState<CitySnapshot | null>(null)
   const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState(false)
   const [activePanel, setActivePanel] = useState<ActivePanel>(null)
   const [chatOpen, setChatOpen] = useState(false)
   const [activeLayers, setActiveLayers] = useState<string[]>(['air-quality', 'events', 'transit', 'crowd', 'crime'])
@@ -46,7 +47,14 @@ export default function CityPage() {
       if (res.ok) {
         const data = await res.json() as CitySnapshot
         setSnapshot(data)
+        setFetchError(false)
+      } else {
+        setSnapshot(null)
+        setFetchError(true)
       }
+    } catch {
+      setSnapshot(null)
+      setFetchError(true)
     } finally {
       setLoading(false)
     }
@@ -112,6 +120,32 @@ export default function CityPage() {
         >
           <div style={{ color: 'var(--amber)', fontFamily: 'var(--font-inter)' }}>
             Loading...
+          </div>
+        </div>
+      )}
+
+      {fetchError && !loading && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'var(--panel-bg)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid var(--panel-border)',
+            borderRadius: 'var(--radius-lg)',
+            padding: '24px',
+            textAlign: 'center',
+            zIndex: 60,
+            minWidth: '260px',
+          }}
+        >
+          <div style={{ color: 'var(--tx-1)', fontWeight: 700, marginBottom: '8px', fontSize: '15px' }}>
+            City data unavailable
+          </div>
+          <div style={{ color: 'var(--tx-2)', fontSize: '13px' }}>
+            Some data sources are temporarily unreachable. Retrying...
           </div>
         </div>
       )}

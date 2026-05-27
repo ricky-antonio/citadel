@@ -44,7 +44,11 @@ export default function TransitPanel({ transit, onClose }: TransitPanelProps) {
 
   return (
     <PanelBase anchor="bottom-right" onClose={onClose} title="TRANSIT">
-      {transit.delayCount === 0 ? (
+      {transit.status === 'unknown' ? (
+        <p style={{ fontSize: '12px', color: 'var(--tx-2)', margin: 0 }}>
+          Transit data temporarily unavailable.
+        </p>
+      ) : transit.delayCount === 0 ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '16px' }} aria-hidden="true">✓</span>
           <span style={{ fontSize: '13px', color: '#4ADE80' }}>All lines running normally</span>

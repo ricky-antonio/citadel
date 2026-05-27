@@ -58,9 +58,14 @@ export default function HistoryPanel({ cityId, onClose }: HistoryPanelProps) {
   return (
     <PanelBase anchor="right-center" onClose={onClose} title="PULSE HISTORY">
       {history.length < 2 ? (
-        <p style={{ fontSize: '12px', color: 'var(--tx-2)', margin: 0 }}>
-          Not enough data yet — check back after a few hours.
-        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <p style={{ fontSize: '12px', color: 'var(--tx-2)', margin: 0 }}>
+            Not enough data yet. Check back after the first hour of data collection.
+          </p>
+          <p style={{ fontSize: '11px', color: 'var(--tx-3)', margin: '4px 0 0 0' }}>
+            History builds up as the app runs — typically 2+ hours for a visible chart.
+          </p>
+        </div>
       ) : (
         <>
           <div

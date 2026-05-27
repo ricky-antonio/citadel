@@ -93,9 +93,15 @@ export default function EventsPanel({ events, onClose }: EventsPanelProps) {
   return (
     <PanelBase anchor="bottom-left" onClose={onClose} title="EVENTS">
       {displayEvents.length === 0 ? (
-        <p style={{ fontSize: '12px', color: 'var(--tx-2)', margin: 0 }}>
-          No major events scheduled tonight.
-        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '16px' }} aria-hidden="true">📅</span>
+            <span style={{ fontSize: '13px', color: 'var(--tx-1)' }}>No major events tonight.</span>
+          </div>
+          <p style={{ fontSize: '11px', color: 'var(--tx-3)', margin: '4px 0 0 0' }}>
+            Check back this afternoon for evening event listings.
+          </p>
+        </div>
       ) : (
         <>
           <div

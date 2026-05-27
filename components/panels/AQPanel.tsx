@@ -1,6 +1,7 @@
 'use client'
 
 import PanelBase from './PanelBase'
+import ErrorBanner from '@/components/shared/ErrorBanner'
 import type { AirQualityData } from '@/lib/types'
 
 interface AQPanelProps {
@@ -24,9 +25,15 @@ function getAQIBarPosition(aqi: number): string {
 
 export default function AQPanel({ airQuality, onClose }: AQPanelProps) {
   const color = getAQIColor(airQuality.aqi)
+  const isUnavailable = airQuality.category === 'Unavailable'
 
   return (
     <PanelBase anchor="top-right" onClose={onClose} title="AIR QUALITY">
+      {isUnavailable && (
+        <div style={{ marginBottom: '10px' }}>
+          <ErrorBanner message="Air quality data temporarily unavailable." />
+        </div>
+      )}
       <div style={{ marginBottom: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '4px' }}>
           <span style={{ fontSize: '32px', fontWeight: 800, color, lineHeight: 1.1 }}>

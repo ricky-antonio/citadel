@@ -1,10 +1,26 @@
 # Citadel — Progress
 
 ## Current phase
-Phase 6 — Polish & Deploy (not started)
+Phase 6 — Polish & Deploy (in progress)
 
 ## Completed
 <!-- Newest entries go at the top. Never delete completed items — they are the audit trail. -->
+
+### P6.1 — Empty states + error recovery
+- `components/panels/TransitPanel.tsx` — added `transit.status === 'unknown'` check → "Transit data temporarily unavailable." (above the existing delayCount === 0 check)
+- `components/panels/EventsPanel.tsx` — updated empty state: calendar icon 📅 + "No major events tonight." + sub-text "Check back this afternoon for evening event listings."
+- `components/panels/AnomalyPanel.tsx` — updated empty state text to include "City metrics are within normal range."
+- `components/panels/HistoryPanel.tsx` — updated empty state: "Not enough data yet. Check back after the first hour of data collection." + sub-text about 2+ hours
+- `components/panels/WeatherPanel.tsx` — imported ErrorBanner; shows "Weather data temporarily unavailable." when `condition === 'Unavailable'`; renders `–°F` / `–` for unavailable temp/condition
+- `components/panels/AQPanel.tsx` — imported ErrorBanner; shows "Air quality data temporarily unavailable." when `category === 'Unavailable'`
+- `app/city/[id]/page.tsx` — added `fetchError` state; `refetch` now sets `snapshot(null)` + `fetchError(true)` on non-ok response or network error, clears `fetchError` on success; error overlay rendered when `fetchError && !loading` (absolute, centered, glassmorphism, "City data unavailable" + "Retrying..." message)
+- ChatDrawer — verified: catch block already sets "[Connection interrupted. Please try again.]" on both network errors and mid-stream breaks ✓
+- `tests/components/EventsPanel.test.tsx` — new file: 8 tests covering empty state, sub-text, event list, count header, attendance badges (large/medium/none), 5-event limit, panel title
+- `tests/components/AnomalyPanel.test.tsx` — new file: 8 tests covering empty state, "within normal range" text, anomaly rows, metric badges, deviation %, "Analyzing…" for undefined description, 10-anomaly limit, panel title
+- `npm run type-check` — zero errors ✓
+- `npm test` — 288/288 pass ✓
+- `npm run test:coverage` — lines 89.31%, functions 89.09%, branches 77.59% (all above 82/82/77 Phase 5 thresholds still in use) ✓
+- Next: P6.2 — Keyboard completeness
 
 ### P5.6 — Phase 5 final checklist
 - `vitest.config.ts` — thresholds raised to Phase 5 targets: lines 82%, functions 82%, branches 77%

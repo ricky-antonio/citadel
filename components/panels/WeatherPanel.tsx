@@ -1,6 +1,7 @@
 'use client'
 
 import PanelBase from './PanelBase'
+import ErrorBanner from '@/components/shared/ErrorBanner'
 import type { WeatherData, HourlyForecast } from '@/lib/types'
 
 interface WeatherPanelProps {
@@ -42,15 +43,21 @@ function HourlyItem({ item }: { item: HourlyForecast }) {
 
 export default function WeatherPanel({ weather, onClose }: WeatherPanelProps) {
   const forecastItems = weather.hourlyForecast.slice(0, 6)
+  const isUnavailable = weather.condition === 'Unavailable'
 
   return (
     <PanelBase anchor="top-left" onClose={onClose} title="WEATHER">
+      {isUnavailable && (
+        <div style={{ marginBottom: '10px' }}>
+          <ErrorBanner message="Weather data temporarily unavailable." />
+        </div>
+      )}
       <div style={{ marginBottom: '8px' }}>
         <div style={{ fontSize: '32px', fontWeight: 800, color: 'var(--tx-1)', lineHeight: 1.1 }}>
-          {weather.temperature}°F
+          {isUnavailable ? '–°F' : `${weather.temperature}°F`}
         </div>
         <div style={{ fontSize: '14px', color: 'var(--tx-2)', marginTop: '2px' }}>
-          {weather.condition}
+          {isUnavailable ? '–' : weather.condition}
         </div>
       </div>
 

@@ -89,7 +89,7 @@ export default function AnomalyPanel({ anomalies, onClose }: AnomalyPanelProps) 
     <PanelBase anchor="left-center" onClose={onClose} title="ANOMALIES">
       {displayAnomalies.length === 0 ? (
         <p style={{ fontSize: '12px', color: 'var(--tx-2)', margin: 0 }}>
-          No anomalies detected in the last 7 days.
+          No anomalies detected in the last 7 days. City metrics are within normal range.
         </p>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
