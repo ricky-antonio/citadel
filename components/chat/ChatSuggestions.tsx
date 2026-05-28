@@ -6,6 +6,7 @@ interface Props {
 export default function ChatSuggestions({ suggestions, onSelect }: Props) {
   return (
     <div
+      data-chat-suggestions="true"
       style={{
         display: 'flex',
         gap: '8px',

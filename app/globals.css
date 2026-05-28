@@ -191,6 +191,16 @@ body {
     max-height: calc(100dvh - 80px) !important;
   }
 
+  [data-chat-suggestions] {
+    flex-direction: column !important;
+    overflow-x: visible !important;
+  }
+
+  [data-chat-suggestions] button {
+    white-space: normal !important;
+    text-align: left !important;
+  }
+
   [data-chat-drawer] {
     position: fixed !important;
     bottom: env(safe-area-inset-bottom, 0px) !important;
