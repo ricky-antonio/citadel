@@ -178,11 +178,12 @@ body {
     width: 100% !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
+    bottom: env(safe-area-inset-bottom, 0px) !important;
     top: auto !important;
     transform: none !important;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
-    max-height: 70vh !important;
+    max-height: calc(100dvh - 80px) !important;
+    padding-bottom: max(env(safe-area-inset-bottom), 16px) !important;
   }
 
   [data-chat-drawer] { height: 85vh !important; }
