@@ -2,6 +2,14 @@ import type { Map as MapboxMap, GeoJSONSource, LngLatLike } from 'mapbox-gl'
 import { Popup } from 'mapbox-gl'
 import type { EventsData } from '@/lib/types'
 
+function formatEventTime(iso: string): string {
+  try {
+    return new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+  } catch {
+    return iso
+  }
+}
+
 const SOURCE_ID = 'events'
 const LAYER_CLUSTERS = 'event-clusters'
 const LAYER_CLUSTER_COUNT = 'event-cluster-count'
@@ -113,7 +121,7 @@ export function updateEventLayer(
           `<div style="font-family:var(--font-inter);color:#F0EDE8;background:#141820;` +
             `padding:8px 12px;border-radius:8px;font-size:12px;">` +
             `<strong>${props.name as string}</strong><br/>` +
-            `${props.time as string}` +
+            `${formatEventTime(props.time as string)}` +
             `${capacityLine}` +
             `</div>`
         )

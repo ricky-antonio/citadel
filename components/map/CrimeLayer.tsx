@@ -2,6 +2,14 @@ import type { Map as MapboxMap, GeoJSONSource, LngLatLike } from 'mapbox-gl'
 import { Popup } from 'mapbox-gl'
 import type { CrimeData } from '@/lib/types'
 
+function formatCrimeDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })
+  } catch {
+    return iso
+  }
+}
+
 const SOURCE_ID = 'crime-incidents'
 const LAYER_CLUSTERS = 'crime-clusters'
 const LAYER_CLUSTER_COUNT = 'crime-cluster-count'
@@ -107,7 +115,7 @@ export function updateCrimeLayer(
           `<div style="font-family:var(--font-inter);color:#F0EDE8;background:#141820;` +
             `padding:8px 12px;border-radius:8px;font-size:12px;">` +
             `<strong style="text-transform:capitalize">${(props.category as string).toLowerCase()}</strong>` +
-            `<br/><span style="color:#9CA3AF">${props.date as string}</span>` +
+            `<br/><span style="color:#9CA3AF">${formatCrimeDate(props.date as string)}</span>` +
             `</div>`
         )
         .addTo(map)
