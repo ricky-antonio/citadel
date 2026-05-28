@@ -168,15 +168,15 @@ body {
 
 @media (max-width: 767px) {
   [data-orbital] {
-    top: auto !important;
-    bottom: 25% !important;
+    top: 50% !important;
+    bottom: auto !important;
     left: 50% !important;
-    transform: translateX(-50%) scale(0.6) !important;
+    transform: translate(-50%, -50%) scale(0.65) !important;
     transition: transform 300ms ease !important;
   }
 
   [data-orbital][data-moving] {
-    transform: translateX(-50%) scale(0.45) !important;
+    transform: translate(-50%, -50%) scale(0.49) !important;
   }
 
   [data-panel] {
