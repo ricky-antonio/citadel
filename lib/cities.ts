@@ -2,6 +2,18 @@ import type { City } from '@/lib/types'
 
 export const CITIES: City[] = [
   {
+    id: 'chicago',
+    name: 'Chicago',
+    state: 'Illinois',
+    lat: 41.8781,
+    lng: -87.6298,
+    zoom: 12,
+    timezone: 'America/Chicago',
+    mapStyle: 'mapbox://styles/mapbox/dark-v11',
+    transitProvider: 'cta',
+    crimeProvider: 'chicago-data-portal',
+  },
+  {
     id: 'new-york',
     name: 'New York',
     state: 'New York',
@@ -24,18 +36,6 @@ export const CITIES: City[] = [
     mapStyle: 'mapbox://styles/mapbox/dark-v11',
     transitProvider: 'sf-511',
     crimeProvider: 'datasf',
-  },
-  {
-    id: 'chicago',
-    name: 'Chicago',
-    state: 'Illinois',
-    lat: 41.8781,
-    lng: -87.6298,
-    zoom: 12,
-    timezone: 'America/Chicago',
-    mapStyle: 'mapbox://styles/mapbox/dark-v11',
-    transitProvider: 'cta',
-    crimeProvider: 'chicago-data-portal',
   },
   {
     id: 'washington-dc',

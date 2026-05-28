@@ -33,7 +33,7 @@ export default function CrimePanel({ crime, onClose }: CrimePanelProps) {
     .slice(0, 5)
 
   return (
-    <PanelBase anchor="top-center" onClose={onClose} title="SAFETY">
+    <PanelBase anchor="top-left" onClose={onClose} title="SAFETY">
       <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '12px' }}>
         <span style={{ fontSize: '36px', fontWeight: 800, color, lineHeight: 1 }}>
           {crime.safetyScore}
