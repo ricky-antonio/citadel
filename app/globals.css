@@ -172,6 +172,11 @@ body {
     bottom: 25% !important;
     left: 50% !important;
     transform: translateX(-50%) scale(0.6) !important;
+    transition: transform 300ms ease !important;
+  }
+
+  [data-orbital][data-moving] {
+    transform: translateX(-50%) scale(0.45) !important;
   }
 
   [data-panel] {

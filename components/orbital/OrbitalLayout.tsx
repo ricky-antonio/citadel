@@ -54,6 +54,7 @@ export function OrbitalLayout({ snapshot, onOpenPanel, activePanel, mapMoving }:
   return (
     <div
       data-orbital="true"
+      data-moving={mapMoving || undefined}
       style={{
         position: 'absolute',
         top: '50%',
