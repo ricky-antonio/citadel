@@ -191,5 +191,9 @@ body {
     max-height: calc(100dvh - 80px) !important;
   }
 
-  [data-chat-drawer] { height: 85vh !important; }
+  [data-chat-drawer] {
+    position: fixed !important;
+    bottom: env(safe-area-inset-bottom, 0px) !important;
+    height: 85dvh !important;
+  }
 }
