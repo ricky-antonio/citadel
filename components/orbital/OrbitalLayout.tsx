@@ -8,6 +8,7 @@ type OrbitalLayoutProps = {
   snapshot: CitySnapshot
   onOpenPanel: (panel: 'weather' | 'aq' | 'transit' | 'events' | 'crime') => void
   activePanel?: string | null
+  mapMoving?: boolean
 }
 
 function getAqiColor(aqi: number): string {
@@ -41,7 +42,7 @@ function nodePos(angleDeg: number, r = 160): { top: string; left: string; transf
   }
 }
 
-export function OrbitalLayout({ snapshot, onOpenPanel, activePanel }: OrbitalLayoutProps) {
+export function OrbitalLayout({ snapshot, onOpenPanel, activePanel, mapMoving }: OrbitalLayoutProps) {
   const aqiColor = getAqiColor(snapshot.airQuality.aqi)
   const transitColor = getTransitColor(snapshot.transit.delayCount)
   const safetyColor = getSafetyColor(snapshot.crime.safetyScore)
@@ -57,7 +58,8 @@ export function OrbitalLayout({ snapshot, onOpenPanel, activePanel }: OrbitalLay
         position: 'absolute',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)',
+        transform: mapMoving ? 'translate(-50%, -50%) scale(0.75)' : 'translate(-50%, -50%)',
+        transition: 'transform 300ms ease',
         zIndex: 'var(--z-orbital)',
         pointerEvents: 'none',
       }}

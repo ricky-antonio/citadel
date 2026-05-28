@@ -34,6 +34,7 @@ export function OrbitalMetric({ metric, value, label, color, animationDelay, onO
         flexDirection: 'column',
         alignItems: 'center',
         gap: '4px',
+        width: '92px',
         cursor: 'pointer',
         pointerEvents: 'auto',
         animation: 'float 4s ease-in-out infinite',

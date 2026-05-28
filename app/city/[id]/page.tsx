@@ -183,12 +183,12 @@ export default function CityPage() {
           style={{
             position: 'absolute',
             inset: 0,
-            opacity: fading ? 0 : mapMoving ? 0.5 : 1,
+            opacity: fading ? 0 : mapMoving ? 0.4 : 1,
             transition: 'opacity 300ms ease',
             pointerEvents: 'none',
           }}
         >
-          <OrbitalLayout snapshot={snapshot} onOpenPanel={setActivePanel} activePanel={activePanel} />
+          <OrbitalLayout snapshot={snapshot} onOpenPanel={setActivePanel} activePanel={activePanel} mapMoving={mapMoving} />
 
           {activePanel === 'weather' && (
             <WeatherPanel weather={snapshot.weather} onClose={() => setActivePanel(null)} />
