@@ -37,6 +37,12 @@ export function OrbitalMetric({ metric, value, label, color, animationDelay, onO
         cursor: 'pointer',
         animation: 'float 4s ease-in-out infinite',
         animationDelay,
+        background: 'rgba(6, 10, 15, 0.70)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255, 255, 255, 0.08)',
+        borderRadius: '8px',
+        padding: '8px 12px',
       }}
     >
       <div
