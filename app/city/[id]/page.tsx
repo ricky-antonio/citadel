@@ -15,6 +15,7 @@ import EventsPanel from '@/components/panels/EventsPanel'
 import AnomalyPanel from '@/components/panels/AnomalyPanel'
 import HistoryPanel from '@/components/panels/HistoryPanel'
 import CrimePanel from '@/components/panels/CrimePanel'
+import { LoadingScreen } from '@/components/shared/LoadingScreen'
 
 const CityMap = dynamic(() => import('@/components/map/CityMap'), {
   ssr: false,
@@ -110,23 +111,7 @@ export default function CityPage() {
         <CityMap city={city} snapshot={snapshot} activeLayers={activeLayers} onMoving={setMapMoving} />
       )}
 
-      {loading && !snapshot && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'var(--bg-base)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 60,
-          }}
-        >
-          <div style={{ color: 'var(--amber)', fontFamily: 'var(--font-inter)' }}>
-            Loading...
-          </div>
-        </div>
-      )}
+      {loading && !snapshot && <LoadingScreen />}
 
       {fetchError && !loading && (
         <div
