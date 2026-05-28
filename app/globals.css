@@ -124,6 +124,23 @@ body {
   border: 0;
 }
 
+/* ─── Mapbox popup overrides ────────────────────────────────── */
+
+.mapboxgl-popup-content {
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.mapboxgl-popup-tip {
+  display: none !important;
+}
+
+.mapboxgl-popup-close-button {
+  display: none !important;
+}
+
 /* ─── Keyframe animations ───────────────────────────────────── */
 
 @keyframes float {

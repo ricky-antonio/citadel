@@ -10,6 +10,7 @@ export function OrbitalCore({ pulseScore, pulseLabel }: OrbitalCoreProps) {
       width="280"
       height="280"
       viewBox="0 0 280 280"
+      style={{ pointerEvents: 'none' }}
       role="img"
       aria-label={`Pulse score ${pulseScore} — ${pulseLabel}`}
       aria-live="polite"

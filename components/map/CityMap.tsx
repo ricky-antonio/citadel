@@ -10,14 +10,14 @@ interface CityMapProps {
   city: City
   snapshot: CitySnapshot | null
   activeLayers: string[]
+  onMoving?: (isMoving: boolean) => void
 }
 
-export default function CityMap({ city, snapshot, activeLayers }: CityMapProps) {
+export default function CityMap({ city, snapshot, activeLayers, onMoving }: CityMapProps) {
   const mapRef = useRef<MapRef>(null)
   const { theme } = useTheme()
   const prevCityIdRef = useRef(city.id)
   const prevThemeRef = useRef(theme)
-
   useEffect(() => {
     if (prevCityIdRef.current === city.id) return
     prevCityIdRef.current = city.id
@@ -52,6 +52,8 @@ export default function CityMap({ city, snapshot, activeLayers }: CityMapProps) 
       mapStyle={city.mapStyle}
       attributionControl={false}
       aria-label="Interactive city map. Use the orbital controls above to view data."
+      onMoveStart={() => onMoving?.(true)}
+      onMoveEnd={() => onMoving?.(false)}
     >
       <MapLayers snapshot={snapshot} activeLayers={activeLayers} mapRef={mapRef} />
     </Map>

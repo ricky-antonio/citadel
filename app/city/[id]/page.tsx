@@ -40,6 +40,7 @@ export default function CityPage() {
   const [chatOpen, setChatOpen] = useState(false)
   const [activeLayers, setActiveLayers] = useState<string[]>(['air-quality', 'events', 'transit', 'crowd', 'crime'])
   const [fading, setFading] = useState(false)
+  const [mapMoving, setMapMoving] = useState(false)
 
   const refetch = useCallback(async () => {
     setLoading(true)
@@ -106,7 +107,7 @@ export default function CityPage() {
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
       {city && (
-        <CityMap city={city} snapshot={snapshot} activeLayers={activeLayers} />
+        <CityMap city={city} snapshot={snapshot} activeLayers={activeLayers} onMoving={setMapMoving} />
       )}
 
       {loading && !snapshot && (
@@ -182,7 +183,7 @@ export default function CityPage() {
           style={{
             position: 'absolute',
             inset: 0,
-            opacity: fading ? 0 : 1,
+            opacity: fading ? 0 : mapMoving ? 0.5 : 1,
             transition: 'opacity 300ms ease',
             pointerEvents: 'none',
           }}
